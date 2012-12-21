@@ -5,7 +5,6 @@ This is a library to abstract the Keen IO API to PHP objects.
 
 Installation
 ------------
-#### Installation steps
   1. edit `composer.json` file with following contents:
 
      ```json
