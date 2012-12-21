@@ -7,7 +7,7 @@ use KeenIO\Service\Project;
 
 final class KeenIO extends AbstractService {
 
-    public function projects() {
+    public function getProjects() {
         $http = $this->getHttpClient();
         $http->setUri('https://api.keen.io/3.0/projects');
         $http->getMethod('GET');
