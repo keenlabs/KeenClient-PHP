@@ -12,7 +12,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*"
     },
-    "homepage": "http://www.keen.io",
+    "homepage": "http://keen.io",
     "authors": [
         {
             "name": "Tom Anderson",
