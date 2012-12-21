@@ -65,12 +65,12 @@ $collection->funnel(array('see docs'));
 
 Fetch or create a query
 ```php
-$query = $collection->getQuery('test1-a');
+$query = $collection->getSavedQuery('test1-a');
 $query->setAnalysisType('count');
 $query->save();
 ```
 
 Show all saved queries
 ```php
-$collection->savedQueries();
+$collection->getSavedQueries();
 ```
