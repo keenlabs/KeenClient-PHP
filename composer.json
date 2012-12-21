@@ -6,6 +6,7 @@
     "keywords": [
         "keen io",
         "zf2",
+        "analytics"
     ],
     "require": {
         "php": ">=5.3.3",
