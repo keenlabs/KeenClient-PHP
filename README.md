@@ -2,14 +2,20 @@ Keen IO Zend Framework 2 Library
 ================================
 This is a library to abstract the Keen IO API to PHP objects.  
 
-Install
--------
-Edit your composer.json file with the following contents
-```json
-"require": {
-    "keen-io/keen-io-tha": "dev-master"
-}
-```
+
+Installation
+------------
+#### Installation steps
+  1. edit `composer.json` file with following contents:
+
+     ```json
+     "require": {
+        "keen-io/keen-io-tha": "dev-master"
+     }
+     ```
+  2. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
+     http://getcomposer.org/installer and execute it with PHP)
+  3. run `php composer.phar install`
 
 Use
 ---
