@@ -6,17 +6,19 @@ use Zend\Json\Json;
 
 use KeenIO\Service\AbstractService;
 use KeenIO\Service\Projct;
-use KeenIO\Service\Query;
+use KeenIO\Service\SavedQuery;
 
-final class Collection extends AbstractService {
-
+final class Collection extends AbstractService
+{
     private $project;
 
-    public function getProject() {
+    public function getProject()
+    {
         return $this->project;
     }
 
-    public function setProject(Project $project) {
+    public function setProject(Project $project)
+    {
         $this->project = $project;
         return $this;
     }
@@ -24,8 +26,8 @@ final class Collection extends AbstractService {
     /**
      * Send an event
      */
-    public function send($values) {
-
+    public function send($values)
+    {
         $http = $this->getHttpClient();
         $http->setUri('https://api.keen.io/3.0/projects/' . $this->getProject()->getName() . '/events/' . $this->getName());
         $http->setMethod('POST');
@@ -36,8 +38,9 @@ final class Collection extends AbstractService {
         return $json->created;
     }
 
-    public function getQuery($name) {
-        $query = new Query($this->getApiKey());
+    public function getSavedQuery($name)
+    {
+        $query = new SavedQuery($this->getApiKey());
         $query->setCollection($this);
         $query->setName($name);
         $query->get();
@@ -45,8 +48,17 @@ final class Collection extends AbstractService {
         return $query;
     }
 
-    public function count($options = array()) {
+    public function getSavedQueries()
+    {
+        $http = $this->getHttpClient();
+        $http->setUri('https://api.keen.io/3.0/projects/' . $this->getProject()->getName() . '/saved_queries');
+        $http->setMethod('GET');
 
+        return $this->sendHttpRequest($http);
+    }
+
+    public function count($options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe'), $options);
 
         $http = $this->getHttpClient();
@@ -59,8 +71,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function countUnique($targetProperty, $options = array()) {
-
+    public function countUnique($targetProperty, $options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe', 'group_by'), $options);
 
         $http = $this->getHttpClient();
@@ -74,8 +86,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function minimum($targetProperty, $options = array()) {
-
+    public function minimum($targetProperty, $options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe', 'group_by'), $options);
 
         $http = $this->getHttpClient();
@@ -89,8 +101,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function maximum($targetProperty, $options = array()) {
-
+    public function maximum($targetProperty, $options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe', 'group_by'), $options);
 
         $http = $this->getHttpClient();
@@ -104,8 +116,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function average($targetProperty, $options = array()) {
-
+    public function average($targetProperty, $options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe', 'group_by'), $options);
 
         $http = $this->getHttpClient();
@@ -119,8 +131,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function sum($targetProperty, $options = array()) {
-
+    public function sum($targetProperty, $options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe', 'group_by'), $options);
 
         $http = $this->getHttpClient();
@@ -134,8 +146,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function selectUnique($targetProperty, $options = array()) {
-
+    public function selectUnique($targetProperty, $options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe'), $options);
 
         $http = $this->getHttpClient();
@@ -149,8 +161,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function extraction($options = array()) {
-
+    public function extraction($options = array())
+    {
         $this->validateOptions(array('filters', 'timeframe', 'email_address', 'latest'), $options);
 
         $http = $this->getHttpClient();
@@ -163,8 +175,8 @@ final class Collection extends AbstractService {
         return $this->sendHttpRequest($http);
     }
 
-    public function funnel($steps) {
-
+    public function funnel($steps)
+    {
         $http = $this->getHttpClient();
         $http->setUri('https://api.keen.io/3.0/projects/' . $this->getProject()->getName() . '/queries/funnel');
         $http->setMethod('GET');
@@ -175,14 +187,4 @@ final class Collection extends AbstractService {
 
         return $this->sendHttpRequest($http);
     }
-
-    public function savedQueries() {
-
-        $http = $this->getHttpClient();
-        $http->setUri('https://api.keen.io/3.0/projects/' . $this->getProject()->getName() . '/saved_queries');
-        $http->setMethod('GET');
-
-        return $this->sendHttpRequest($http);
-    }
-
 }
