@@ -1,5 +1,5 @@
 {
-    "name": "keen-io/keen-io-tha-module",
+    "name": "keen-io/keen-io-tha",
     "description": "A Zend Framework 2 module for accessing the Keen IO API",
     "type": "library",
     "license": "MIT",
