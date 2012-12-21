@@ -1,0 +1,27 @@
+{
+    "name": "keen-io/keen-io-module",
+    "description": "A Zend Framework 2 module for accessing the Keen IO API",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "keen io",
+        "zf2",
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*"
+    },
+    "homepage": "http://www.keen.io",
+    "authors": [
+        {
+            "name": "Tom Anderson",
+            "email": "tom.h.anderson@gmail.com",
+            "homepage": "http://db.etree.org/"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "KeenIO": "src/"
+        }
+    }
+}
