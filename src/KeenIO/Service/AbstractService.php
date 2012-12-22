@@ -10,8 +10,8 @@ use Zend\I18n\Validator\Alnum as Alnum;
 
 abstract class AbstractService {
 
-    private $apiKey;
-    private $name;
+    protected $apiKey;
+    protected $name;
 
     public function __construct($apiKey)
     {
