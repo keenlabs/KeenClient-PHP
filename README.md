@@ -1,4 +1,4 @@
-Keen IO Zend PHP Library
+Keen IO PHP Library
 ================================
 This is a library to abstract the Keen IO API to PHP objects.  
 
