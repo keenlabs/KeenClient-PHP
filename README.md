@@ -1,4 +1,4 @@
-Keen IO Zend Framework 2 Library
+Keen IO Zend PHP Library
 ================================
 This is a library to abstract the Keen IO API to PHP objects.  
 
@@ -37,12 +37,6 @@ $project = $keenIO->getProject('projectId');
 Fetch a collection for a project
 ```php
 $collection = $project->getCollection('collectionName');
-```
-
-Echo the project and collection names
-```php
-$project->getName();
-$collection->getName();
 ```
 
 Send a new event
