@@ -26,7 +26,7 @@ KeenIO::configure($projectId, $apiKey);
 
 Send a new event
 ```php
-KeenIO::addEvent(array(
+KeenIO::addEvent('collectionName', array(
     'type' => 'test',
     'page' => '/',
 ));
