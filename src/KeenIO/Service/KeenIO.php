@@ -7,14 +7,14 @@ use Zend\Http\Headers;
 use Zend\Json\Json;
 use Zend\I18n\Validator\Alnum as Alnum;
 
-static final class KeenIO {
+final class KeenIO {
 
     static private $projectId;
     static private $apiKey;
 
     static public function getApiKey()
     {
-        return self::apiKey;
+        return self::$apiKey;
     }
 
     static public function setApiKey($value)
@@ -24,13 +24,12 @@ static final class KeenIO {
         if (!$validator->isValid($value))
             throw new \Exception("API Key '$value' contains invalid characters or spaces.");
 
-        self::apiKey = $value;
-        return self;
+        self::$apiKey = $value;
     }
 
     static public function getProjectId()
     {
-        return self::projectId;
+        return self::$projectId;
     }
 
     static public function setProjectId($value)
@@ -40,8 +39,7 @@ static final class KeenIO {
         if (!$validator->isValid($value))
             throw new \Exception("Project ID '$name' contains invalid characters or spaces.");
 
-        self::projectId = $value
-        return self;
+        self::$projectId = $value;
     }
 
     static public function configure($projectId, $apiKey)
@@ -58,8 +56,8 @@ static final class KeenIO {
 
         // Validate collection name
         $validator = new Alnum();
-        if (!$validator->isValid($name))
-            throw new \Exception("Collection name '$name' contains invalid characters or spaces.");
+        if (!$validator->isValid($collectionName))
+            throw new \Exception("Collection name '$collectionName' contains invalid characters or spaces.");
 
         $http = new Client();
 
