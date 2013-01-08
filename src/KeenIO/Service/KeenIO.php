@@ -2,24 +2,80 @@
 
 namespace KeenIO\Service;
 
-use KeenIO\Service\AbstractService;
-use KeenIO\Service\Project;
+use Zend\Http\Client;
+use Zend\Http\Headers;
+use Zend\Json\Json;
+use Zend\I18n\Validator\Alnum as Alnum;
 
-final class KeenIO extends AbstractService {
+static final class KeenIO {
 
-    public function getProjects() {
-        $http = $this->getHttpClient();
-        $http->setUri('https://api.keen.io/3.0/projects');
-        $http->getMethod('GET');
+    static private $projectId;
+    static private $apiKey;
 
-        return $this->sendHttpRequest($http);
+    static public function getApiKey()
+    {
+        return self::apiKey;
     }
 
-    public function getProject($name) {
-        $project = new Project($this->getApiKey());
-        $project->setName($name);
-        $project->setService($this);
+    static public function setApiKey($value)
+    {
+        // Validate collection name
+        $validator = new Alnum();
+        if (!$validator->isValid($value))
+            throw new \Exception("API Key '$value' contains invalid characters or spaces.");
 
-        return $project;
+        self::apiKey = $value;
+        return self;
+    }
+
+    static public function getProjectId()
+    {
+        return self::projectId;
+    }
+
+    static public function setProjectId($value)
+    {
+        // Validate collection name
+        $validator = new Alnum();
+        if (!$validator->isValid($value))
+            throw new \Exception("Project ID '$name' contains invalid characters or spaces.");
+
+        self::projectId = $value
+        return self;
+    }
+
+    static public function configure($projectId, $apiKey)
+    {
+        self::setProjectId($projectId);
+        self::setApiKey($apiKey);
+    }
+
+    static public function addEvent($collectionName, $parameters)
+    {
+        // Validate configuration
+        if (!self::getProjectId() or !self::getApiKey())
+            throw new \Exception('Keen IO has not been configured');
+
+        // Validate collection name
+        $validator = new Alnum();
+        if (!$validator->isValid($name))
+            throw new \Exception("Collection name '$name' contains invalid characters or spaces.");
+
+        $http = new Client();
+
+        $http->setOptions(array('sslverifypeer' => false));
+        $headers = new Headers();
+        $headers->addHeaderLine('Authorization', self::getApiKey());
+        $headers->addHeaderLine('Content-Type', 'application/json');
+        $http->setHeaders($headers);
+
+        $http->setUri('https://api.keen.io/3.0/projects/' . self::getProjectId() . '/events/' . $collectionName);
+        $http->setMethod('POST');
+        $http->getRequest()->setContent(Json::encode($parameters));
+
+        $response = $http->send();
+        $json = Json::decode($response->getBody());
+
+        return $json->created;
     }
 }
