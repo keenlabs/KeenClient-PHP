@@ -1,7 +1,6 @@
 Keen IO PHP Library
 ================================
-This is a library to abstract the Keen IO API to PHP objects.  
-
+This is a library to abstract the Keen IO API addEvent method
 
 Installation
 ------------
@@ -18,58 +17,17 @@ Installation
 
 Use
 ---
-
-Create a KeenIO service object
+Configure the service
 ```php
-$keenIO = new \KeenIO\Service\KeenIO('apiKey');
-```
+use KeenIO\Service\KeenIO;
 
-Fetch a list of all projects 
-```php
-$keenIO->getProjects();
-```
-
-Fetch a project
-```php
-$project = $keenIO->getProject('projectId');
-```
-
-Fetch a collection for a project
-```php
-$collection = $project->getCollection('collectionName');
+KeenIO::configure($projectId, $apiKey);
 ```
 
 Send a new event
 ```php
-$collection->send(array(
-    'test1' => 1,
-    'test2' => 2,
-    'test3' => 3,
-    'test4' => 4,
+KeenIO::addEvent(array(
+    'type' => 'test',
+    'page' => '/',
 ));
-```
-
-Analyze a collection
-```php
-$collection->count();
-$collection->countUnique('test1');
-$collection->minimum('test1');
-$collection->maximum('test1');
-$collection->average('test1');
-$collection->sum('test1');
-$collection->selectUnique('test1');
-$collection->extraction();
-$collection->funnel(array('see docs'));
-```
-
-Fetch or create a query
-```php
-$query = $collection->getSavedQuery('test1-a');
-$query->setAnalysisType('count');
-$query->save();
-```
-
-Show all saved queries
-```php
-$collection->getSavedQueries();
 ```
