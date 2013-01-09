@@ -1,4 +1,9 @@
 <?php
+/**
+ * Keen IO PHP Library
+ * 
+ * @version 1.0.0
+ */
 
 namespace KeenIO\Service;
 
