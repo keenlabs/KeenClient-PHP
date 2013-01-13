@@ -8,7 +8,7 @@ Installation
 
      ```json
      "require": {
-        "keen-io/keen-io-tha": "dev-master"
+        "keen-io/keen-io": "dev-master"
      }
      ```
   2. install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
@@ -26,8 +26,9 @@ KeenIO::configure($projectId, $apiKey);
 
 Send a new event
 ```php
-KeenIO::addEvent('collectionName', array(
-    'type' => 'test',
-    'page' => '/',
+KeenIO::addEvent('purchases', array(
+    'purchase' => array(
+        'item' => 'Golden Elephant'
+    ),
 ));
 ```
