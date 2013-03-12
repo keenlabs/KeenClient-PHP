@@ -1,12 +1,12 @@
 <?php
 
-namespace KeenIO\Http\Client;
+namespace KeenIO\Http\Adaptor;
 
 use Buzz\Browser;
 
 /**
  * Class Buzz
- * @package KeenIO\Http\Client
+ * @package KeenIO\Http\Adaptor
  */
 final class Buzz implements AdaptorInterface
 {

@@ -1,10 +1,10 @@
 <?php
-namespace KeenIO\Http\Client;
+namespace KeenIO\Http\Adaptor;
 
 /**
  * Class AdaptorInterface
  *
- * @package KeenIO\Service
+ * @package KeenIO\Http\Adaptor
  */
 interface AdaptorInterface
 {

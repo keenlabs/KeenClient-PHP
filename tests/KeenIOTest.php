@@ -53,7 +53,7 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
     public function testGetHttpAdaptor()
     {
         $adaptor = KeenIO::getHttpAdaptor();
-        $this->assertInstanceOf('KeenIO\Http\Client\Buzz', $adaptor, 'Adaptor is not a Buzz client');
+        $this->assertInstanceOf('KeenIO\Http\Adaptor\Buzz', $adaptor, 'Adaptor is not a Buzz client');
     }
 
     public function testValidCollectionName()
@@ -71,11 +71,11 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
      * create a mock http adaptor
      *
      * @param $content
-     * @return \KeenIO\Http\Client\AdaptorInterface
+     * @return \KeenIO\Http\Adaptor\AdaptorInterface
      */
     private function getMockAdaptor($content)
     {
-        $adaptor = $this->getMockBuilder('\KeenIO\Http\Client\AdaptorInterface')
+        $adaptor = $this->getMockBuilder('\KeenIO\Http\Adaptor\AdaptorInterface')
             ->setMethods(array('doPost'))
             ->setMockClassName('HttpAdaptor')
             ->getMock();

@@ -2,8 +2,8 @@
 
 namespace KeenIO\Service;
 
-use KeenIO\Http\Client\AdaptorInterface;
-use KeenIO\Http\Client\Buzz as BuzzHttpAdaptor;
+use KeenIO\Http\Adaptor\AdaptorInterface;
+use KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor;
 
 /**
  * Class KeenIO
