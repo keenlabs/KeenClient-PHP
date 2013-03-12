@@ -1,7 +1,7 @@
 <?php
 namespace KeenIO;
 
-use KeenIO\Service\BuzzHttpAdaptor;
+use KeenIO\Http\Client\Buzz as BuzzHttpAdaptor;
 use KeenIO\Service\KeenIO;
 
 /**
