@@ -1,14 +1,12 @@
 <?php
 
-namespace KeenIO\Service;
-
-use Buzz;
+namespace KeenIO\Http\Client;
 
 /**
- * Class BuzzHttpAdaptor
- * @package KeenIO\Service
+ * Class Buzz
+ * @package KeenIO\Http\Client
  */
-class BuzzHttpAdaptor implements AdaptorInterface
+class Buzz implements AdaptorInterface
 {
 
     private $apiKey;
@@ -23,7 +21,7 @@ class BuzzHttpAdaptor implements AdaptorInterface
         $this->apiKey = $apiKey;
 
         if (!$client) {
-            $client = new Buzz\Browser();
+            $client = new \Buzz\Browser();
         }
 
         $this->browser = $client;

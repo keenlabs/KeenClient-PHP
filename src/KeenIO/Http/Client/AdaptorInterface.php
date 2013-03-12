@@ -1,5 +1,5 @@
 <?php
-namespace KeenIO\Service;
+namespace KeenIO\Http\Client;
 
 /**
  * Class AdaptorInterface

@@ -1,5 +1,8 @@
 <?php
+
 namespace KeenIO\Service;
+
+use KeenIO\Http\Client\Buzz as BuzzHttpAdaptor;
 
 /**
  * Class KeenIO
@@ -11,9 +14,7 @@ final class KeenIO
 
     private static $projectId;
     private static $apiKey;
-
-    /** @var AdaptorInterface */
-    private static $adaptor;
+    private static $httpAdaptor;
 
     public static function getApiKey()
     {
@@ -54,28 +55,33 @@ final class KeenIO
         self::$projectId = $value;
     }
 
-    /**
-     * @param $projectId
-     * @param $apiKey
-     * @param AdaptorInterface $adaptor
-     */
-    public static function configure($projectId, $apiKey, AdaptorInterface $adaptor = null)
+    public static function getHttpAdaptor()
     {
-        self::setProjectId($projectId);
-        self::setApiKey($apiKey);
-        self::setAdaptor($adaptor);
+        if (!self::$httpAdaptor) {
+            self::$httpAdaptor = new BuzzHttpAdaptor(self::getApiKey());
+        }
+
+        return self::$httpAdaptor;
+
     }
 
     /**
-     * @param AdaptorInterface $adaptor
+     * @param AdaptorInterface $httpAdaptor
      */
-    public static function setAdaptor(AdaptorInterface $adaptor = null)
+    public static function setHttpAdaptor(AdaptorInterface $httpAdaptor)
     {
-        if ($adaptor === null) {
-            $adaptor = new BuzzHttpAdaptor(self::getApiKey());
-        }
+        self::$httpAdaptor = $httpAdaptor;
+    }
 
-        self::$adaptor = $adaptor;
+    /**
+     * @param $projectId
+     * @param $apiKey
+     * @param AdaptorInterface $httpAdaptor
+     */
+    public static function configure($projectId, $apiKey)
+    {
+        self::setProjectId($projectId);
+        self::setApiKey($apiKey);
     }
 
     /**
@@ -89,7 +95,7 @@ final class KeenIO
     public static function addEvent($collectionName, $parameters = array())
     {
         // Validate configuration
-        if (!self::getProjectId() or !self::getApiKey() or !self::$adaptor) {
+        if (!self::getProjectId() or !self::getApiKey()) {
             throw new \Exception('Keen IO has not been configured');
         }
 
@@ -105,7 +111,7 @@ final class KeenIO
             $collectionName
         );
 
-        $response = self::$adaptor->doPost($url, $parameters);
+        $response = self::getHttpAdaptor()->doPost($url, $parameters);
         $json = json_decode($response);
 
         return $json->created;
