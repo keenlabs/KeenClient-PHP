@@ -2,6 +2,7 @@
 
 namespace KeenIO\Service;
 
+use KeenIO\Http\Client\AdaptorInterface;
 use KeenIO\Http\Client\Buzz as BuzzHttpAdaptor;
 
 /**
@@ -55,6 +56,9 @@ final class KeenIO
         self::$projectId = $value;
     }
 
+    /**
+     * @return BuzzHttpAdaptor
+     */
     public static function getHttpAdaptor()
     {
         if (!self::$httpAdaptor) {
@@ -76,7 +80,6 @@ final class KeenIO
     /**
      * @param $projectId
      * @param $apiKey
-     * @param AdaptorInterface $httpAdaptor
      */
     public static function configure($projectId, $apiKey)
     {

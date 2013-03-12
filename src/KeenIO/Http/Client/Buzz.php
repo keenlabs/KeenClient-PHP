@@ -2,6 +2,8 @@
 
 namespace KeenIO\Http\Client;
 
+use Buzz\Browser;
+
 /**
  * Class Buzz
  * @package KeenIO\Http\Client
@@ -21,7 +23,7 @@ final class Buzz implements AdaptorInterface
         $this->apiKey = $apiKey;
 
         if (!$client) {
-            $client = new \Buzz\Browser();
+            $client = new Browser();
         }
 
         $this->browser = $client;
