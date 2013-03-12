@@ -3,6 +3,7 @@
 namespace KeenIO\Http\Adaptor;
 
 use Buzz\Browser;
+use Buzz\Client\Curl;
 
 /**
  * Class Buzz
@@ -18,15 +19,10 @@ final class Buzz implements AdaptorInterface
      * @param $apiKey
      * @param null $client
      */
-    public function __construct($apiKey, $client = null)
+    public function __construct($apiKey)
     {
         $this->apiKey = $apiKey;
-
-        if (!$client) {
-            $client = new Browser();
-        }
-
-        $this->browser = $client;
+        $this->browser = new Browser(new Curl());
     }
 
     /**
