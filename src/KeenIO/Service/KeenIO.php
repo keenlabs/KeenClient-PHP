@@ -1,83 +1,112 @@
 <?php
-/**
- * Keen IO PHP Library
- * 
- * @version 1.0.0
- */
-
 namespace KeenIO\Service;
 
-use Zend\Http\Client;
-use Zend\Http\Headers;
-use Zend\Json\Json;
-use Zend\I18n\Validator\Alnum as Alnum;
+/**
+ * Class KeenIO
+ *
+ * @package KeenIO\Service
+ */
+final class KeenIO
+{
 
-final class KeenIO {
+    private static $projectId;
+    private static $apiKey;
 
-    static private $projectId;
-    static private $apiKey;
+    /** @var AdaptorInterface */
+    private static $adaptor;
 
-    static public function getApiKey()
+    public static function getApiKey()
     {
         return self::$apiKey;
     }
 
-    static public function setApiKey($value)
+    /**
+     * @param $value
+     * @throws \Exception
+     */
+    public static function setApiKey($value)
     {
-        // Validate collection name
-        $validator = new Alnum();
-        if (!$validator->isValid($value))
-            throw new \Exception("API Key '$value' contains invalid characters or spaces.");
+        if (!ctype_alnum($value)) {
+            throw new \Exception(sprintf("API Key '%s' contains invalid characters or spaces.", $value));
+        }
 
         self::$apiKey = $value;
     }
 
-    static public function getProjectId()
+    public static function getProjectId()
     {
         return self::$projectId;
     }
 
-    static public function setProjectId($value)
+    /**
+     * @param $value
+     * @throws \Exception
+     */
+    public static function setProjectId($value)
     {
         // Validate collection name
-        $validator = new Alnum();
-        if (!$validator->isValid($value))
-            throw new \Exception("Project ID '$name' contains invalid characters or spaces.");
+        if (!ctype_alnum($value)) {
+            throw new \Exception(
+                "Project ID '" . $value . "' contains invalid characters or spaces."
+            );
+        }
 
         self::$projectId = $value;
     }
 
-    static public function configure($projectId, $apiKey)
+    /**
+     * @param $projectId
+     * @param $apiKey
+     * @param AdaptorInterface $adaptor
+     */
+    public static function configure($projectId, $apiKey, AdaptorInterface $adaptor = null)
     {
         self::setProjectId($projectId);
         self::setApiKey($apiKey);
+        self::setAdaptor($adaptor);
     }
 
-    static public function addEvent($collectionName, $parameters)
+    /**
+     * @param AdaptorInterface $adaptor
+     */
+    public static function setAdaptor(AdaptorInterface $adaptor = null)
+    {
+        if ($adaptor === null) {
+            $adaptor = new BuzzHttpAdaptor(self::getApiKey());
+        }
+
+        self::$adaptor = $adaptor;
+    }
+
+    /**
+     * add an event to KeenIO
+     *
+     * @param $collectionName
+     * @param $parameters
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function addEvent($collectionName, $parameters = array())
     {
         // Validate configuration
-        if (!self::getProjectId() or !self::getApiKey())
+        if (!self::getProjectId() or !self::getApiKey() or !self::$adaptor) {
             throw new \Exception('Keen IO has not been configured');
+        }
 
-        // Validate collection name
-        $validator = new Alnum();
-        if (!$validator->isValid($collectionName))
-            throw new \Exception("Collection name '$collectionName' contains invalid characters or spaces.");
+        if (!ctype_alnum($collectionName)) {
+            throw new \Exception(
+                sprintf("Collection name '%s' contains invalid characters or spaces.", $collectionName)
+            );
+        }
 
-        $http = new Client();
+        $url = sprintf(
+            'https://api.keen.io/3.0/projects/%s/events/%s',
+            self::getProjectId(),
+            $collectionName
+        );
 
-        $http->setOptions(array('sslverifypeer' => false));
-        $headers = new Headers();
-        $headers->addHeaderLine('Authorization', self::getApiKey());
-        $headers->addHeaderLine('Content-Type', 'application/json');
-        $http->setHeaders($headers);
-
-        $http->setUri('https://api.keen.io/3.0/projects/' . self::getProjectId() . '/events/' . $collectionName);
-        $http->setMethod('POST');
-        $http->getRequest()->setContent(Json::encode($parameters));
-
-        $response = $http->send();
-        $json = Json::decode($response->getBody());
+        $response = self::$adaptor->doPost($url, $parameters);
+        $json = json_decode($response);
 
         return $json->created;
     }
