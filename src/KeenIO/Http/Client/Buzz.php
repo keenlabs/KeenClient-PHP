@@ -6,7 +6,7 @@ namespace KeenIO\Http\Client;
  * Class Buzz
  * @package KeenIO\Http\Client
  */
-class Buzz implements AdaptorInterface
+final class Buzz implements AdaptorInterface
 {
 
     private $apiKey;
