@@ -5,12 +5,11 @@
     "license": "MIT",
     "keywords": [
         "keen io",
-        "zf2",
         "analytics"
     ],
     "require": {
         "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*,!=2.0.6"
+        "kriswallsmith/buzz": "dev-master"
     },
     "homepage": "http://keen.io",
     "authors": [
