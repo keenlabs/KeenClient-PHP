@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/keenlabs/KeenClient-PHP.png)](https://travis-ci.org/keenlabs/KeenClient-PHP.png)
+[![Still Maintained](http://stillmaintained.com/keenlabs/KeenClient-PHP)](http://stillmaintained.com/images/maintained.png)
 
 Keen IO PHP Library
 ================================
