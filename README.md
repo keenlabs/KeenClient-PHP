@@ -35,3 +35,16 @@ KeenIO::addEvent('purchases', array(
     ),
 ));
 ```
+
+Create a scoped key
+```php
+$filter = array(
+    'property_name' => 'id', 
+    'operator' => 'eq', 
+    'property_value' => '123'
+);
+$filters = array($filter);
+
+$scopedKey = KeenIO::getScopedKey($filters);
+```
+

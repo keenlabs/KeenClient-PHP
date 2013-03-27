@@ -2,8 +2,9 @@
 
 namespace KeenIO\Service;
 
-use KeenIO\Http\Adaptor\AdaptorInterface;
-use KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor;
+use KeenIO\Http\Adaptor\AdaptorInterface
+    , KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor
+    ;
 
 /**
  * Class KeenIO
@@ -12,7 +13,6 @@ use KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor;
  */
 final class KeenIO
 {
-
     private static $projectId;
     private static $apiKey;
     private static $httpAdaptor;
@@ -120,8 +120,6 @@ final class KeenIO
     /**
      * get a scoped key for an array of filters
      *
-     * note: requires libmcrypt
-     *
      * @param $filters
      * @return string
      */
@@ -129,18 +127,18 @@ final class KeenIO
     {
         self::validateConfiguration();
 
-        $theFilters = array('filters' => $filters);
-        $filter_json = self::padString(json_encode($theFilters));
+        $filterArray = array('filters' => $filters);
+        $filterJson = self::padString(json_encode($filterArray));
 
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $iv = mcrypt_create_iv($ivLength);
 
-        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, self::getApiKey(), $filter_json, MCRYPT_MODE_CBC, $iv);
+        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, self::getApiKey(), $filterJson, MCRYPT_MODE_CBC, $iv);
 
-        $ivHexed = bin2hex($iv);
-        $encryptedHexed = bin2hex($encrypted);
+        $ivHex = bin2hex($iv);
+        $encryptedHex = bin2hex($encrypted);
 
-        $scopedKey = $ivHexed . $encryptedHexed;
+        $scopedKey = $ivHex . $encryptedHex;
 
         return $scopedKey;
     }
@@ -154,23 +152,23 @@ final class KeenIO
     public static function decryptScopedKey($scopedKey)
     {
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
-        $ivHexed = substr($scopedKey, 0, $ivLength);
+        $ivHex = substr($scopedKey, 0, $ivLength);
 
-        $encryptedHexed = substr($scopedKey, $ivLength);
+        $encryptedHex = substr($scopedKey, $ivLength);
 
         $resultPadded = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
             self::getApiKey(),
-            pack('H*', $encryptedHexed),
+            pack('H*', $encryptedHex),
             MCRYPT_MODE_CBC,
-            pack('H*', $ivHexed)
+            pack('H*', $ivHex)
         );
 
         $result = self::unpadString($resultPadded);
 
-        $theFilters = json_decode($result, true);
+        $filterArray = json_decode($result, true);
 
-        return $theFilters['filters'];
+        return $filterArray['filters'];
     }
 
 
@@ -181,7 +179,7 @@ final class KeenIO
      * @param int $blockSize
      * @return string
      */
-    public static function padString($string, $blockSize = 32)
+    protected static function padString($string, $blockSize = 32)
     {
         $paddingSize = $blockSize - (strlen($string) % $blockSize);
         $string .= str_repeat(chr($paddingSize), $paddingSize);
@@ -195,7 +193,7 @@ final class KeenIO
      * @param $string
      * @return string
      */
-    public static function unpadString($string)
+    protected static function unpadString($string)
     {
         $len = strlen($string);
         $pad = ord($string[$len - 1]);

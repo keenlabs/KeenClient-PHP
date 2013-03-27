@@ -67,22 +67,6 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
-    public function testPadShortString()
-    {
-        $this->assertEquals(32, strlen(KeenIO::padString('12345')));
-        $this->assertEquals(64, strlen(KeenIO::padString('12345', 64)));
-    }
-
-    public function testUnpadString()
-    {
-        $string = '12345';
-        $paddedString32 = KeenIO::padString($string, 32);
-        $this->assertEquals($string, KeenIO::unpadString($paddedString32));
-
-        $paddedString64 = KeenIO::padString($string, 64);
-        $this->assertEquals($string, KeenIO::unpadString($paddedString64));
-    }
-
     public function testGetScopedKey()
     {
         $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
