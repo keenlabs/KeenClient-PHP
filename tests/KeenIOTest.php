@@ -67,6 +67,18 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    public function testGetScopedKey()
+    {
+        $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
+        $filters = array($filter);
+
+        KeenIO::configure('12345', '12345');
+        $scopedKey = KeenIO::getScopedKey($filters);
+
+        $result = KeenIO::decryptScopedKey($scopedKey);
+        $this->assertEquals($filters, $result);
+    }
+
     /**
      * create a mock http adaptor
      *
@@ -83,6 +95,8 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
         $adaptor->expects($this->once())
             ->method('doPost')
             ->will($this->returnValue($content));
+
         return $adaptor;
     }
+
 }

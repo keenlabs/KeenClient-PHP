@@ -2,8 +2,9 @@
 
 namespace KeenIO\Service;
 
-use KeenIO\Http\Adaptor\AdaptorInterface;
-use KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor;
+use KeenIO\Http\Adaptor\AdaptorInterface
+    , KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor
+    ;
 
 /**
  * Class KeenIO
@@ -12,7 +13,6 @@ use KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor;
  */
 final class KeenIO
 {
-
     private static $projectId;
     private static $apiKey;
     private static $httpAdaptor;
@@ -97,10 +97,7 @@ final class KeenIO
      */
     public static function addEvent($collectionName, $parameters = array())
     {
-        // Validate configuration
-        if (!self::getProjectId() or !self::getApiKey()) {
-            throw new \Exception('Keen IO has not been configured');
-        }
+        self::validateConfiguration();
 
         if (!ctype_alnum($collectionName)) {
             throw new \Exception(
@@ -118,5 +115,98 @@ final class KeenIO
         $json = json_decode($response);
 
         return $json->created;
+    }
+
+    /**
+     * get a scoped key for an array of filters
+     *
+     * @param $filters
+     * @return string
+     */
+    public static function getScopedKey($filters)
+    {
+        self::validateConfiguration();
+
+        $filterArray = array('filters' => $filters);
+        $filterJson = self::padString(json_encode($filterArray));
+
+        $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+        $iv = mcrypt_create_iv($ivLength);
+
+        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, self::getApiKey(), $filterJson, MCRYPT_MODE_CBC, $iv);
+
+        $ivHex = bin2hex($iv);
+        $encryptedHex = bin2hex($encrypted);
+
+        $scopedKey = $ivHex . $encryptedHex;
+
+        return $scopedKey;
+    }
+
+    /**
+     * decrypt a scoped key (primarily used for testing)
+     *
+     * @param $scopedKey
+     * @return mixed
+     */
+    public static function decryptScopedKey($scopedKey)
+    {
+        $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
+        $ivHex = substr($scopedKey, 0, $ivLength);
+
+        $encryptedHex = substr($scopedKey, $ivLength);
+
+        $resultPadded = mcrypt_decrypt(
+            MCRYPT_RIJNDAEL_128,
+            self::getApiKey(),
+            pack('H*', $encryptedHex),
+            MCRYPT_MODE_CBC,
+            pack('H*', $ivHex)
+        );
+
+        $result = self::unpadString($resultPadded);
+
+        $filterArray = json_decode($result, true);
+
+        return $filterArray['filters'];
+    }
+
+
+    /**
+     * implement PKCS7 padding
+     *
+     * @param $string
+     * @param int $blockSize
+     * @return string
+     */
+    protected static function padString($string, $blockSize = 32)
+    {
+        $paddingSize = $blockSize - (strlen($string) % $blockSize);
+        $string .= str_repeat(chr($paddingSize), $paddingSize);
+
+        return $string;
+    }
+
+    /**
+     * remove padding for a PKCS7-padded string
+     *
+     * @param $string
+     * @return string
+     */
+    protected static function unpadString($string)
+    {
+        $len = strlen($string);
+        $pad = ord($string[$len - 1]);
+
+        return substr($string, 0, $len - $pad);
+    }
+
+
+    protected static function validateConfiguration()
+    {
+        // Validate configuration
+        if (!self::getProjectId() or !self::getApiKey()) {
+            throw new \Exception('Keen IO has not been configured');
+        }
     }
 }
