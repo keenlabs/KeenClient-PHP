@@ -161,9 +161,9 @@ final class KeenIO
         $resultPadded = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
             self::getApiKey(),
-            hex2bin($encryptedHexed),
+            pack('H*', $encryptedHexed),
             MCRYPT_MODE_CBC,
-            hex2bin($ivHexed)
+            pack('H*', $ivHexed)
         );
 
         $result = self::unpadString($resultPadded);
