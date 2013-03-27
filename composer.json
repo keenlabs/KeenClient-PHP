@@ -9,6 +9,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
+        "ext-mcrypt": "*",
         "kriswallsmith/buzz": "dev-master"
     },
     "homepage": "http://keen.io",
