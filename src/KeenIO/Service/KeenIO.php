@@ -14,25 +14,36 @@ use KeenIO\Http\Adaptor\AdaptorInterface
 final class KeenIO
 {
     private static $projectId;
-    private static $apiKey;
+    private static $writeKey;
+    private static $readKey;
     private static $httpAdaptor;
 
-    public static function getApiKey()
+    public static function getWriteKey()
     {
-        return self::$apiKey;
+        return self::$writeKey;
     }
 
-    /**
-     * @param $value
-     * @throws \Exception
-     */
-    public static function setApiKey($value)
+    public static function setWriteKey($value)
     {
         if (!ctype_alnum($value)) {
-            throw new \Exception(sprintf("API Key '%s' contains invalid characters or spaces.", $value));
+            throw new \Exception(sprintf("Write Key '%s' contains invalid characters or spaces.", $value));
         }
 
-        self::$apiKey = $value;
+        self::$writeKey = $value;
+    }
+
+    public static function getReadKey()
+    {
+        return self::$readKey;
+    }
+
+    public static function setReadKey($value)
+    {
+        if (!ctype_alnum($value)) {
+            throw new \Exception(sprintf("Read Key '%s' contains invalid characters or spaces.", $value));
+        }
+
+        self::$readKey = $value;
     }
 
     public static function getProjectId()
@@ -62,7 +73,7 @@ final class KeenIO
     public static function getHttpAdaptor()
     {
         if (!self::$httpAdaptor) {
-            self::$httpAdaptor = new BuzzHttpAdaptor(self::getApiKey());
+            self::$httpAdaptor = new BuzzHttpAdaptor(self::getWriteKey());
         }
 
         return self::$httpAdaptor;
@@ -79,12 +90,14 @@ final class KeenIO
 
     /**
      * @param $projectId
-     * @param $apiKey
+     * @param $writeKey
+     * @param $readKey
      */
-    public static function configure($projectId, $apiKey)
+    public static function configure($projectId, $writeKey, $readKey)
     {
         self::setProjectId($projectId);
-        self::setApiKey($apiKey);
+        self::setWriteKey($writeKey);
+        self::setReadKey($readKey);
     }
 
     /**
@@ -98,6 +111,9 @@ final class KeenIO
     public static function addEvent($collectionName, $parameters = array())
     {
         self::validateConfiguration();
+        if (!self::getWriteKey()) {
+            throw new \Exception('You must set a Write Key before adding events.');
+        }
 
         if (!ctype_alnum($collectionName)) {
             throw new \Exception(
@@ -120,20 +136,27 @@ final class KeenIO
     /**
      * get a scoped key for an array of filters
      *
-     * @param $filters
+     * @param $apiKey - the master API key to use for encryption
+     * @param $filters - what filters to encode into a scoped key
+     * @param $allowed_operations - what operations the generated scoped key will allow
      * @return string
      */
-    public static function getScopedKey($filters)
+    public static function getScopedKey($apiKey, $filters, $allowed_operations)
     {
         self::validateConfiguration();
 
-        $filterArray = array('filters' => $filters);
-        $filterJson = self::padString(json_encode($filterArray));
+        $options = array('filters' => $filters);
+        if ($allowed_operations) 
+        {
+            $options['allowed_operations'] = $allowed_operations;
+        }
+
+        $optionsJson = self::padString(json_encode($options));
 
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $iv = mcrypt_create_iv($ivLength);
 
-        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, self::getApiKey(), $filterJson, MCRYPT_MODE_CBC, $iv);
+        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $apiKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
 
         $ivHex = bin2hex($iv);
         $encryptedHex = bin2hex($encrypted);
@@ -146,10 +169,11 @@ final class KeenIO
     /**
      * decrypt a scoped key (primarily used for testing)
      *
+     * @param $apiKey - the master API key to use for decryption
      * @param $scopedKey
      * @return mixed
      */
-    public static function decryptScopedKey($scopedKey)
+    public static function decryptScopedKey($apiKey, $scopedKey)
     {
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
         $ivHex = substr($scopedKey, 0, $ivLength);
@@ -158,7 +182,7 @@ final class KeenIO
 
         $resultPadded = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
-            self::getApiKey(),
+            $apiKey,
             pack('H*', $encryptedHex),
             MCRYPT_MODE_CBC,
             pack('H*', $ivHex)
@@ -166,9 +190,9 @@ final class KeenIO
 
         $result = self::unpadString($resultPadded);
 
-        $filterArray = json_decode($result, true);
+        $options = json_decode($result, true);
 
-        return $filterArray['filters'];
+        return $options;
     }
 
 
@@ -205,7 +229,7 @@ final class KeenIO
     protected static function validateConfiguration()
     {
         // Validate configuration
-        if (!self::getProjectId() or !self::getApiKey()) {
+        if (!self::getProjectId()) {
             throw new \Exception('Keen IO has not been configured');
         }
     }

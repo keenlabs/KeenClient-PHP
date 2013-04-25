@@ -29,23 +29,37 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
         KeenIO::setProjectId('1-3-5');
     }
 
-    public function testSetValidApiKey()
+    public function testSetValidWriteKey()
     {
-        $apiKey = '12345';
-        KeenIO::setApiKey($apiKey);
-        $this->assertEquals($apiKey, KeenIO::getApiKey(), 'API Key was set OK');
+        $key = '12345';
+        KeenIO::setWriteKey($key);
+        $this->assertEquals($key, KeenIO::getWriteKey(), 'Write Key was set OK');
     }
 
-    public function testSetInvalidApiKey()
+    public function testSetInvalidWriteKey()
     {
-        $apiKey = '1-2345';
-        $this->setExpectedException('Exception', "API Key '1-2345' contains invalid characters or spaces");
-        KeenIO::setApiKey($apiKey);
+        $key = '1-2345';
+        $this->setExpectedException('Exception', "Write Key '1-2345' contains invalid characters or spaces");
+        KeenIO::setWriteKey($key);
+    }
+
+    public function testSetValidReadKey()
+    {
+        $key = '12345';
+        KeenIO::setReadKey($key);
+        $this->assertEquals($key, KeenIO::getReadKey(), 'Write Key was set OK');
+    }
+
+    public function testSetInvalidReadKey()
+    {
+        $key = '1-2345';
+        $this->setExpectedException('Exception', "Read Key '1-2345' contains invalid characters or spaces");
+        KeenIO::setReadKey($key);
     }
 
     public function testInvalidCollectionName()
     {
-        KeenIO::configure('12345', '12345');
+        KeenIO::configure('projectId', 'writeKey', 'readKey');
         $this->setExpectedException('Exception', "Collection name '1-2-3' contains invalid characters or spaces.");
         KeenIO::addEvent('1-2-3', null);
     }
@@ -60,7 +74,7 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
     {
         $adaptor = $this->getMockAdaptor('{ "created": true }');
 
-        KeenIO::configure('12345', '12345');
+        KeenIO::configure('projectId', 'writeKey', 'readKey');
         KeenIO::setHttpAdaptor($adaptor);
 
         $result = KeenIO::addEvent('purchase', array());
@@ -69,14 +83,16 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
 
     public function testGetScopedKey()
     {
+        $apiKey = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
         $filters = array($filter);
+        $allowed_operations = array('read');
 
-        KeenIO::configure('12345', '12345');
-        $scopedKey = KeenIO::getScopedKey($filters);
+        $scopedKey = KeenIO::getScopedKey($apiKey, $filters, $allowed_operations);
 
-        $result = KeenIO::decryptScopedKey($scopedKey);
-        $this->assertEquals($filters, $result);
+        $result = KeenIO::decryptScopedKey($apiKey, $scopedKey);
+        $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
+        $this->assertEquals($expected, $result);
     }
 
     /**

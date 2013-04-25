@@ -24,7 +24,7 @@ Configure the service
 ```php
 use KeenIO\Service\KeenIO;
 
-KeenIO::configure($projectId, $apiKey);
+KeenIO::configure($projectId, $writeKey, $readKey);
 ```
 
 Send a new event
@@ -44,7 +44,8 @@ $filter = array(
     'property_value' => '123'
 );
 $filters = array($filter);
+$allowed_operations = array('read')
 
-$scopedKey = KeenIO::getScopedKey($filters);
+$scopedKey = KeenIO::getScopedKey($filters, $allowed_operations);
 ```
 
