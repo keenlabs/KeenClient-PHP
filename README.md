@@ -1,6 +1,6 @@
 Keen IO PHP Library
 ================================
-[![Build Status](https://travis-ci.org/keenlabs/KeenClient-PHP.png)](https://travis-ci.org/keenlabs/KeenClient-PHP.png)
+[![Build Status](https://travis-ci.org/keenlabs/KeenClient-PHP.png)](https://travis-ci.org/keenlabs/KeenClient-PHP)
 [![Still Maintained](http://stillmaintained.com/images/maintained.png)](http://stillmaintained.com/keenlabs/KeenClient-PHP)
 
 This is a library to abstract the Keen IO API addEvent method
