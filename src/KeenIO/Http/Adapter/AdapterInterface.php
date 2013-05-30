@@ -1,12 +1,12 @@
 <?php
-namespace KeenIO\Http\Adaptor;
+namespace KeenIO\Http\Adapter;
 
 /**
- * Class AdaptorInterface
+ * Class AdapterInterface
  *
- * @package KeenIO\Http\Adaptor
+ * @package KeenIO\Http\Adapter
  */
-interface AdaptorInterface
+interface AdapterInterface
 {
     /**
      * post to the KeenIO API

@@ -64,18 +64,18 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
         KeenIO::addEvent('1-2-3', null);
     }
 
-    public function testGetHttpAdaptor()
+    public function testGetHttpAdapter()
     {
-        $adaptor = KeenIO::getHttpAdaptor();
-        $this->assertInstanceOf('KeenIO\Http\Adaptor\Buzz', $adaptor, 'Adaptor is not a Buzz client');
+        $adapter = KeenIO::getHttpAdapter();
+        $this->assertInstanceOf('KeenIO\Http\Adapter\AdapterInterface', $adapter, 'Adapter is not a valid client');
     }
 
     public function testValidCollectionName()
     {
-        $adaptor = $this->getMockAdaptor('{ "created": true }');
+        $adapter = $this->getMockAdapter('{ "created": true }');
 
         KeenIO::configure('projectId', 'writeKey', 'readKey');
-        KeenIO::setHttpAdaptor($adaptor);
+        KeenIO::setHttpAdapter($adapter);
 
         $result = KeenIO::addEvent('purchase', array());
         $this->assertTrue($result);
@@ -96,23 +96,23 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * create a mock http adaptor
+     * create a mock http adapter
      *
      * @param $content
-     * @return \KeenIO\Http\Adaptor\AdaptorInterface
+     * @return \KeenIO\Http\Adapter\AdapterInterface
      */
-    private function getMockAdaptor($content)
+    private function getMockAdapter($content)
     {
-        $adaptor = $this->getMockBuilder('\KeenIO\Http\Adaptor\AdaptorInterface')
+        $adapter = $this->getMockBuilder('\KeenIO\Http\Adapter\AdapterInterface')
             ->setMethods(array('doPost'))
-            ->setMockClassName('HttpAdaptor')
+            ->setMockClassName('HttpAdapter')
             ->getMock();
 
-        $adaptor->expects($this->once())
+        $adapter->expects($this->once())
             ->method('doPost')
             ->will($this->returnValue($content));
 
-        return $adaptor;
+        return $adapter;
     }
 
 }

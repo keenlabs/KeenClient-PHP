@@ -10,14 +10,14 @@
     "require": {
         "php": ">=5.3.3",
         "ext-mcrypt": "*",
-        "kriswallsmith/buzz": "dev-master"
+        "zendframework/zend-http": ">=2.2"
     },
     "homepage": "http://keen.io",
     "authors": [
         {
             "name": "Tom Anderson",
-            "email": "tom.h.anderson@gmail.com",
-            "homepage": "http://db.etree.org"
+            "email": "tanderson@soliantconsulting.com",
+            "homepage": "http://www.soliantconsulting.com"
         }
     ],
     "autoload": {

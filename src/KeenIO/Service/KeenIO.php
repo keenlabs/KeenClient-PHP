@@ -2,9 +2,8 @@
 
 namespace KeenIO\Service;
 
-use KeenIO\Http\Adaptor\AdaptorInterface
-    , KeenIO\Http\Adaptor\Buzz as BuzzHttpAdaptor
-    ;
+use KeenIO\Http\Adapter\AdapterInterface;
+use KeenIO\Http\Adapter\Zend as HttpAdapter;
 
 /**
  * Class KeenIO
@@ -16,7 +15,7 @@ final class KeenIO
     private static $projectId;
     private static $writeKey;
     private static $readKey;
-    private static $httpAdaptor;
+    private static $httpAdapter;
 
     public static function getWriteKey()
     {
@@ -68,24 +67,24 @@ final class KeenIO
     }
 
     /**
-     * @return BuzzHttpAdaptor
+     * @return BuzzHttpAdapter
      */
-    public static function getHttpAdaptor()
+    public static function getHttpAdapter()
     {
-        if (!self::$httpAdaptor) {
-            self::$httpAdaptor = new BuzzHttpAdaptor(self::getWriteKey());
+        if (!self::$httpAdapter) {
+            self::$httpAdapter = new HttpAdapter(self::getWriteKey());
         }
 
-        return self::$httpAdaptor;
+        return self::$httpAdapter;
 
     }
 
     /**
-     * @param AdaptorInterface $httpAdaptor
+     * @param AdapterInterface $httpAdapter
      */
-    public static function setHttpAdaptor(AdaptorInterface $httpAdaptor)
+    public static function setHttpAdapter(AdapterInterface $httpAdapter)
     {
-        self::$httpAdaptor = $httpAdaptor;
+        self::$httpAdapter = $httpAdapter;
     }
 
     /**
@@ -127,7 +126,7 @@ final class KeenIO
             $collectionName
         );
 
-        $response = self::getHttpAdaptor()->doPost($url, $parameters);
+        $response = self::getHttpAdapter()->doPost($url, $parameters);
         $json = json_decode($response);
 
         return $json->created;
@@ -146,7 +145,7 @@ final class KeenIO
         self::validateConfiguration();
 
         $options = array('filters' => $filters);
-        if ($allowed_operations) 
+        if ($allowed_operations)
         {
             $options['allowed_operations'] = $allowed_operations;
         }
