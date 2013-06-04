@@ -43,8 +43,8 @@ $filter = array(
     'property_value' => '123'
 );
 $filters = array($filter);
-$allowed_operations = array('read')
+$allowed_operations = array('read');
 
-$scopedKey = KeenIO::getScopedKey($filters, $allowed_operations);
+$scopedKey = KeenIO::getScopedKey('master api key', $filters, $allowed_operations);
 ```
 
