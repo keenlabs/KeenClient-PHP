@@ -140,7 +140,7 @@ final class KeenIO
      * @param $allowed_operations - what operations the generated scoped key will allow
      * @return string
      */
-    public static function getScopedKey($apiKey, $filters, $allowed_operations)
+    public static function getScopedKey($apiKey, $filters, $allowed_operations, $source = MCRYPT_DEV_RANDOM)
     {
         self::validateConfiguration();
 
@@ -153,7 +153,7 @@ final class KeenIO
         $optionsJson = self::padString(json_encode($options));
 
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-        $iv = mcrypt_create_iv($ivLength);
+        $iv = mcrypt_create_iv($ivLength, $source);
 
         $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $apiKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
 
