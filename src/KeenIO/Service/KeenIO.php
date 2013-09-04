@@ -141,11 +141,13 @@ final class KeenIO
      */
     public static function validateCollectionName($collectionName)
     {
-        if (empty($collectionName) || strlen($collectionName) > 64) {
+        if (empty($collectionName) or strlen($collectionName) > 64) {
             return false;
         }
 
-        if ($collectionName[0] === '_' || $collectionName[0] === '.' || $collectionName[strlen($collectionName) - 1] === '.') {
+        if ($collectionName[0] === '_' 
+            or $collectionName[0] === '.' 
+            or $collectionName[strlen($collectionName) - 1] === '.') {
             return false;
         }
 
