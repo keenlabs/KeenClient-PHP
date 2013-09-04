@@ -12,6 +12,9 @@
         "ext-mcrypt": "*",
         "zendframework/zend-http": ">=2.2"
     },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
     "homepage": "http://keen.io",
     "authors": [
         {

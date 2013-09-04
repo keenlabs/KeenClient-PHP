@@ -60,8 +60,8 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
     public function testInvalidCollectionName()
     {
         KeenIO::configure('projectId', 'writeKey', 'readKey');
-        $this->setExpectedException('Exception', "Collection name '1-2-3' contains invalid characters or spaces.");
-        KeenIO::addEvent('1-2-3', null);
+        $this->setExpectedException('Exception', "Collection name '_1-2-3' contains invalid characters.");
+        KeenIO::addEvent('_1-2-3', null);
     }
 
     public function testGetHttpAdapter()
@@ -93,6 +93,41 @@ class KeenIOTest extends \PHPUnit_Framework_TestCase
         $result = KeenIO::decryptScopedKey($apiKey, $scopedKey);
         $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
         $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Data provider for testing collection name validation
+     *
+     * @return array
+     */
+    public function collectionNameProvider()
+    {
+        return array(
+            array('testcollection', true),
+            array('test_collection_', true),
+            array('_test_collection', false), // Cannot start with an underscore
+            array('qwertyuiop1234567890asdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm123456', false), // Cannot be more than 64 characters
+            array('téstcøllection', false), // Must only contain ASCII characters
+            array('test$collection', false), // Cannot contain a $
+            array('.testcollection', false), // Cannot start or end with a period (.)
+            array('testcollection.', false), // Cannot start or end with a period (.)
+            array('test.collection', true),
+            array('test collection', true), // Spaces are allowed
+            array(null, false), // Cannot be a null value
+            array('', false), // Cannot be a null value
+        );
+    }
+
+    /**
+     *
+     * @param string  $collectionName
+     * @param boolean $isValid
+     *
+     * @dataProvider collectionNameProvider
+     */
+    public function testValidateCollectionName($collectionName, $isValid)
+    {
+        $this->assertSame($isValid, KeenIO::validateCollectionName($collectionName));
     }
 
     /**

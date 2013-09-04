@@ -114,9 +114,9 @@ final class KeenIO
             throw new \Exception('You must set a Write Key before adding events.');
         }
 
-        if (!ctype_alnum($collectionName)) {
+        if (!self::validateCollectionName($collectionName)) {
             throw new \Exception(
-                sprintf("Collection name '%s' contains invalid characters or spaces.", $collectionName)
+                sprintf("Collection name '%s' contains invalid characters.", $collectionName)
             );
         }
 
@@ -130,6 +130,26 @@ final class KeenIO
         $json = json_decode($response);
 
         return $json->created;
+    }
+
+    /**
+     * Validates a collection name
+     *
+     * @param string $collectionName
+     *
+     * @return boolean
+     */
+    public static function validateCollectionName($collectionName)
+    {
+        if (empty($collectionName) || strlen($collectionName) > 64) {
+            return false;
+        }
+
+        if ($collectionName[0] === '_' || $collectionName[0] === '.' || $collectionName[strlen($collectionName) - 1] === '.') {
+            return false;
+        }
+
+        return (bool) preg_match('#^[\x20-\x23\x25-\x7e]+$#', $collectionName);
     }
 
     /**
