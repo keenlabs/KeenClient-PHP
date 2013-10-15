@@ -1,0 +1,603 @@
+{
+	"operations": {
+		"getResources": {
+			"uri": "/",
+			"description": "Returns the available child resources. Currently, the only child resource is the Projects Resource.",
+			"httpMethod": "GET",
+			"parameters": {
+				"masterKey": {
+					"location": "header",
+					"description": "The Master Api Key",
+					"sentAs": "Authorization",
+					"required": true
+				}
+			}
+		},
+		"getProjects": {
+			"uri": "projects",
+			"description": "Returns the projects accessible to the API user, as well as links to project sub-resources for discovery.",
+			"httpMethod": "GET",
+			"parameters": { 
+				"masterKey": {
+					"location": "header",
+					"description": "The Master API Key.",
+					"sentAs": "Authorization",
+					"required": true
+				}
+			}
+		},
+		"getProject": {
+			"uri": "projects/{projectId}",
+			"description": "GET returns detailed information about the specific project, as well as links to related resources.",
+			"httpMethod": "GET",
+			"parameters": { 
+				"masterKey": {
+					"location": "header",
+					"description": "The Master API Key.",
+					"sentAs": "Authorization",
+					"required": true
+				}
+			}
+		},
+		"getEventSchemas": {
+			"uri": "projects/{projectId}/events",
+			"description": "GET returns schema information for all the event collections in this project, including properties and their type. It also returns links to sub-resources.",
+			"httpMethod": "GET",
+			"parameters": { 
+				"masterKey": {
+					"location": "header",
+					"description": "The Master API Key.",
+					"sentAs": "Authorization",
+					"required": true
+				}
+			}
+		},
+		"addEvent": {
+			"uri": "projects/{projectId}/events/{event_collection}",
+			"description": "POST inserts an event into the specified collection.",
+			"httpMethod": "POST",
+			"parameters": { 
+				"writeKey": {
+					"location": "header",
+					"description": "The Write Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "uri",
+					"description": "The event collection.",
+					"required": true
+				},
+				"data": {
+					"location": "json",
+					"type": "array",
+					"filters": [ "json_encode" ]
+				}
+			}
+		},
+		"addEvents": {
+			"uri": "projects/{projectId}/events",
+			"description": "POST inserts multiple events in one or more collections, in a single request. The API expects a JSON object whose keys are the names of each event collection you want to insert into. Each key should point to a list of events to insert for that event collection.",
+			"httpMethod": "POST",
+			"parameters": { 
+				"writeKey": {
+					"location": "header",
+					"description": "The Write Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"data": {
+					"location": "body",
+					"type": "array",
+					"filters": [ "json_encode" ]
+				}
+			}
+		},
+		"count": {
+			"uri": "projects/{projectId}/queries/count",
+			"description": "GET returns the number of resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: a numeric result.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection":	{
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe": {
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"countUnique": {
+			"uri": "projects/{projectId}/queries/count_unique",
+			"description": "GET returns the number of UNIQUE resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"target_property": {
+					"location": "query",
+					"description": "The name of the property you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"minimum": {
+			"uri": "projects/{projectId}/queries/minimum",
+			"description": "GET returns the minimum numeric value for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"target_property": {
+					"location": "query",
+					"description": "The name of the property you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"maximum": {
+			"uri": "projects/{projectId}/queries/maximum",
+			"description": "GET returns the maximum numeric value for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"target_property": {
+					"location": "query",
+					"description": "The name of the property you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"average": {
+			"uri": "projects/{projectId}/queries/average",
+			"description": "GET returns the average across all numeric values for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"target_property": {
+					"location": "query",
+					"description": "The name of the property you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"sum": {
+			"uri": "projects/{projectId}/queries/sum",
+			"description": "GET returns the sum if all numeric values for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"target_property": {
+					"location": "query",
+					"description": "The name of the property you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"selectUnique": {
+			"uri": "projects/{projectId}/queries/select_unique",
+			"description": "GET returns a list of UNIQUE resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: result, which maps to an array of unique property values.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"target_property": {
+					"location": "query",
+					"description": "The name of the property you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"funnel": {
+			"uri": "projects/{projectId}/queries/funnel",
+			"description": "Funnels count relevant events in succession.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"steps":	{
+					"location": "query",
+					"description": "A URL encoded JSON Array defining the Steps in the Funnel.",
+					"type": "array",
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"multiAnalysis": {
+			"uri": "projects/{projectId}/queries/multi_analysis",
+			"description": "Multi-analysis lets you run multiple types of analysis over the same data. Performing a multi-analysis call is very similar to a Metric or a Series.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"analyses": {
+					"location": "query",
+					"description": "A URL encoded JSON object that defines the multiple types of analyses to perform.",
+					"type": "array",
+					"filters": [ "json_encode" ],
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"interval":	{
+					"location": "query",
+					"description": "Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.",
+					"type": "string",
+					"required": false
+				},
+				"timezone": {
+					"location": "query",
+					"description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+					"type": "number",
+					"required": false
+				},
+				"group_by": {
+					"location": "query",
+					"description": "The group_by parameter specifies the name of a property by which you would like to group the results.",
+					"type": [ "string", "array" ],
+					"filters": [ "json_encode" ],
+					"required": false
+				}
+			}
+		},
+		"extraction": {
+			"uri": "projects/{projectId}/queries/select_unique",
+			"description": "GET creates an extraction request for full-form event data with all property values. If the query string parameter email is specified, then the extraction will be processed asynchronously and an e-mail will be sent to the specified address when it completes. The email will include a link to a downloadable CSV file. If email is omitted, then the extraction will be processed in-line and JSON results will be returned in the GET request.",
+			"httpMethod": "GET",
+			"parameters": {
+				"readKey": {
+					"location": "header",
+					"description": "The Read Key for the project.",
+					"sentAs": "Authorization",
+					"required": true
+				},
+				"event_collection": {
+					"location": "query",
+					"description": "The name of the event collection you are analyzing.",
+					"type": "string",
+					"required": true
+				},
+				"filters":	{
+					"location": "query",
+					"description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+					"type": "array",
+					"required": false
+				},
+				"timeframe":	{
+					"location": "query",
+					"description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+					"type": "string",
+					"required": false
+				},
+				"email":	{
+					"location": "query",
+					"description": "Email that will be notified when your extraction is ready for download.",
+					"type": "string",
+					"required": false
+				},
+				"latest":	{
+					"location": "query",
+					"description": "Use this parameter to specifically request the most recent events added to a given collection. Extract up to 100 of your most recent events.",
+					"type": "integer",
+					"required": false
+				}
+			}
+		}
+	}
+}
