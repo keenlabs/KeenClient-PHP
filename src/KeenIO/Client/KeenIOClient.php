@@ -63,6 +63,30 @@ class KeenIOClient extends Client
 	}
 
 	/**
+	 * Magic method used to retrieve a command
+	 * Overriden to allow the `event_collection` parameter to passed separately
+	 * from the normal argument array.
+	 *
+	 * @param string	$method	Name of the command object to instantiate
+	 * @param array	$args		Arguments to pass to the command
+	 *
+	 * @return mixed Returns the result of the command
+	 * @throws BadMethodCallException when a command is not found
+	 */
+	public function __call( $method, $args = array() )
+	{
+		if ( isset( $args[0] ) && is_string( $args[0] ) )
+		{
+			$args[0] = array( 'event_collection' => $args[0] );
+
+			if ( isset( $args[1] ) && is_array( $args[1] ) )
+				$args[0] = array_merge( $args[1], $args[0] );
+		}
+
+		return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
+	}
+
+	/**
 	 * Bulk insert events into a single event collection.
 	 * @TODO: Better response & error handling needed before using / documenting...
 	 *
@@ -85,10 +109,10 @@ class KeenIOClient extends Client
 			$result = $this->execute( $commands );
 		} catch( CommandTransferException $e ) {
 			return array(
-				'total'     => sizeof( $eventChunks ),
-				'succeeded' => sizeof( $e->getSuccessfulCommands() ),
-				'failed'    => sizeof( $e->getFailedCommands() )
-			);
+					'total'     => sizeof( $eventChunks ),
+					'succeeded' => sizeof( $e->getSuccessfulCommands() ),
+					'failed'    => sizeof( $e->getFailedCommands() )
+					);
 		}
 
 		return array( 'batches' => sizeof( $eventChunks ), 'succeeded' => sizeof( $result ), 'failed' => 0 );
@@ -161,12 +185,12 @@ class KeenIOClient extends Client
 		$encryptedHex = substr( $scopedKey, $ivLength );
 
 		$resultPadded = mcrypt_decrypt(
-			MCRYPT_RIJNDAEL_128,
-			$apiKey,
-			pack( 'H*', $encryptedHex ),
-			MCRYPT_MODE_CBC,
-			pack( 'H*', $ivHex )
-		);
+				MCRYPT_RIJNDAEL_128,
+				$apiKey,
+				pack( 'H*', $encryptedHex ),
+				MCRYPT_MODE_CBC,
+				pack( 'H*', $ivHex )
+				);
 
 		$result = $this->unpadString( $resultPadded );
 
@@ -199,7 +223,7 @@ class KeenIOClient extends Client
 	public function setProjectId( $projectId )
 	{
 		self::validateConfig( array( 'projectId' => $projectId ) );
-	
+
 		$this->getConfig()->set( 'projectId', $projectId );
 	}
 
@@ -221,14 +245,14 @@ class KeenIOClient extends Client
 	public function setWriteKey( $writeKey )
 	{
 		self::validateConfig( array( 'writeKey' => $writeKey ) );
-	
+
 		$this->getConfig()->set( 'writeKey', $writeKey );
 
 		// Add API Read Key to `command.params`
 		$params = $this->getConfig( 'command.params' );
 		$params['writeKey'] = $writeKey;
 		$this->getConfig()->set( 'command.params', $params );
-        
+
 	}
 
 	/**
@@ -249,7 +273,7 @@ class KeenIOClient extends Client
 	public function setReadKey( $readKey )
 	{
 		self::validateConfig( array( 'readKey' => $readKey ) );
-	
+
 		$this->getConfig()->set( 'readKey', $readKey );
 
 		// Add API Read Key to `command.params`
@@ -276,7 +300,7 @@ class KeenIOClient extends Client
 	public function setMasterKey( $masterKey )
 	{
 		self::validateConfig( array( 'masterKey' => $masterKey ) );
-	
+
 		$this->getConfig()->set( 'masterKey', $masterKey );
 
 		// Add API Master Key to `command.params`
@@ -304,7 +328,7 @@ class KeenIOClient extends Client
 	public function setVersion( $version )
 	{
 		self::validateConfig( array( 'version' => $version ) );
-	
+
 		$this->getConfig()->set( 'version', $version );
 
 		/* Set the Service Definition from the versioned file */
@@ -334,10 +358,10 @@ class KeenIOClient extends Client
 		{
 			if ( $option == 'version' && empty( $config['version'] ) )
 				throw new \InvalidArgumentException("Version can not be empty");
-	
+
 			if ( $option == "readKey" && ! ctype_alnum( $value ) )
 				throw new \InvalidArgumentException( "Read Key '{$value}' contains invalid characters or spaces." );
-	
+
 			if ( $option == "writeKey" && ! ctype_alnum( $value ) )
 				throw new \InvalidArgumentException( "Write Key '{$value}' contains invalid characters or spaces." );
 

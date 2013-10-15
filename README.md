@@ -92,7 +92,7 @@ Once you've created a `KeenIOClient`, sending events is simple:
 ```php
 $event = [ 'purchase' => [ 'item' => 'Golden Elephant' ] ];
 
-$client->addEvent( [ 'event_collection' => 'purchases', 'data' => $event ] );
+$client->addEvent( 'purchases', [ 'data' => $event ] );
 ```
 
 ####Send batched events to Keen
@@ -159,26 +159,20 @@ Below are a few example calls to some of the Analysis methods available.
 ```php
 
 //Count
-$totalPurchases = $client->count([ 'event_collection' => 'purchases' ]);
+$totalPurchases = $client->count( 'purchases' );
 
 //Count Unqiue
-$totalItems = $client->countUnique([ 
-	'event_collection' => 'purchases', 
-	'target_property' => 'purchase.item'
-]);
+$totalItems = $client->countUnique( 'purchases', [ 'target_property' => 'purchase.item' ]);
 
 //Select Unique
-$items = $client->selectUnique([ 
-	'event_collection' => 'purchases', 
-	'target_property' => 'purchase.item'
-]);
+$items = $client->selectUnique( 'purchases', [ 'target_property' => 'purchase.item' ]);
 
 //Multi Analysis
 $analyses = [
 	'clicks'		=> [ "analysis_type" => "count" ],
 	'average price'	=> [ "analysis_type" => "average", "target_property" => "purchase.price" ]
 ];
-$stats = $client->multiAnalysis([ 'event_collection' => 'purchases', 'analyses' => $analyses ]);
+$stats = $client->multiAnalysis( 'purchases', [ 'analyses' => $analyses ]);
 ```
 
 ###Create a Scoped Key
