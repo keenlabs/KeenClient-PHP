@@ -2,7 +2,7 @@ Keen IO PHP Library
 ===================
 The Keen IO API lets developers build analytics features directly into their apps.
 
-[![Build Status](https://travis-ci.org/kmfk/KeenClient-PHP.png)](https://travis-ci.org/kmfk/KeenClient-PHP.png)
+[![Build Status](https://travis-ci.org/keenlabs/KeenClient-PHP.png?branch=master)](https://travis-ci.org/keenlabs/KeenClient-PHP)
 
 Installation with Composer
 ------------
@@ -57,9 +57,9 @@ Currently the Keen IO Webservice Client only supports - and automatically defaul
 use KeenIO\Client\KeenIOClient;
 
 $client = KeenIOClient::factory([ 
-	'projectId' => $projectId,
-	'writeKey' => $writeKey,
-	'readKey' => $readKey 
+    'projectId' => $projectId,
+    'writeKey' => $writeKey,
+    'readKey' => $readKey 
 ]);
 ```
 
@@ -105,11 +105,11 @@ where those events should be stored.
 ######Example
 ```php
 $purchases = [
-	[ 'purchase' => [ 'item' => 'Golden Elephant' ] ],
-	[ 'purchase' => [ 'item' => 'Magenta Elephant' ] ]
+    [ 'purchase' => [ 'item' => 'Golden Elephant' ] ],
+    [ 'purchase' => [ 'item' => 'Magenta Elephant' ] ]
 ];
 $signUps = [
-	[ 'name' => 'foo', 'email' => 'bar@baz.com' ]
+    [ 'name' => 'foo', 'email' => 'bar@baz.com' ]
 ];
 
 $client->addEvents([ 'data' => [ 'purchases' => $purchases, 'sign_ups' => $signUps ] ]);
@@ -131,21 +131,21 @@ $eventChunks = array_chunk( $events, 500 );
 $commands = [];
 foreach( $eventChunks as $eventChunk )
 {
-	// Using getCommand will create the command with out immediately executing it
-	// versus using the magic methods
-	$commands[] = $this->getCommand( "sendEvents", [ 'data' => [ 'purchases' => $eventChunk ] ] );
+    // Using getCommand will create the command with out immediately executing it
+    // versus using the magic methods
+    $commands[] = $this->getCommand( "sendEvents", [ 'data' => [ 'purchases' => $eventChunk ] ] );
 }
 
 try
 {
-	// The commands can then be passed to the client's execute method to be run
-	// in parallel
-	$result = $this->execute( $commands );
+    // The commands can then be passed to the client's execute method to be run
+    // in parallel
+    $result = $this->execute( $commands );
 }
 catch( \KeenIO\Exception\CommandTransferException $e )
 {
-	// Handle any errored commands...
-	$failedCommands = $e->getFailedCommands();
+    // Handle any errored commands...
+    $failedCommands = $e->getFailedCommands();
 }
 ```
 
@@ -169,8 +169,8 @@ $items = $client->selectUnique( 'purchases', [ 'target_property' => 'purchase.it
 
 //Multi Analysis
 $analyses = [
-	'clicks'		=> [ "analysis_type" => "count" ],
-	'average price'	=> [ "analysis_type" => "average", "target_property" => "purchase.price" ]
+    'clicks'        => [ "analysis_type" => "count" ],
+    'average price' => [ "analysis_type" => "average", "target_property" => "purchase.price" ]
 ];
 $stats = $client->multiAnalysis( 'purchases', [ 'analyses' => $analyses ]);
 ```
@@ -184,9 +184,9 @@ for more details.
 ######Example
 ```php
 $filter = [
-	'property_name'		=> 'user_id', 
-	'operator'			=> 'eq', 
-	'property_value'	=> '123'
+    'property_name'     => 'user_id', 
+    'operator'          => 'eq', 
+    'property_value'    => '123'
 ];
 
 $filters = [ $filter ];
