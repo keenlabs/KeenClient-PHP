@@ -70,8 +70,7 @@
 				},
 				"data": {
 					"location": "body",
-					"type": "array",
-					"filters": [ "json_encode" ]
+					"type": "array"
 				}
 			}
 		},
@@ -88,8 +87,7 @@
 				},
 				"data": {
 					"location": "body",
-					"type": "array",
-					"filters": [ "json_encode" ]
+					"type": "array"
 				}
 			}
 		},
