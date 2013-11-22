@@ -17,7 +17,7 @@
 			"uri": "projects",
 			"description": "Returns the projects accessible to the API user, as well as links to project sub-resources for discovery.",
 			"httpMethod": "GET",
-			"parameters": { 
+			"parameters": {
 				"masterKey": {
 					"location": "header",
 					"description": "The Master API Key.",
@@ -30,7 +30,7 @@
 			"uri": "projects/{projectId}",
 			"description": "GET returns detailed information about the specific project, as well as links to related resources.",
 			"httpMethod": "GET",
-			"parameters": { 
+			"parameters": {
 				"masterKey": {
 					"location": "header",
 					"description": "The Master API Key.",
@@ -43,7 +43,7 @@
 			"uri": "projects/{projectId}/events",
 			"description": "GET returns schema information for all the event collections in this project, including properties and their type. It also returns links to sub-resources.",
 			"httpMethod": "GET",
-			"parameters": { 
+			"parameters": {
 				"masterKey": {
 					"location": "header",
 					"description": "The Master API Key.",
@@ -56,7 +56,7 @@
 			"uri": "projects/{projectId}/events/{event_collection}",
 			"description": "POST inserts an event into the specified collection.",
 			"httpMethod": "POST",
-			"parameters": { 
+			"parameters": {
 				"writeKey": {
 					"location": "header",
 					"description": "The Write Key for the project.",
@@ -70,8 +70,7 @@
 				},
 				"data": {
 					"location": "body",
-					"type": "array",
-					"filters": [ "json_encode" ]
+					"type": "array"
 				}
 			}
 		},
@@ -79,7 +78,7 @@
 			"uri": "projects/{projectId}/events",
 			"description": "POST inserts multiple events in one or more collections, in a single request. The API expects a JSON object whose keys are the names of each event collection you want to insert into. Each key should point to a list of events to insert for that event collection.",
 			"httpMethod": "POST",
-			"parameters": { 
+			"parameters": {
 				"writeKey": {
 					"location": "header",
 					"description": "The Write Key for the project.",
@@ -88,8 +87,7 @@
 				},
 				"data": {
 					"location": "body",
-					"type": "array",
-					"filters": [ "json_encode" ]
+					"type": "array"
 				}
 			}
 		},
