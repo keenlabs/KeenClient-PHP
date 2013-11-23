@@ -85,6 +85,31 @@ class KeenIOClient extends Client
     }
 
     /**
+     * Method used to send a single event to the Keen IO Api
+     *
+     * @param string    $collection     Name of the collection to store events
+     * @param array     $event          Event data to store
+     *
+     * @return mixed                    Returns the result of the command
+     */
+    public function addEvent($collection, $event = array())
+    {
+        return $this->getCommand('addEvent', array( 'event_collection' => $collection, 'request_body' => $event ))->getResult();
+    }
+
+    /**
+     * Method used to send multiple events to the Keen IO Api
+     *
+     * @param array $events             Event data to store
+     *  
+     * @return mixed                    Returns the result of the command
+     */
+    public function addEvents($events = array())
+    {
+        return $this->getCommand('addEvents', array( 'request_body' => $events ))->getResult();
+    }	
+
+    /**
      * Bulk insert events into a single event collection.
      * @TODO: Better response & error handling needed before using / documenting...
      *
@@ -100,7 +125,7 @@ class KeenIOClient extends Client
 
         $eventChunks = array_chunk( $events, $size );
         foreach( $eventChunks as $eventChunk ) {
-            $commands[ ] = $this->getCommand( "sendEvents", array( 'data' => array( $collection => $eventChunk ) ) );
+            $commands[ ] = $this->getCommand( "addEvents", array( 'data' => array( $collection => $eventChunk ) ) );
         }
 
         try {

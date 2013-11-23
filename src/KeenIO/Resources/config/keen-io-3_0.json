@@ -68,7 +68,7 @@
 					"description": "The event collection.",
 					"required": true
 				},
-				"data": {
+				"request_body": {
 					"location": "body",
 					"type": "array",
 					"filters": [ "json_encode" ]
@@ -86,7 +86,7 @@
 					"sentAs": "Authorization",
 					"required": true
 				},
-				"data": {
+				"request_body": {
 					"location": "body",
 					"type": "array",
 					"filters": [ "json_encode" ]
