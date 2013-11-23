@@ -1,0 +1,11 @@
+HTTP/1.1 404 Not Found
+Server: Keen/K9-D/1.5x25-alpha3
+Date: Fri, 29 Nov 2013 20:46:58 GMT
+Content-Type: application/json
+Content-Length: 73
+Connection: close
+Vary: Accept-Encoding
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: origin, content-type, accept, authorization, user-agent
+
+{"message": "Resource not found.", "error_code": "ResourceNotFoundError"}
