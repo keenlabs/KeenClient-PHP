@@ -92,7 +92,7 @@ Once you've created a `KeenIOClient`, sending events is simple:
 ```php
 $event = [ 'purchase' => [ 'item' => 'Golden Elephant' ] ];
 
-$client->addEvent( 'purchases', [ 'data' => $event ] );
+$client->addEvent( 'purchases', $event );
 ```
 
 ####Send batched events to Keen
@@ -112,7 +112,7 @@ $signUps = [
     [ 'name' => 'foo', 'email' => 'bar@baz.com' ]
 ];
 
-$client->addEvents([ 'data' => [ 'purchases' => $purchases, 'sign_ups' => $signUps ] ]);
+$client->addEvents([ 'purchases' => $purchases, 'sign_ups' => $signUps ]);
 ```
 
 ####Send batched events in Parallel

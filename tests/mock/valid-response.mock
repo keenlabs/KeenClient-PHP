@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+Server: Keen/K9-D/1.5x25-alpha3
+Date: Sat, 30 Nov 2013 04:26:53 GMT
+Content-Type: application/json
+Content-Length: 18
+Connection: close, close
+Expires: Sat, 01 Jan 2000 01:01:01 GMT
+Vary: Accept-Encoding
+Etag: "01d58e2ee345954dd8a8b933678921d5942d600f"
+Pragma: no-cache
+Cache-Control: private, no-cache, no-cache=Set-Cookie, max-age=0, s-maxage=0
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: origin, content-type, accept, authorization, user-agent
+
+{"response": true}
