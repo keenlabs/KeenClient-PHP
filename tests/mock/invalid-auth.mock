@@ -1,0 +1,11 @@
+HTTP/1.1 401 Unauthorized
+Server: Keen/K9-D/1.5x25-alpha3
+Date: Sat, 30 Nov 2013 05:59:17 GMT
+Content-Type: application/json
+Content-Length: 315
+Connection: close
+Vary: Accept-Encoding
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Headers: origin, content-type, accept, authorization, user-agent
+
+{"message": "Specified API Key is invalid. API Key: 'testApiKey'.", "error_code": "InvalidApiKeyError"}
