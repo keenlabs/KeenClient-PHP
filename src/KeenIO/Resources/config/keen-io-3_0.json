@@ -1,7 +1,7 @@
 {
 	"operations": {
 		"getResources": {
-			"uri": "/",
+		    "uri": "/",
 			"description": "Returns the available child resources. Currently, the only child resource is the Projects Resource.",
 			"httpMethod": "GET",
 			"parameters": {
@@ -53,7 +53,7 @@
 			}
 		},
 		"addEvent": {
-			"uri": "projects/{projectId}/events/{event_collection}",
+		    "uri": "projects/{projectId}/events/{event_collection}",
 			"description": "POST inserts an event into the specified collection.",
 			"httpMethod": "POST",
 			"parameters": { 
