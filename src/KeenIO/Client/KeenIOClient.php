@@ -5,7 +5,6 @@ namespace KeenIO\Client;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
-use KeenIO\Exception\CommandTransferException;
 
 /**
  * Class KeenIOClient
@@ -98,38 +97,6 @@ class KeenIOClient extends Client
         }
 
         return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
-    }
-
-    /**
-     * Bulk insert events into a single event collection.
-     * @TODO: Better response & error handling needed before using / documenting...
-     *
-     * @param string $collection
-     * @param array  $events
-     * @param int    $size
-     *
-     * @return array
-     */
-    public function addBatchedEvents($collection, $events = array(), $size = 500)
-    {
-        $commands = array();
-
-        $eventChunks = array_chunk($events, $size);
-        foreach($eventChunks as $eventChunk) {
-            $commands[] = $this->getCommand('sendEvents', array('data' => array($collection => $eventChunk)));
-        }
-
-        try {
-            $result = $this->execute($commands);
-        } catch(CommandTransferException $e) {
-            return array(
-                'total'     => count($eventChunks),
-                'succeeded' => count($e->getSuccessfulCommands()),
-                'failed'    => count($e->getFailedCommands())
-            );
-        }
-
-        return array('batches' => count($eventChunks), 'succeeded' => count($result), 'failed' => 0);
     }
 
     /**
