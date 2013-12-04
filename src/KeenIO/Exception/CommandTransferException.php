@@ -6,5 +6,4 @@ use Guzzle\Service\Exception\CommandTransferException as GuzzleCommandTransferEx
 
 class CommandTransferException extends GuzzleCommandTransferException
 {
-
 }
