@@ -40,7 +40,7 @@ class KeenIOClient extends Client
     public static function factory($config = array())
     {
         $default = array(
-            'baseUrl'   => "https://api.keen.io/{version}/",
+            'baseUrl'   => 'https://api.keen.io/{version}/',
             'version'   => '3.0',
             'masterKey' => null,
             'writeKey'  => null,
@@ -334,19 +334,19 @@ class KeenIOClient extends Client
                 throw new \InvalidArgumentException("Version can not be empty");
             }
 
-            if ($option === "readKey" && ! ctype_alnum($value)) {
+            if ($option === 'readKey' && ! ctype_alnum($value)) {
                 throw new \InvalidArgumentException( "Read Key '{$value}' contains invalid characters or spaces." );
             }
 
-            if ($option === "writeKey" && ! ctype_alnum($value)) {
+            if ($option === 'writeKey' && ! ctype_alnum($value)) {
                 throw new \InvalidArgumentException( "Write Key '{$value}' contains invalid characters or spaces." );
             }
 
-            if ($option === "masterKey" && ! ctype_alnum($value)) {
+            if ($option === 'masterKey' && ! ctype_alnum($value)) {
                 throw new \InvalidArgumentException( "Write Key '{$value}' contains invalid characters or spaces." );
             }
 
-            if ($option === "projectId" && ! ctype_alnum($value)) {
+            if ($option === 'projectId' && ! ctype_alnum($value)) {
                 throw new \InvalidArgumentException( "Project ID '{$value}' contains invalid characters or spaces.");
             }
         }
