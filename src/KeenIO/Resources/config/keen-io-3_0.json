@@ -93,6 +93,66 @@
                 }
             }
         },
+        "deleteEvent": {
+            "uri": "projects/{projectId}/events/{event_collection}",
+            "description": "DELETE one or multiple events from a collection. You can optionally add filters, timeframe or timezone. You can delete up to 50,000 events using one method call",
+            "httpMethod": "DELETE",
+            "parameters": {
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master API key.",
+                    "sentAs": "Authorization",
+                    "required": true
+                },
+                "event_collection": {
+                    "location": "uri",
+                    "description": "The event collection.",
+                    "required": true
+                },
+                "filters": {
+                    "location": "query",
+                    "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
+                    "type": "array",
+                    "required": false
+                },
+                "timeframe": {
+                    "location": "query",
+                    "description": "A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.",
+                    "type": "string",
+                    "required": false
+                },
+                "timezone": {
+                    "location": "query",
+                    "description": "Modifies the timeframe filters for Relative Timeframes to match a specific timezone.",
+                    "type": "number",
+                    "required": false
+                }
+            }
+        },
+        "deleteEventProperties": {
+            "uri": "projects/{projectId}/events/{event_collection}/properties/{property_name}",
+            "description": "DELETE one property for events. This only work for properties with less than 10,000 events.",
+            "httpMethod": "DELETE",
+            "parameters": {
+                "writeKey": {
+                    "location": "header",
+                    "description": "The Write Key for the project.",
+                    "sentAs": "Authorization",
+                    "required": true
+                },
+                "event_collection": {
+                    "location": "uri",
+                    "description": "The event collection.",
+                    "required": true
+                },
+                "property_name": {
+                    "location": "query",
+                    "description": "Name of the property to delete.",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
         "count": {
             "uri": "projects/{projectId}/queries/count",
             "description": "GET returns the number of resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: a numeric result.",
