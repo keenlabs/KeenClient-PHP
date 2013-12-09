@@ -617,7 +617,7 @@
             }
         },
         "extraction": {
-            "uri": "projects/{projectId}/queries/select_unique",
+            "uri": "projects/{projectId}/queries/extraction",
             "description": "GET creates an extraction request for full-form event data with all property values. If the query string parameter email is specified, then the extraction will be processed asynchronously and an e-mail will be sent to the specified address when it completes. The email will include a link to a downloadable CSV file. If email is omitted, then the extraction will be processed in-line and JSON results will be returned in the GET request.",
             "httpMethod": "GET",
             "parameters": {
