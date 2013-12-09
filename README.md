@@ -25,13 +25,13 @@ This client was built using [Guzzle](http://guzzlephp.org/), a PHP HTTP client &
 When you first create a new `KeenIOClient` instance you can pass configuration settings like your Project Id and API Keys in an array
 to the factory method. These are optional and can be later specified through Setter methods.
 
-For certain API Resources, the Master API Key is required and can also be passed to the factory method in the configuration array. 
+For certain API Resources, the Master API Key is required and can also be passed to the factory method in the configuration array.
 Please read the [Security Documentation](https://keen.io/docs/security/) regarding this Master API key.
 
 For Requests, the `KeenIOClient` will determine what API Key should be passed based on the type of Request and configuration in the
 [Service Description](/src/KeenIO/Resources/config/keen-io-3_0.json). The API Key is passed in the `Authorization` header of the request.
 
-For a list of required and available parameters for the different API Endpoints, please consult the Keen IO 
+For a list of required and available parameters for the different API Endpoints, please consult the Keen IO
 [API Reference Docs](https://keen.io/docs/api/reference/).
 
 
@@ -47,7 +47,7 @@ Read API Key | `readKey` | The Read API Key - used for access to read only (GET|
 Write API Key | `writeKey` | The Write API Key - used for write (PUT|POST Requests) operations of the API
 API Version | `version` | The API Version.  Currently used to version the API URL and Service Description
 
-When passing `version` to the factory method or using the `setVersion()` method, the Client will try to load a client Service Description 
+When passing `version` to the factory method or using the `setVersion()` method, the Client will try to load a client Service Description
 that matches that version. That Service Description defines the operations available to the Webservice Client.
 
 Currently the Keen IO Webservice Client only supports - and automatically defaults - to the current version (`3.0`) of the API.
@@ -56,10 +56,10 @@ Currently the Keen IO Webservice Client only supports - and automatically defaul
 ```php
 use KeenIO\Client\KeenIOClient;
 
-$client = KeenIOClient::factory([ 
+$client = KeenIOClient::factory([
     'projectId' => $projectId,
     'writeKey' => $writeKey,
-    'readKey' => $readKey 
+    'readKey' => $readKey
 ]);
 ```
 
@@ -96,9 +96,9 @@ $client->addEvent( 'purchases', [ 'data' => $event ] );
 ```
 
 ####Send batched events to Keen
-You can upload multiple Events to multiple Event Collections at once! 
+You can upload multiple Events to multiple Event Collections at once!
 
-In the example below, we will create two new purchase events in the `purchases` event collection and a single 
+In the example below, we will create two new purchase events in the `purchases` event collection and a single
 new event in the `sign_ups` event collection. Note that the keys of the `data` array specify the `event_collection`
 where those events should be stored.
 
@@ -113,40 +113,6 @@ $signUps = [
 ];
 
 $client->addEvents([ 'data' => [ 'purchases' => $purchases, 'sign_ups' => $signUps ] ]);
-```
-
-####Send batched events in Parallel
-Useful for large batch processing jobs. The client will serialize each request and send them all in parallel. 
-
-If an error is encountered during the transfer, then a `KeenIO\Exception\CommandTransferException` is thrown, which allows 
-you to retrieve a list of commands that succeeded and a list of commands that failed.
-
-For more information on parallel commands, you can check the [Guzzle docs](http://guzzlephp.org/webservice-client/webservice-client.html#executing-commands-in-parallel).
-
-######Example:
-```php
-// Split the events into chunks
-$eventChunks = array_chunk( $events, 500 );
-
-$commands = [];
-foreach( $eventChunks as $eventChunk )
-{
-    // Using getCommand will create the command with out immediately executing it
-    // versus using the magic methods
-    $commands[] = $this->getCommand( "sendEvents", [ 'data' => [ 'purchases' => $eventChunk ] ] );
-}
-
-try
-{
-    // The commands can then be passed to the client's execute method to be run
-    // in parallel
-    $result = $this->execute( $commands );
-}
-catch( \KeenIO\Exception\CommandTransferException $e )
-{
-    // Handle any errored commands...
-    $failedCommands = $e->getFailedCommands();
-}
 ```
 
 ####Get Analysis on Events
@@ -178,14 +144,14 @@ $stats = $client->multiAnalysis( 'purchases', [ 'analyses' => $analyses ]);
 ###Create a Scoped Key
 
 Scoped keys allow you to secure the requests to the API Endpoints and are especially useful when you are providing
-access to multiple clients or applications. You should read the Keen IO docs concerning [Scoped Keys](https://keen.io/docs/security/#scoped-key) 
+access to multiple clients or applications. You should read the Keen IO docs concerning [Scoped Keys](https://keen.io/docs/security/#scoped-key)
 for more details.
 
 ######Example
 ```php
 $filter = [
-    'property_name'     => 'user_id', 
-    'operator'          => 'eq', 
+    'property_name'     => 'user_id',
+    'operator'          => 'eq',
     'property_value'    => '123'
 ];
 
