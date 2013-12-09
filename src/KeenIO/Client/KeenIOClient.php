@@ -17,6 +17,8 @@ use Guzzle\Service\Description\ServiceDescription;
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
  * @method array addEvent(array $args = array()) {@command KeenIO addEvent}
  * @method array addEvents(array $args = array()) {@command KeenIO addEvents}
+ * @method array deleteEvents(array $args = array()) {@command KeenIO deleteEvents}
+ * @method array deleteEventProperties(array $args = array()) {@command KeenIO deleteEventProperties}
  * @method array count(array $args = array()) {@command KeenIO count}
  * @method array countUnique(array $args = array()) {@command KeenIO countUnique}
  * @method array minimum(array $args = array()) {@command KeenIO minimum}
