@@ -113,6 +113,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -174,6 +175,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -230,6 +232,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -286,6 +289,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -342,6 +346,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -398,6 +403,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -454,6 +460,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -510,6 +517,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -587,6 +595,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
@@ -637,6 +646,7 @@
                     "location": "query",
                     "description": "Filters are used to narrow down the events used in an analysis request based on event property values.",
                     "type": "array",
+                    "filters": [ "json_encode" ],
                     "required": false
                 },
                 "timeframe": {
