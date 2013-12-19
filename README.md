@@ -43,8 +43,8 @@ Setting | Property Name | Description
 --- | --- | ---
 Project ID | `projectId` | The Keen IO Project ID for your specific project
 Master API Key | `masterKey` | The Keen IO Master API Key - the one API key to rule them all
-Read API Key | `readKey` | The Read API Key - used for access to read only GET|HEAD operations of the API
-Write API Key | `writeKey` | The Write API Key - used for write PUT|POST Requests operations of the API
+Read API Key | `readKey` | The Read API Key - used for access to read only GET or HEAD operations of the API
+Write API Key | `writeKey` | The Write API Key - used for write PUT or POST Requests operations of the API
 API Version | `version` | The API Version.  Currently used to version the API URL and Service Description
 
 When passing `version` to the factory method or using the `setVersion()` method, the Client will try to load a client Service Description
