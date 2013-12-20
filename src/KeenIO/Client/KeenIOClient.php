@@ -15,8 +15,6 @@ use Guzzle\Service\Description\ServiceDescription;
  * @method array getProjects(array $args = array()) {@command KeenIO getProjects}
  * @method array getProject(array $args = array()) {@command KeenIO getProject}
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
- * @method array addEvent(array $args = array()) {@command KeenIO addEvent}
- * @method array addEvents(array $args = array()) {@command KeenIO addEvents}
  * @method array deleteEvents(array $args = array()) {@command KeenIO deleteEvents}
  * @method array deleteEventProperties(array $args = array()) {@command KeenIO deleteEventProperties}
  * @method array count(array $args = array()) {@command KeenIO count}
@@ -56,12 +54,11 @@ class KeenIOClient extends Client
         // Create client configuration
         $config = Collection::fromConfig($config, $default);
 
-        /**
-         * Because each API Resource uses a separate type of API Key, we need to expose them all in
-         * `commands.params`. Doing it this way allows the Service Definitions to set what API Key is used.
-         */
+        
+        // Because each API Resource uses a separate type of API Key, we need to expose them all in
+        // `commands.params`. Doing it this way allows the Service Definitions to set what API Key is used.
         $parameters = array();
-        foreach(array('masterKey', 'writeKey', 'readKey') as $key) {
+        foreach (array('masterKey', 'writeKey', 'readKey') as $key) {
             $parameters[$key] = $config->get($key);
         }
         $config->set('command.params', $parameters);
@@ -81,11 +78,12 @@ class KeenIOClient extends Client
 
     /**
      * Magic method used to retrieve a command
+     *
      * Overriden to allow the `event_collection` parameter to passed separately
      * from the normal argument array.
      *
-     * @param string    $method Name of the command object to instantiate
-     * @param array $args       Arguments to pass to the command
+     * @param string $method Name of the command object to instantiate
+     * @param array  $args   Arguments to pass to the command
      *
      * @return mixed Returns the result of the command
      */
@@ -94,24 +92,66 @@ class KeenIOClient extends Client
         if (isset($args[0]) && is_string($args[0])) {
             $args[0] = array('event_collection' => $args[0]);
 
-            if (isset($args[1]) && is_array($args[1]))
+            if (isset($args[1]) && is_array($args[1])) {
                 $args[0] = array_merge($args[1], $args[0]);
+            }
         }
 
         return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
     }
 
     /**
+     * Method used to send a single event to the Keen IO Api
+     *
+     * @param string $collection Name of the collection to store events
+     * @param array  $event      Event data to store
+     *
+     * @throws \InvalidArgumentException If $event is not an array
+     * @return mixed
+     */
+    public function addEvent($collection, $event = array())
+    {
+        if (!is_array($event)) {
+            $message = 'Argument 2, \'$event\' must be of the type array, ' . gettype($event) .' given.';
+            throw new \InvalidArgumentException($message);
+        }
+
+        $parameters = array('event_collection' => $collection, 'keen_io_event' => $event);
+
+        return $this->getCommand('addEvent', $parameters)->getResult();
+    }
+
+    /**
+     * Method used to send multiple events to the Keen IO Api
+     *
+     * @param array $events Event data to store
+     *
+     * @throws \InvalidArgumentException If $events is not an array
+     * @return mixed
+     */
+    public function addEvents($events = array())
+    {
+        if ( !is_array( $events ) ) {
+            $message = 'Argument 1, \'$events\' must be of the type array, ' . gettype($events) . ' given.';
+            throw new \InvalidArgumentException($message);
+        }
+
+        $parameters = array('keen_io_events' => $events);
+
+        return $this->getCommand('addEvents', $parameters)->getResult();
+    }
+
+    /**
      * Get a scoped key for an array of filters
      *
-     * @param string    $apiKey            The master API key to use for encryption
-     * @param array     $filters           What filters to encode into a scoped key
-     * @param array     $allowedOperations What operations the generated scoped key will allow
-     * @param int       $source
+     * @param string $apiKey            The master API key to use for encryption
+     * @param array  $filters           What filters to encode into a scoped key
+     * @param array  $allowedOperations What operations the generated scoped key will allow
+     * @param int    $source
      *
      * @return string
      */
-    public function getScopedKey( $apiKey, $filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM )
+    public function getScopedKey($apiKey, $filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM)
     {
         $options = array( 'filters' => $filters );
 
@@ -137,8 +177,8 @@ class KeenIOClient extends Client
     /**
      * Implement PKCS7 padding
      *
-     * @param   string  $string
-     * @param   int     $blockSize
+     * @param string $string
+     * @param int    $blockSize
      *
      * @return string
      */
@@ -153,8 +193,8 @@ class KeenIOClient extends Client
     /**
      * Decrypt a scoped key (primarily used for testing)
      *
-     * @param string    $apiKey     The master API key to use for decryption
-     * @param string    $scopedKey  The scoped Key to decrypt
+     * @param  string $apiKey    The master API key to use for decryption
+     * @param  string $scopedKey The scoped Key to decrypt
      * @return mixed
      */
     public function decryptScopedKey($apiKey, $scopedKey)
@@ -178,7 +218,7 @@ class KeenIOClient extends Client
     /**
      * Remove padding for a PKCS7-padded string
      *
-     * @param string $string
+     * @param  string $string
      * @return string
      */
     protected function unpadString($string)
@@ -326,12 +366,11 @@ class KeenIOClient extends Client
      * Validates the Keen IO Client configuration options
      *
      * @params  array                     $config
-     * @throws  \InvalidArgumentException When a config value does not meet its validation criteria
+     * @throws \InvalidArgumentException When a config value does not meet its validation criteria
      */
-    static function validateConfig($config = array())
+    public static function validateConfig($config = array())
     {
-        foreach($config as $option => $value)
-        {
+        foreach ($config as $option => $value) {
             if ($option === 'version' && empty($config['version'])) {
                 throw new \InvalidArgumentException("Version can not be empty");
             }

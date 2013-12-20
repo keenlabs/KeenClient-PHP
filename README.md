@@ -17,6 +17,10 @@ Installation with Composer
      ```
   3. Run `php composer.phar install`
 
+Changes
+-------
+Please review [CHANGES.md](CHANGES.md) before upgrading!
+
 Usage
 -----
 
@@ -85,17 +89,17 @@ $client->setReadKey($newReadKey);
 
 ```
 
-####Send an event to Keen
+####Send an event to Keen - ([Changed in 2.0!](CHANGE.md))
 Once you've created a `KeenIOClient`, sending events is simple:
 
 ######Example
 ```php
 $event = ['purchase' => ['item' => 'Golden Elephant']];
 
-$client->addEvent('purchases', ['data' => $event]);
+$client->addEvent('purchases', $event);
 ```
 
-#### Send batched events to Keen
+#### Send batched events to Keen  - ([Changed in 2.0!](CHANGE.md))
 You can upload multiple Events to multiple Event Collections at once!
 
 In the example below, we will create two new purchase events in the `purchases` event collection and a single
@@ -112,7 +116,7 @@ $signUps = [
     ['name' => 'foo', 'email' => 'bar@baz.com']
 ];
 
-$client->addEvents(['data' => ['purchases' => $purchases, 'sign_ups' => $signUps]]);
+$client->addEvents(['purchases' => $purchases, 'sign_ups' => $signUps]);
 ```
 
 #### Get Analysis on Events
@@ -141,8 +145,7 @@ $analyses = [
 $stats = $client->multiAnalysis('purchases', ['analyses' => $analyses]);
 ```
 
-### Create a Scoped Key
-
+#### Create a Scoped Key
 Scoped keys allow you to secure the requests to the API Endpoints and are especially useful when you are providing
 access to multiple clients or applications. You should read the Keen IO docs concerning [Scoped Keys](https://keen.io/docs/security/#scoped-key)
 for more details.
@@ -160,11 +163,13 @@ $allowed_operations = ['read'];
 
 $scopedKey = $client->getScopedKey($masterKey, $filters, $allowedOperations);
 ```
-### Questions & Support
 
+Questions & Support
+-------------------
 If you have any questions, bugs, or suggestions, please
 report them via Github Issues. Or, come chat with us anytime
 at [users.keen.io](http://users.keen.io). We'd love to hear your feedback and ideas!
 
-### Contributing
+Contributing
+------------
 This is an open source project and we love involvement from the community! Hit us up with pull requests and issues.

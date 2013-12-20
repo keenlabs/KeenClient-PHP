@@ -68,7 +68,7 @@
                     "description": "The event collection.",
                     "required": true
                 },
-                "data": {
+                "keen_io_event": {
                     "location": "body",
                     "type": "array",
                     "filters": [ "json_encode" ]
@@ -86,7 +86,7 @@
                     "sentAs": "Authorization",
                     "required": true
                 },
-                "data": {
+                "keen_io_events": {
                     "location": "body",
                     "type": "array",
                     "filters": [ "json_encode" ]
