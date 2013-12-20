@@ -12,7 +12,7 @@ Installation with Composer
 
      ```json
      "require": {
-        "keen-io/keen-io": "~2.0"
+        "keen-io/keen-io": "~1.1"
      }
      ```
   3. Run `php composer.phar install`
@@ -26,7 +26,7 @@ Usage
 
 This client was built using [Guzzle](http://guzzlephp.org/), a PHP HTTP client & framework for building RESTful web service clients.
 
-When you first create a new `KeenIOClient` instance you can pass configuration settings like your Project Id and API Keys in an array
+When you first create a new `KeenIOClient` instance you can pass configuration settings like your Project ID and API Keys in an array
 to the factory method. These are optional and can be later specified through Setter methods.
 
 For certain API Resources, the Master API Key is required and can also be passed to the factory method in the configuration array.
@@ -45,10 +45,10 @@ The factory method accepts an array of configuration settings for the Keen IO We
 
 Setting | Property Name | Description
 --- | --- | ---
-Project ID | `projectId` | The Keen IO Project Id for your specific project
+Project ID | `projectId` | The Keen IO Project ID for your specific project
 Master API Key | `masterKey` | The Keen IO Master API Key - the one API key to rule them all
-Read API Key | `readKey` | The Read API Key - used for access to read only (GET|HEAD) operations of the API
-Write API Key | `writeKey` | The Write API Key - used for write (PUT|POST Requests) operations of the API
+Read API Key | `readKey` | The Read API Key - used for access to read only GET or HEAD operations of the API
+Write API Key | `writeKey` | The Write API Key - used for write PUT or POST Requests operations of the API
 API Version | `version` | The API Version.  Currently used to version the API URL and Service Description
 
 When passing `version` to the factory method or using the `setVersion()` method, the Client will try to load a client Service Description
@@ -145,8 +145,7 @@ $analyses = [
 $stats = $client->multiAnalysis('purchases', ['analyses' => $analyses]);
 ```
 
-### Create a Scoped Key
-
+#### Create a Scoped Key
 Scoped keys allow you to secure the requests to the API Endpoints and are especially useful when you are providing
 access to multiple clients or applications. You should read the Keen IO docs concerning [Scoped Keys](https://keen.io/docs/security/#scoped-key)
 for more details.
@@ -164,3 +163,13 @@ $allowed_operations = ['read'];
 
 $scopedKey = $client->getScopedKey($masterKey, $filters, $allowedOperations);
 ```
+
+Questions & Support
+-------------------
+If you have any questions, bugs, or suggestions, please
+report them via Github Issues. Or, come chat with us anytime
+at [users.keen.io](http://users.keen.io). We'd love to hear your feedback and ideas!
+
+Contributing
+------------
+This is an open source project and we love involvement from the community! Hit us up with pull requests and issues.
