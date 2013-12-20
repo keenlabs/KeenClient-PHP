@@ -19,7 +19,7 @@ Installation with Composer
 
 Changes
 -------
-Please review [CHANGES.md](CHANGES.md) before upgrading!
+Please review the change log ( [CHANGE.md](CHANGE.md) ) before upgrading!
 
 Usage
 -----
