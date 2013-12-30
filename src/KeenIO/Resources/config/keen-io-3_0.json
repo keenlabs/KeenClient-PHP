@@ -61,7 +61,13 @@
                     "location": "header",
                     "description": "The Write Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "uri",
@@ -84,7 +90,13 @@
                     "location": "header",
                     "description": "The Write Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "keen_io_events": {
                     "location": "body",
@@ -139,7 +151,13 @@
                     "location": "header",
                     "description": "The Write Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "uri",
@@ -163,7 +181,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -214,7 +238,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -271,7 +301,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -328,7 +364,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -385,7 +427,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -442,7 +490,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -499,7 +553,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -556,7 +616,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "steps": {
                     "location": "query",
@@ -576,7 +642,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
@@ -634,7 +706,13 @@
                     "location": "header",
                     "description": "The Read Key for the project.",
                     "sentAs": "Authorization",
-                    "required": true
+                    "required": false
+                },
+                "masterKey": {
+                    "location": "header",
+                    "description": "The Master Api Key",
+                    "sentAs": "Authorization",
+                    "required": false
                 },
                 "event_collection": {
                     "location": "query",
