@@ -35,7 +35,7 @@ class KeenIOClient extends Client
      *
      * @param array $config
      *
-     * @returns \KeenIO\Client\KeenIOClient
+     * @return \KeenIO\Client\KeenIOClient
      */
     public static function factory($config = array())
     {
@@ -185,6 +185,105 @@ class KeenIOClient extends Client
         $pad = ord($string[$len - 1]);
 
         return substr($string, 0, $len - $pad);
+    }
+
+    /**
+     * Sets the Project Id used by the Keen IO Client
+     *
+     * @param string $projectId
+     */
+    public function setProjectId($projectId)
+    {
+        $this->getConfig()->set('projectId', $projectId);
+    }
+
+    /**
+     * Gets the Project Id being used by the Keen IO Client
+     *
+     * @return string|null Value of the ProjectId or NULL
+     */
+    public function getProjectId()
+    {
+        return $this->getConfig('projectId');
+    }
+
+    /**
+     * Sets the API Write Key used by the Keen IO Client
+     *
+     * @param string $writeKey
+     */
+    public function setWriteKey($writeKey)
+    {
+        $this->getConfig()->set('writeKey', $writeKey);
+
+        // Add API Read Key to `command.params`
+        $params             = $this->getConfig('command.params');
+        $params['writeKey'] = $writeKey;
+
+        $this->getConfig()->set('command.params', $params);
+
+    }
+
+    /**
+     * Gets the API Write Key being used by the Keen IO Client
+     *
+     * @return string|null Value of the WriteKey or NULL
+     */
+    public function getWriteKey()
+    {
+        return $this->getConfig('writeKey');
+    }
+
+    /**
+     * Sets the API Read Key used by the Keen IO Client
+     *
+     * @param string $readKey
+     */
+    public function setReadKey($readKey)
+    {
+        $this->getConfig()->set('readKey', $readKey);
+
+        // Add API Read Key to `command.params`
+        $params            = $this->getConfig('command.params');
+        $params['readKey'] = $readKey;
+
+        $this->getConfig()->set('command.params', $params);
+    }
+
+    /**
+     * Gets the API Read Key being used by the Keen IO Client
+     *
+     * @return string|null Value of the ReadKey or NULL
+     */
+    public function getReadKey()
+    {
+        return $this->getConfig('readKey');
+    }
+
+    /**
+     * Sets the API Master Key used by the Keen IO Client
+     *
+     * @param string $masterKey
+     */
+    public function setMasterKey($masterKey)
+    {
+        $this->getConfig()->set('masterKey', $masterKey);
+
+        // Add API Master Key to `command.params`
+        $params              = $this->getConfig('command.params');
+        $params['masterKey'] = $masterKey;
+
+        $this->getConfig()->set('command.params', $params);
+    }
+
+    /**
+     * Gets the API Master Key being used by the Keen IO Client
+     *
+     * @return string|null Value of the MasterKey or NULL
+     */
+    public function getMasterKey()
+    {
+        return $this->getConfig('masterKey');
     }
 
     /**
