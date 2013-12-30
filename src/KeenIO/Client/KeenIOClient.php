@@ -88,14 +88,6 @@ class KeenIOClient extends Client
      */
     public function __call($method, $args = array())
     {
-        if (isset($args[0]) && is_string($args[0])) {
-            $args[0] = array('event_collection' => $args[0]);
-
-            if (isset($args[1]) && is_array($args[1])) {
-                $args[0] = array_merge($args[1], $args[0]);
-            }
-        }
-
         return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
     }
 
