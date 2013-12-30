@@ -5,6 +5,7 @@ namespace KeenIO\Client;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
+use RuntimeException;
 
 /**
  * Class KeenIOClient
@@ -94,16 +95,21 @@ class KeenIOClient extends Client
     /**
      * Get a scoped key for an array of filters
      *
-     * @param string $apiKey            The master API key to use for encryption
      * @param array  $filters           What filters to encode into a scoped key
      * @param array  $allowedOperations What operations the generated scoped key will allow
      * @param int    $source
-     *
      * @return string
+     * @throws RuntimeException
      */
-    public function getScopedKey($apiKey, $filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM)
+    public function getScopedKey($filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM)
     {
-        $options = array( 'filters' => $filters );
+        $masterKey = $this->getConfig('masterKey', null);
+
+        if (null === $masterKey) {
+            throw new RuntimeException('A master key is needed to create a scoped key');
+        }
+
+        $options = array('filters' => $filters);
 
         if (!empty($allowedOperations)) {
             $options['allowed_operations'] = $allowedOperations;
@@ -114,7 +120,7 @@ class KeenIOClient extends Client
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $iv       = mcrypt_create_iv($ivLength, $source);
 
-        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $apiKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
+        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $masterKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
 
         $ivHex        = bin2hex($iv);
         $encryptedHex = bin2hex($encrypted);
