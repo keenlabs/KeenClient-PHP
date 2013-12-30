@@ -73,7 +73,7 @@ class KeenIOServiceMethodsTest extends GuzzleTestCase
         $client = $this->getServiceBuilder()->get('keen-io');
 
         $this->setMockResponse($client, 'add-event.mock');
-        $response = $client->addEvent(['event_collection' => 'test', 'data' => $event]);
+        $response = $client->addEvent(array('event_collection' => 'test', 'data' => $event));
         $requests = $this->getMockedRequests();
 
         //Resource Url
