@@ -149,12 +149,18 @@ class KeenIOClient extends Client
     /**
      * Decrypt a scoped key (primarily used for testing)
      *
-     * @param  string $apiKey    The master API key to use for decryption
      * @param  string $scopedKey The scoped Key to decrypt
      * @return mixed
+     * @throws RuntimeException
      */
-    public function decryptScopedKey($apiKey, $scopedKey)
+    public function decryptScopedKey($scopedKey)
     {
+        $masterKey = $this->getConfig('masterKey', null);
+
+        if (null === $masterKey) {
+            throw new RuntimeException('A master key is needed to create a scoped key');
+        }
+
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
         $ivHex    = substr($scopedKey, 0, $ivLength);
 
@@ -162,7 +168,7 @@ class KeenIOClient extends Client
 
         $resultPadded = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
-            $apiKey,
+            $masterKey,
             pack('H*', $encryptedHex),
             MCRYPT_MODE_CBC,
             pack('H*', $ivHex)

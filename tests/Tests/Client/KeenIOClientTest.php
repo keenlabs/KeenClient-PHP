@@ -93,16 +93,17 @@ class KeenIOClientTest extends GuzzleTestCase
      */
     public function testGetScopedKey()
     {
-        $client = KeenIOClient::factory();
+        $client = KeenIOClient::factory(array(
+            'masterKey' => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+        ));
 
-        $apiKey = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
         $filters = array($filter);
         $allowed_operations = array('read');
 
-        $scopedKey = $client->getScopedKey($apiKey, $filters, $allowed_operations);
+        $scopedKey = $client->getScopedKey($filters, $allowed_operations);
 
-        $result = $client->decryptScopedKey($apiKey, $scopedKey);
+        $result = $client->decryptScopedKey($scopedKey);
         $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
 
         $this->assertEquals($expected, $result);
