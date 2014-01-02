@@ -12,7 +12,7 @@ Installation with Composer
 
      ```json
      "require": {
-        "keen-io/keen-io": "~2.0"
+        "keen-io/keen-io": "~2.1"
      }
      ```
   3. Run `php composer.phar install`
