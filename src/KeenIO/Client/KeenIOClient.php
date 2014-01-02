@@ -158,7 +158,6 @@ class KeenIOClient extends Client
         $params['writeKey'] = $writeKey;
 
         $this->getConfig()->set('command.params', $params);
-
     }
 
     /**
