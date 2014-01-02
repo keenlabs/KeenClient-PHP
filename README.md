@@ -19,7 +19,7 @@ Installation with Composer
 
 Changes
 -------
-Please review the change log ( [CHANGE.md](CHANGE.md) ) before upgrading!
+Please review the change log ( [CHANGELOG.md](CHANGELOG.md) ) before upgrading!
 
 Usage
 -----
@@ -89,36 +89,6 @@ $client->setReadKey($newReadKey);
 
 ```
 
-####Send an event to Keen - ([Changed in 2.0!](CHANGE.md))
-Once you've created a `KeenIOClient`, sending events is simple:
-
-######Example
-```php
-$event = ['purchase' => ['item' => 'Golden Elephant']];
-
-$client->addEvent('purchases', $event);
-```
-
-#### Send batched events to Keen  - ([Changed in 2.0!](CHANGE.md))
-You can upload multiple Events to multiple Event Collections at once!
-
-In the example below, we will create two new purchase events in the `purchases` event collection and a single
-new event in the `sign_ups` event collection. Note that the keys of the `data` array specify the `event_collection`
-where those events should be stored.
-
-###### Example
-```php
-$purchases = [
-    ['purchase' => ['item' => 'Golden Elephant']],
-    ['purchase' => ['item' => 'Magenta Elephant']]
-];
-$signUps = [
-    ['name' => 'foo', 'email' => 'bar@baz.com']
-];
-
-$client->addEvents(['purchases' => $purchases, 'sign_ups' => $signUps]);
-```
-
 #### Get Analysis on Events
 All Analysis Endpoints should be supported.  See the [API Reference Docs](https://keen.io/docs/api/reference/) for required parameters.
 You can also check the [Service Description](/src/KeenIO/Resources/config/keen-io-3_0.json) for configured API Endpoints.
@@ -131,7 +101,7 @@ Below are a few example calls to some of the Analysis methods available.
 //Count
 $totalPurchases = $client->count('purchases');
 
-//Count Unqiue
+//Count Unique
 $totalItems = $client->countUnique('purchases', ['target_property' => 'purchase.item']);
 
 //Select Unique

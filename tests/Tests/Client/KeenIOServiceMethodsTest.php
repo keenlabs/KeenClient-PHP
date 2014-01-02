@@ -73,7 +73,7 @@ class KeenIOServiceMethodsTest extends GuzzleTestCase
         $client = $this->getServiceBuilder()->get('keen-io');
 
         $this->setMockResponse($client, 'add-event.mock');
-        $response = $client->addEvent('test', $event);
+        $response = $client->addEvent(array('event_collection' => 'test', 'data' => $event));
         $requests = $this->getMockedRequests();
 
         //Resource Url
@@ -95,18 +95,6 @@ class KeenIOServiceMethodsTest extends GuzzleTestCase
     }
 
     /**
-     * @dataProvider                providerInvalidEvents
-     * @expectedException           InvalidArgumentException
-     */
-    public function testSendEventReturnsExceptionOnBadDataType($event)
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-
-        $this->setMockResponse($client, 'add-event.mock');
-        $response = $client->addEvent('test', $event);
-    }
-
-    /**
      * Uses mock response to test addEvents service method.  Also checks that event data
      * is properly json_encoded in the request body.
      */
@@ -117,7 +105,7 @@ class KeenIOServiceMethodsTest extends GuzzleTestCase
         $client = $this->getServiceBuilder()->get('keen-io');
 
         $this->setMockResponse($client, 'add-events.mock');
-        $response = $client->addEvents($events);
+        $response = $client->addEvents(array('data' => $events));
         $requests = $this->getMockedRequests();
 
         //Resource Url
@@ -136,18 +124,6 @@ class KeenIOServiceMethodsTest extends GuzzleTestCase
 
         //Checks that the event is properly encoded in the request body
         $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $requests[0]->getBody());
-    }
-
-    /**
-     * @dataProvider                providerInvalidEvents
-     * @expectedException           InvalidArgumentException
-     */
-    public function testSendEventsReturnsExceptionOnBadDataType($events)
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-
-        $this->setMockResponse($client, 'add-events.mock');
-        $response = $client->addEvents($events);
     }
 
     /**
