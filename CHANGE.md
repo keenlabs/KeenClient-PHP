@@ -4,28 +4,20 @@ Change Log
 Version 2.0
 -----------
 
-####addEvent method - ( [source](src/KeenIO/Client/KeenIOClient.php#L112) )
+* All commands can now be used with a master key.
+* [BC] Method `deleteEvent` has been renamed to `deleteEvents` as it allows to delete multiple events.
+* [BC] `getScopedKey` has been renamed `createScopedKey` to better reflect its purpose.
+* [BC] `createScopedKey` and `decryptScopedKey` no longer need an API key: it just reuses the one set in the client.
+* [BC] The client provides shortcut for the `addEvent` and `addEvents` methods. Instead of:
 
-Previously, this method required nesting your event data under an extra `data` property - which is no longer necessary.
+```php
+$client->addEvent(array('event_collection' => 'bar', 'data' => array('my' => 'data')));
+```
 
-The `data` property has been renamed in the [service description](src/KeenIO/Resources/config/keen-io-3_0.json#L71) to `keen_io_event`, to effectively namespace this property. 
+Just use it like this:
 
-#####Changed from:
-    $client->addEvent($collection, array('data' => $event));
+```php
+$client->addEvent('bar', array('my' => 'data'));
+```
 
-#####To:
-    $client->addEvent($collection, $event);
-
-####addEvents method - ( [source](src/KeenIO/Client/KeenIOClient.php#L132) )
-
-Previously, this method required nesting your array of events under an extra `data` property - which is no longer necessary.
-
-The `data` property has been renamed in the [service description](src/KeenIO/Resources/config/keen-io-3_0.json#L89) to `keen_io_events`, to effectively namespace this property. 
-
-#####Changed from:
-    $client->addEvents(array('data' => $events));
-
-#####To:
-    $client->addEvents($events);
-
----
+If you still want to use the command manually, you must get the commands manually.

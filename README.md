@@ -84,7 +84,7 @@ $client->setProjectId($someNewProjectId);
 $client->getReadKey();
 
 //Set a new Read Key
-$newReadKey = $client->getScopedKey($masterKey, $filters, $allowedOperations);
+$newReadKey = $client->createScopedKey($filters, $allowedOperations);
 $client->setReadKey($newReadKey);
 
 ```
@@ -161,7 +161,7 @@ $filter = [
 $filters = [$filter];
 $allowed_operations = ['read'];
 
-$scopedKey = $client->getScopedKey($masterKey, $filters, $allowedOperations);
+$scopedKey = $client->createScopedKey($filters, $allowedOperations);
 ```
 
 Questions & Support

@@ -5,6 +5,7 @@ namespace KeenIO\Client;
 use Guzzle\Common\Collection;
 use Guzzle\Service\Client;
 use Guzzle\Service\Description\ServiceDescription;
+use KeenIO\Exception\RuntimeException;
 
 /**
  * Class KeenIOClient
@@ -48,27 +49,24 @@ class KeenIOClient extends Client
             'projectId' => null
         );
 
-        // Validate the configuration options
-        self::validateConfig($config);
-
         // Create client configuration
         $config = Collection::fromConfig($config, $default);
 
-        
         // Because each API Resource uses a separate type of API Key, we need to expose them all in
         // `commands.params`. Doing it this way allows the Service Definitions to set what API Key is used.
         $parameters = array();
         foreach (array('masterKey', 'writeKey', 'readKey') as $key) {
             $parameters[$key] = $config->get($key);
         }
+
         $config->set('command.params', $parameters);
 
         // Create the new Keen IO Client with our Configuration
         $client = new self($config->get('baseUrl'), $config);
 
         // Set the Service Definition from the versioned file
-        $file = 'keen-io-' . str_replace('.', '_', $client->getConfig('version')) . '.json';
-        $client->setDescription(ServiceDescription::factory(__DIR__ . "/../Resources/config/{$file}"));
+        $file = 'keen-io-' . str_replace('.', '_', $client->getConfig('version')) . '.php';
+        $client->setDescription(ServiceDescription::factory(__DIR__ . "/Resources/{$file}"));
 
         // Set the content type header to use "application/json" for all requests
         $client->setDefaultOption('headers', array('Content-Type' => 'application/json'));
@@ -79,7 +77,7 @@ class KeenIOClient extends Client
     /**
      * Magic method used to retrieve a command
      *
-     * Overriden to allow the `event_collection` parameter to passed separately
+     * Overridden to allow the `event_collection` parameter to passed separately
      * from the normal argument array.
      *
      * @param string $method Name of the command object to instantiate
@@ -97,63 +95,180 @@ class KeenIOClient extends Client
             }
         }
 
-        return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
+        return $this->getCommand($method, $args)->getResult();
     }
 
     /**
-     * Method used to send a single event to the Keen IO Api
+     * Proxy the addEvent command (to be used as a shortcut)
      *
-     * @param string $collection Name of the collection to store events
-     * @param array  $event      Event data to store
-     *
-     * @throws \InvalidArgumentException If $event is not an array
+     * @param  string $collection Name of the collection to store events
+     * @param  array  $event      Event data to store
      * @return mixed
      */
-    public function addEvent($collection, $event = array())
+    public function addEvent($collection, array $event = array())
     {
-        if (!is_array($event)) {
-            $message = 'Argument 2, \'$event\' must be of the type array, ' . gettype($event) .' given.';
-            throw new \InvalidArgumentException($message);
-        }
-
-        $parameters = array('event_collection' => $collection, 'keen_io_event' => $event);
-
-        return $this->getCommand('addEvent', $parameters)->getResult();
+        return $this->getCommand('addEvent', array(
+            'event_collection' => $collection,
+            'event_data'       => $event
+        ))->getResult();
     }
 
     /**
      * Method used to send multiple events to the Keen IO Api
      *
-     * @param array $events Event data to store
-     *
-     * @throws \InvalidArgumentException If $events is not an array
+     * @param  array $events Event data to store
      * @return mixed
      */
-    public function addEvents($events = array())
+    public function addEvents(array $events = array())
     {
-        if ( !is_array( $events ) ) {
-            $message = 'Argument 1, \'$events\' must be of the type array, ' . gettype($events) . ' given.';
-            throw new \InvalidArgumentException($message);
-        }
-
-        $parameters = array('keen_io_events' => $events);
-
-        return $this->getCommand('addEvents', $parameters)->getResult();
+        return $this->getCommand('addEvents', array('event_data' => $events))->getResult();
     }
+
+    /**
+     * Sets the Project Id used by the Keen IO Client
+     *
+     * @param string $projectId
+     */
+    public function setProjectId($projectId)
+    {
+        $this->getConfig()->set('projectId', $projectId);
+    }
+
+    /**
+     * Gets the Project Id being used by the Keen IO Client
+     *
+     * @return string|null Value of the ProjectId or NULL
+     */
+    public function getProjectId()
+    {
+        return $this->getConfig('projectId');
+    }
+
+    /**
+     * Sets the API Write Key used by the Keen IO Client
+     *
+     * @param string $writeKey
+     */
+    public function setWriteKey($writeKey)
+    {
+        $this->getConfig()->set('writeKey', $writeKey);
+
+        // Add API Read Key to `command.params`
+        $params             = $this->getConfig('command.params');
+        $params['writeKey'] = $writeKey;
+
+        $this->getConfig()->set('command.params', $params);
+    }
+
+    /**
+     * Gets the API Write Key being used by the Keen IO Client
+     *
+     * @return string|null Value of the WriteKey or NULL
+     */
+    public function getWriteKey()
+    {
+        return $this->getConfig('writeKey');
+    }
+
+    /**
+     * Sets the API Read Key used by the Keen IO Client
+     *
+     * @param string $readKey
+     */
+    public function setReadKey($readKey)
+    {
+        $this->getConfig()->set('readKey', $readKey);
+
+        // Add API Read Key to `command.params`
+        $params            = $this->getConfig('command.params');
+        $params['readKey'] = $readKey;
+
+        $this->getConfig()->set('command.params', $params);
+    }
+
+    /**
+     * Gets the API Read Key being used by the Keen IO Client
+     *
+     * @return string|null Value of the ReadKey or NULL
+     */
+    public function getReadKey()
+    {
+        return $this->getConfig('readKey');
+    }
+
+    /**
+     * Sets the API Master Key used by the Keen IO Client
+     *
+     * @param string $masterKey
+     */
+    public function setMasterKey($masterKey)
+    {
+        $this->getConfig()->set('masterKey', $masterKey);
+
+        // Add API Master Key to `command.params`
+        $params              = $this->getConfig('command.params');
+        $params['masterKey'] = $masterKey;
+
+        $this->getConfig()->set('command.params', $params);
+    }
+
+    /**
+     * Gets the API Master Key being used by the Keen IO Client
+     *
+     * @return string|null Value of the MasterKey or NULL
+     */
+    public function getMasterKey()
+    {
+        return $this->getConfig('masterKey');
+    }
+
+    /**
+     * Sets the API Version used by the Keen IO Client.
+     * Changing the API Version will attempt to load a new Service Definition for that Version.
+     *
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->getConfig()->set('version', $version);
+
+        /* Set the Service Definition from the versioned file */
+        $file = 'keen-io-' . str_replace('.', '_', $this->getConfig('version')) . '.php';
+        $this->setDescription(ServiceDescription::factory(__DIR__ . "/Resources/{$file}"));
+    }
+
+    /**
+     * Gets the Version being used by the Keen IO Client
+     *
+     * @return string|null Value of the Version or NULL
+     */
+    public function getVersion()
+    {
+        return $this->getConfig('version');
+    }
+
+    /**
+     * ----------------------------------------------------------------------------------------------------
+     * SCOPED KEY RELATED METHODS
+     * ----------------------------------------------------------------------------------------------------
+     */
 
     /**
      * Get a scoped key for an array of filters
      *
-     * @param string $apiKey            The master API key to use for encryption
      * @param array  $filters           What filters to encode into a scoped key
      * @param array  $allowedOperations What operations the generated scoped key will allow
      * @param int    $source
-     *
      * @return string
+     * @throws RuntimeException If no master key is set
      */
-    public function getScopedKey($apiKey, $filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM)
+    public function createScopedKey($filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM)
     {
-        $options = array( 'filters' => $filters );
+        if (!$masterKey = $this->getMasterKey()) {
+            throw new RuntimeException('A master key is needed to create a scoped key');
+        }
+
+        $options = array('filters' => $filters);
 
         if (!empty($allowedOperations)) {
             $options['allowed_operations'] = $allowedOperations;
@@ -164,7 +279,7 @@ class KeenIOClient extends Client
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $iv       = mcrypt_create_iv($ivLength, $source);
 
-        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $apiKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
+        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $masterKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
 
         $ivHex        = bin2hex($iv);
         $encryptedHex = bin2hex($encrypted);
@@ -193,12 +308,16 @@ class KeenIOClient extends Client
     /**
      * Decrypt a scoped key (primarily used for testing)
      *
-     * @param  string $apiKey    The master API key to use for decryption
      * @param  string $scopedKey The scoped Key to decrypt
      * @return mixed
+     * @throws RuntimeException If no master key is set
      */
-    public function decryptScopedKey($apiKey, $scopedKey)
+    public function decryptScopedKey($scopedKey)
     {
+        if (!$masterKey = $this->getMasterKey()) {
+            throw new RuntimeException('A master key is needed to decrypt a scoped key');
+        }
+
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
         $ivHex    = substr($scopedKey, 0, $ivLength);
 
@@ -206,7 +325,7 @@ class KeenIOClient extends Client
 
         $resultPadded = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
-            $apiKey,
+            $masterKey,
             pack('H*', $encryptedHex),
             MCRYPT_MODE_CBC,
             pack('H*', $ivHex)
@@ -227,169 +346,5 @@ class KeenIOClient extends Client
         $pad = ord($string[$len - 1]);
 
         return substr($string, 0, $len - $pad);
-    }
-
-    /**
-     * Sets the Project Id used by the Keen IO Client
-     *
-     * @param string $projectId
-     */
-    public function setProjectId($projectId)
-    {
-        self::validateConfig(array('projectId' => $projectId));
-        $this->getConfig()->set('projectId', $projectId);
-    }
-
-    /**
-     * Gets the Project Id being used by the Keen IO Client
-     *
-     * @return string|null Value of the ProjectId or NULL
-     */
-    public function getProjectId()
-    {
-        return $this->getConfig('projectId');
-    }
-
-    /**
-     * Sets the API Write Key used by the Keen IO Client
-     *
-     * @param string $writeKey
-     */
-    public function setWriteKey($writeKey)
-    {
-        self::validateConfig(array('writeKey' => $writeKey));
-
-        $this->getConfig()->set('writeKey', $writeKey);
-
-        // Add API Read Key to `command.params`
-        $params             = $this->getConfig('command.params');
-        $params['writeKey'] = $writeKey;
-
-        $this->getConfig()->set('command.params', $params);
-
-    }
-
-    /**
-     * Gets the API Write Key being used by the Keen IO Client
-     *
-     * @return string|null Value of the WriteKey or NULL
-     */
-    public function getWriteKey()
-    {
-        return $this->getConfig('writeKey');
-    }
-
-    /**
-     * Sets the API Read Key used by the Keen IO Client
-     *
-     * @param string $readKey
-     */
-    public function setReadKey($readKey)
-    {
-        self::validateConfig(array('readKey' => $readKey));
-
-        $this->getConfig()->set('readKey', $readKey);
-
-        // Add API Read Key to `command.params`
-        $params            = $this->getConfig('command.params');
-        $params['readKey'] = $readKey;
-
-        $this->getConfig()->set('command.params', $params);
-    }
-
-    /**
-     * Gets the API Read Key being used by the Keen IO Client
-     *
-     * @return string|null Value of the ReadKey or NULL
-     */
-    public function getReadKey()
-    {
-        return $this->getConfig('readKey');
-    }
-
-    /**
-     * Sets the API Master Key used by the Keen IO Client
-     *
-     * @param string $masterKey
-     */
-    public function setMasterKey($masterKey)
-    {
-        self::validateConfig(array('masterKey' => $masterKey));
-
-        $this->getConfig()->set('masterKey', $masterKey);
-
-        // Add API Master Key to `command.params`
-        $params              = $this->getConfig('command.params');
-        $params['masterKey'] = $masterKey;
-
-        $this->getConfig()->set('command.params', $params);
-    }
-
-    /**
-     * Gets the API Master Key being used by the Keen IO Client
-     *
-     * @return string|null Value of the MasterKey or NULL
-     */
-    public function getMasterKey()
-    {
-        return $this->getConfig('masterKey');
-    }
-
-    /**
-     * Sets the API Version used by the Keen IO Client.
-     * Changing the API Version will attempt to load a new Service Definition for that Version.
-     *
-     * @param string $version
-     */
-    public function setVersion($version)
-    {
-        self::validateConfig(array('version' => $version));
-
-        $this->getConfig()->set('version', $version);
-
-        /* Set the Service Definition from the versioned file */
-        $file = 'keen-io-' . str_replace('.', '_', $this->getConfig('version')) . '.json';
-        $this->setDescription(ServiceDescription::factory(__DIR__ . "/../Resources/config/{$file}"));
-    }
-
-    /**
-     * Gets the Version being used by the Keen IO Client
-     *
-     * @return string|null Value of the Version or NULL
-     */
-    public function getVersion()
-    {
-        return $this->getConfig('version');
-    }
-
-    /**
-     * Validates the Keen IO Client configuration options
-     *
-     * @params  array                     $config
-     * @throws \InvalidArgumentException When a config value does not meet its validation criteria
-     */
-    public static function validateConfig($config = array())
-    {
-        foreach ($config as $option => $value) {
-            if ($option === 'version' && empty($config['version'])) {
-                throw new \InvalidArgumentException("Version can not be empty");
-            }
-
-            if ($option === 'readKey' && ! ctype_alnum($value)) {
-                throw new \InvalidArgumentException( "Read Key '{$value}' contains invalid characters or spaces." );
-            }
-
-            if ($option === 'writeKey' && ! ctype_alnum($value)) {
-                throw new \InvalidArgumentException( "Write Key '{$value}' contains invalid characters or spaces." );
-            }
-
-            if ($option === 'masterKey' && ! ctype_alnum($value)) {
-                throw new \InvalidArgumentException( "Write Key '{$value}' contains invalid characters or spaces." );
-            }
-
-            if ($option === 'projectId' && ! ctype_alnum($value)) {
-                throw new \InvalidArgumentException( "Project ID '{$value}' contains invalid characters or spaces.");
-            }
-        }
     }
 }

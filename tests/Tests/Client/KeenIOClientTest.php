@@ -15,7 +15,7 @@ class KeenIOClientTest extends GuzzleTestCase
         $config = array(
             'projectId' => 'testProjectId',
             'masterKey' => 'testMasterKey',
-            'readKey'   => 'testMasterKey',
+            'readKey'   => 'testReadKey',
             'writeKey'  => 'testWriteKey',
             'version'   => '3.0'
        );
@@ -34,23 +34,6 @@ class KeenIOClientTest extends GuzzleTestCase
     }
 
     /**
-     * @dataProvider        invalidClientConfigValues
-     * @expectedException   InvalidArgumentException
-     */
-    public function testFactoryReturnsExceptionOnInvalidConfigs($masterKey, $readKey, $writeKey, $projectId, $version)
-    {
-        $config = array(
-            'projectId' => $projectId,
-            'masterKey' => $masterKey,
-            'readKey'   => $readKey,
-            'writeKey'  => $writeKey,
-            'version'   => $version
-       );
-
-        $client = KeenIOClient::factory($config);
-    }
-
-    /**
      * Tests the client setter method and that the value returned is correct
      */
     public function testProjectIdSetter()
@@ -59,16 +42,6 @@ class KeenIOClientTest extends GuzzleTestCase
         $client->setProjectId('testProjectId');
 
         $this->assertEquals('testProjectId', $client->getConfig('projectId'));
-    }
-
-    /**
-     * @dataProvider        invalidValues
-     * @expectedException   InvalidArgumentException
-     */
-    public function testSetterReturnsExceptionOnInvalidProjectId($projectId)
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-        $client->setProjectId($projectId);
     }
 
     /**
@@ -83,37 +56,6 @@ class KeenIOClientTest extends GuzzleTestCase
     }
 
     /**
-     * @dataProvider        invalidValues
-     * @expectedException   InvalidArgumentException
-     */
-    public function testSetterReturnsExceptionOnInvalidReadKey($readKey)
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-        $client->setReadKey($readKey);
-    }
-
-    /**
-     * Tests the client setter method and that the value returned is correct
-     */
-    public function testWriteKeySetter()
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-        $client->setWriteKey('testWriteKey');
-
-        $this->assertEquals('testWriteKey', $client->getConfig('writeKey'));
-    }
-
-    /**
-     * @dataProvider        invalidValues
-     * @expectedException   InvalidArgumentException
-     */
-    public function testSetterReturnsExceptionOnInvalidWriteKey($writeKey)
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-        $client->setWriteKey($writeKey);
-    }
-
-    /**
      * Tests the client setter method and that the value returned is correct
      */
     public function testMasterKeySetter()
@@ -122,16 +64,6 @@ class KeenIOClientTest extends GuzzleTestCase
         $client->setMasterKey('testMasterKey');
 
         $this->assertEquals('testMasterKey', $client->getConfig('masterKey'));
-    }
-
-    /**
-     * @dataProvider        invalidValues
-     * @expectedException   InvalidArgumentException
-     */
-    public function testSetterReturnsExceptionOnInvalidMasterKey($masterKey)
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-        $client->setMasterKey($masterKey);
     }
 
     /**
@@ -146,67 +78,198 @@ class KeenIOClientTest extends GuzzleTestCase
     }
 
     /**
-     * @dataProvider        invalidVersions
-     * @expectedException   InvalidArgumentException
-     */
-    public function testSetterReturnsExceptionOnInvalidVersion($version)
-    {
-        $client = KeenIOClient::factory(array());
-
-        $client->setVersion($version);
-    }
-
-    /**
      * Tests the creation of a Scoped Key
      */
-    public function testGetScopedKey()
+    public function testCreateScopedKey()
     {
-        $client = KeenIOClient::factory();
+        $client = KeenIOClient::factory(array(
+            'masterKey' => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+        ));
 
-        $apiKey = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
         $filters = array($filter);
         $allowed_operations = array('read');
 
-        $scopedKey = $client->getScopedKey($apiKey, $filters, $allowed_operations);
+        $scopedKey = $client->createScopedKey($filters, $allowed_operations);
 
-        $result = $client->decryptScopedKey($apiKey, $scopedKey);
+        $result = $client->decryptScopedKey($scopedKey);
         $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
 
         $this->assertEquals($expected, $result);
     }
 
     /**
-     * Invalid values used for testing setter methods on the Keen IO Client
+     * @dataProvider providerServiceCommands
      */
-    public function invalidValues()
+    public function testServiceCommands($method, $params)
     {
-        return array(array('!#1234567890.'), array(''));
+        $client = $this->getServiceBuilder()->get('keen-io');
+
+        $this->setMockResponse($client, 'valid-response.mock');
+        $result = $client->getCommand($method, $params)->getResult();
+
+        $requests = $this->getMockedRequests();
+
+        //Resource Url
+        $url = parse_url($requests[0]->getUrl());
+        parse_str($url['query'], $queryString);
+
+        //Camel to underscore case
+        $method = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $method));
+
+        //Make sure the projectId is set properly in the url
+        $this->assertContains($client->getProjectId(), explode('/', $url['path']));
+
+        //Make sure the version is set properly in the url
+        $this->assertContains($client->getVersion(), explode('/', $url['path']));
+
+        //Make sure the url has the right method
+        $this->assertContains($method, explode('/', $url['path']));
+
+        //Check that the querystring has all the parameters
+        $this->assertEquals($params, $queryString);
     }
 
     /**
-     * Invalid version values used for testing version setter
+     * Data for service calls
      */
-    public function invalidVersions()
-    {
-        return array(array(''), array('99.0'));
-    }
-
-    /**
-     * Invalid config values used for testing the factory method of the Keen IO Client
-     */
-    public function invalidClientConfigValues()
+    public function providerServiceCommands()
     {
         return array(
-            array('!#1234567890.', 'testReadAPIKey', 'testWriteAPIKey', 'testProjectId', '3.0'),    // Invalid Master Key
-            array('', 'testReadAPIKey', 'testWriteAPIKey', 'testProjectId', '3.0'),                 // Blank Master Key
-            array('testMasterAPIKey', '!#1234567890.', 'testWriteAPIKey', 'testProjectId', '3.0'),  // Invalid Read Key
-            array('testMasterAPIKey', '', 'testWriteAPIKey', 'testProjectId', '3.0'),               // Blank Read Key
-            array('testMasterAPIKey', 'testReadAPIKey', '!#1234567890.', 'testProjectId', '3.0'),   // Invalid Write Key
-            array('testMasterAPIKey', 'testReadAPIKey', '', 'testProjectId', '3.0'),                // Blank Write Key
-            array('testMasterAPIKey', 'testReadAPIKey', 'testWriteAPIKey', '!#1234567890.', '3.0'), // Invalid Project Id
-            array('testMasterAPIKey', 'testReadAPIKey', 'testWriteAPIKey', '', '3.0'),              // Blank Project Id
-            array('testMasterAPIKey', 'testReadAPIKey', 'testWriteAPIKey', 'testProjectId', '')     // Blank Version
-       );
+            array('count', array('event_collection' => 'test', 'timeframe' => 'this_week')),
+            array('countUnique', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array('minimum', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array('maximum', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array('average', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array('sum', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array('selectUnique', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array('extraction', array('event_collection' => 'test', 'timeframe' => 'this_week', 'latest' => 10))
+        );
+    }
+
+    /**
+     * @dataProvider        providerServiceCommands
+     * @expectedException   \Guzzle\Http\Exception\ClientErrorResponseException
+     */
+    public function testServiceCommandsReturnExceptionOnInvalidAuth($method, $params)
+    {
+        $client = $this->getServiceBuilder()->get('keen-io');
+
+        $this->setMockResponse($client, 'invalid-auth.mock');
+        $result = $client->getCommand($method, $params)->getResult();
+    }
+
+    /**
+     * @dataProvider        providerServiceCommands
+     * @expectedException   \Guzzle\Http\Exception\ClientErrorResponseException
+     */
+    public function testServiceCommandsReturnExceptionOnInvalidProjectId($method, $params)
+    {
+        $client = $this->getServiceBuilder()->get('keen-io');
+
+        $this->setMockResponse($client, 'invalid-project-id.mock');
+        $result = $client->getCommand($method, $params)->getResult();
+    }
+
+    /**
+     * Uses mock response to test addEvent service method.  Also checks that event data
+     * is properly json_encoded in the request body.
+     */
+    public function testSendEventMethod()
+    {
+        $event = array('foo' => 'bar', 'baz' => 1);
+
+        $client = $this->getServiceBuilder()->get('keen-io');
+
+        $this->setMockResponse($client, 'add-event.mock');
+        $response = $client->addEvent('test', $event);
+        $requests = $this->getMockedRequests();
+
+        //Resource Url
+        $url = parse_url($requests[0]->getUrl());
+
+        $expectedResponse = array('created' => true);
+
+        //Make sure the projectId is set properly in the url
+        $this->assertContains($client->getProjectId(), explode('/', $url['path']));
+
+        //Make sure the version is set properly in the url
+        $this->assertContains($client->getVersion(), explode('/', $url['path']));
+
+        //Checks that the response is good - based off mock response
+        $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
+
+        //Checks that the event is properly encoded in the request body
+        $this->assertJsonStringEqualsJsonString(json_encode($event), (string) $requests[0]->getBody());
+    }
+
+    /**
+     * @dataProvider                providerInvalidEvents
+     * @expectedException           \Exception
+     */
+    public function testSendEventReturnsExceptionOnBadDataType($event)
+    {
+        $client = $this->getServiceBuilder()->get('keen-io');
+
+        $this->setMockResponse($client, 'add-event.mock');
+        $response = $client->addEvent('test', $event);
+    }
+
+    /**
+     * Uses mock response to test addEvents service method.  Also checks that event data
+     * is properly json_encoded in the request body.
+     */
+    public function testSendEventsMethod()
+    {
+        $events = array('test' => array(array('foo' => 'bar'), array('bar' => 'baz')));
+
+        $client = $this->getServiceBuilder()->get('keen-io');
+
+        $this->setMockResponse($client, 'add-events.mock');
+        $response = $client->addEvents($events);
+        $requests = $this->getMockedRequests();
+
+        //Resource Url
+        $url = parse_url($requests[0]->getUrl());
+
+        $expectedResponse = array('test' => array(array('success' => true), array('success'=>true)));
+
+        //Make sure the projectId is set properly in the url
+        $this->assertContains($client->getProjectId(), explode('/', $url['path']));
+
+        //Make sure the version is set properly in the url
+        $this->assertContains($client->getVersion(), explode('/', $url['path']));
+
+        //Checks that the response is good - based off mock response
+        $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
+
+        //Checks that the event is properly encoded in the request body
+        $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $requests[0]->getBody());
+    }
+
+    /**
+     * @dataProvider                providerInvalidEvents
+     * @expectedException           \Exception
+     */
+    public function testSendEventsReturnsExceptionOnBadDataType($events)
+    {
+        $client = $this->getServiceBuilder()->get('keen-io');
+
+        $this->setMockResponse($client, 'add-events.mock');
+        $response = $client->addEvents($events);
+    }
+
+    /**
+     * Invalid data types for events
+     */
+    public function providerInvalidEvents()
+    {
+        $obj = new \stdClass();
+
+        return array(
+            array($obj),
+            array('string'),
+            array(12345),
+        );
     }
 }
