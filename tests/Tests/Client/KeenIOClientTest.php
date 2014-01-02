@@ -205,7 +205,7 @@ class KeenIOClientTest extends GuzzleTestCase
 
     /**
      * @dataProvider                providerInvalidEvents
-     * @expectedException           \Guzzle\Service\Exception\ValidationException
+     * @expectedException           \Exception
      */
     public function testSendEventReturnsExceptionOnBadDataType($event)
     {
@@ -249,7 +249,7 @@ class KeenIOClientTest extends GuzzleTestCase
 
     /**
      * @dataProvider                providerInvalidEvents
-     * @expectedException           \Guzzle\Service\Exception\ValidationException
+     * @expectedException           \Exception
      */
     public function testSendEventsReturnsExceptionOnBadDataType($events)
     {

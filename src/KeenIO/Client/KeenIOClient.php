@@ -16,8 +16,6 @@ use KeenIO\Exception\RuntimeException;
  * @method array getProjects(array $args = array()) {@command KeenIO getProjects}
  * @method array getProject(array $args = array()) {@command KeenIO getProject}
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
- * @method array addEvent(array $args = array()) {@command KeenIO addEvent}
- * @method array addEvents(array $args = array()) {@command KeenIO addEvents}
  * @method array deleteEvents(array $args = array()) {@command KeenIO deleteEvents}
  * @method array deleteEventProperties(array $args = array()) {@command KeenIO deleteEventProperties}
  * @method array count(array $args = array()) {@command KeenIO count}
@@ -79,7 +77,8 @@ class KeenIOClient extends Client
     /**
      * Magic method used to retrieve a command
      *
-     * Add shortcut to the addEvent and addEvents
+     * Overridden to allow the `event_collection` parameter to passed separately
+     * from the normal argument array.
      *
      * @param string $method Name of the command object to instantiate
      * @param array  $args   Arguments to pass to the command
@@ -88,16 +87,41 @@ class KeenIOClient extends Client
      */
     public function __call($method, $args = array())
     {
-        switch($method) {
-            case 'addEvent':
-                $args = array('event_collection' => $args[0], 'data' => $args[1]);
-                break;
-            case 'addEvents':
-                $args = array('data' => $args[0]);
-                break;
+        if (isset($args[0]) && is_string($args[0])) {
+            $args[0] = array('event_collection' => $args[0]);
+
+            if (isset($args[1]) && is_array($args[1])) {
+                $args[0] = array_merge($args[1], $args[0]);
+            }
         }
 
         return $this->getCommand($method, $args)->getResult();
+    }
+
+    /**
+     * Proxy the addEvent command (to be used as a shortcut)
+     *
+     * @param  string $collection Name of the collection to store events
+     * @param  array  $event      Event data to store
+     * @return mixed
+     */
+    public function addEvent($collection, array $event = array())
+    {
+        return $this->getCommand('addEvent', array(
+            'event_collection' => $collection,
+            'data'             => $event
+        ))->getResult();
+    }
+
+    /**
+     * Method used to send multiple events to the Keen IO Api
+     *
+     * @param  array $events Event data to store
+     * @return mixed
+     */
+    public function addEvents(array $events = array())
+    {
+        return $this->getCommand('addEvents', array('data' => $events))->getResult();
     }
 
     /**
