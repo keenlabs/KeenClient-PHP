@@ -10,7 +10,7 @@
     "require": {
         "php": ">=5.3.3",
         "ext-mcrypt": "*",
-        "guzzle/guzzle": "~3.7"
+        "zendframework/zend-http": "~2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
@@ -25,7 +25,7 @@
             "name": "Keith Kirk",
             "email": "kkirk@undergroundelephant.com",
             "homepage": "http://undergroundelephant.com"
-        }		
+        }
     ],
     "autoload": {
         "psr-0": {
