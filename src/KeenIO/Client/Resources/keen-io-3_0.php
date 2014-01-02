@@ -94,7 +94,7 @@ return array(
                     'description' => 'The event collection.',
                     'required'    => true,
                 ),
-                'data'             => array(
+                'event_data'       => array(
                     'location' => 'body',
                     'type'     => 'array',
                     'filters'  => array('json_encode'),
@@ -123,7 +123,7 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'data'      => array(
+                'event_data' => array(
                     'location' => 'body',
                     'type'     => 'array',
                     'filters'  => array('json_encode'),

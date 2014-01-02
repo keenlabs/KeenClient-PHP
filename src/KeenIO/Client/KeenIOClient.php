@@ -109,7 +109,7 @@ class KeenIOClient extends Client
     {
         return $this->getCommand('addEvent', array(
             'event_collection' => $collection,
-            'data'             => $event
+            'event_data'       => $event
         ))->getResult();
     }
 
@@ -121,7 +121,7 @@ class KeenIOClient extends Client
      */
     public function addEvents(array $events = array())
     {
-        return $this->getCommand('addEvents', array('data' => $events))->getResult();
+        return $this->getCommand('addEvents', array('event_data' => $events))->getResult();
     }
 
     /**
