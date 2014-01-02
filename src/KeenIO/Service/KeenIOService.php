@@ -297,7 +297,9 @@ class KeenIOService
                          ->setParameterGet(array_filter($parameters))
                          ->send();
 
-        return $this->parseResponse($response);
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -327,7 +329,9 @@ class KeenIOService
                          ->setParameterGet(array_filter($parameters))
                          ->send();
 
-        return $this->parseResponse($response);
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -335,27 +339,31 @@ class KeenIOService
      *
      * @param  string $eventCollection
      * @param  string $targetProperty
-     * @param  array  $filters
-     * @param  string $timeframe
-     * @param  string $interval
-     * @param  string $timezone
-     * @param  array  $groupBy
      * @return array
      */
-    public function minimum($eventCollection, $targetProperty, array $filters = array(), $timeframe = '',
-                            $interval = '', $timezone = '', array $groupBy = array())
+    public function minimum($eventCollection, $targetProperty)
     {
-        $payload = array(
+        $args = func_get_args();
+        $args = isset($args[2]) ? $args[2] : array();
+
+        $parameters = array(
             'event_collection' => $eventCollection,
             'target_property'  => $targetProperty,
-            'filters'          => $filters,
-            'timeframe'        => $timeframe,
-            'interval'         => $interval,
-            'timezone'         => $timezone,
-            'group_by'         => $groupBy
+            'filters'          => isset($args['filters']) ? json_encode($args['filters']) : null,
+            'timeframe'        => isset($args['timeframe']) ? $args['timeframe'] : null,
+            'interval'         => isset($args['interval']) ? $args['interval'] : null,
+            'timezone'         => isset($args['timezone']) ? $args['timezone'] : null,
+            'group_by'         => isset($args['group_by']) ? json_encode($args['group_by']) : null
         );
 
-        return $this->keenIOClient->minimum(array_filter($payload));
+        $uri      = self::API_ENDPOINT . "/projects/{$this->projectId}/queries/minimum";
+        $response = $this->prepareHttpClient($uri, $this->readKey ?: $this->masterKey)
+                         ->setParameterGet(array_filter($parameters))
+                         ->send();
+
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -363,27 +371,31 @@ class KeenIOService
      *
      * @param  string $eventCollection
      * @param  string $targetProperty
-     * @param  array  $filters
-     * @param  string $timeframe
-     * @param  string $interval
-     * @param  string $timezone
-     * @param  array  $groupBy
      * @return array
      */
-    public function maximum($eventCollection, $targetProperty, array $filters = array(), $timeframe = '',
-                            $interval = '', $timezone = '', array $groupBy = array())
+    public function maximum($eventCollection, $targetProperty)
     {
-        $payload = array(
+        $args = func_get_args();
+        $args = isset($args[2]) ? $args[2] : array();
+
+        $parameters = array(
             'event_collection' => $eventCollection,
             'target_property'  => $targetProperty,
-            'filters'          => $filters,
-            'timeframe'        => $timeframe,
-            'interval'         => $interval,
-            'timezone'         => $timezone,
-            'group_by'         => $groupBy
+            'filters'          => isset($args['filters']) ? json_encode($args['filters']) : null,
+            'timeframe'        => isset($args['timeframe']) ? $args['timeframe'] : null,
+            'interval'         => isset($args['interval']) ? $args['interval'] : null,
+            'timezone'         => isset($args['timezone']) ? $args['timezone'] : null,
+            'group_by'         => isset($args['group_by']) ? json_encode($args['group_by']) : null
         );
 
-        return $this->keenIOClient->maximum(array_filter($payload));
+        $uri      = self::API_ENDPOINT . "/projects/{$this->projectId}/queries/maximum";
+        $response = $this->prepareHttpClient($uri, $this->readKey ?: $this->masterKey)
+                         ->setParameterGet(array_filter($parameters))
+                         ->send();
+
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -391,27 +403,31 @@ class KeenIOService
      *
      * @param  string $eventCollection
      * @param  string $targetProperty
-     * @param  array  $filters
-     * @param  string $timeframe
-     * @param  string $interval
-     * @param  string $timezone
-     * @param  array  $groupBy
      * @return array
      */
-    public function average($eventCollection, $targetProperty, array $filters = array(), $timeframe = '',
-                            $interval = '', $timezone = '', array $groupBy = array())
+    public function average($eventCollection, $targetProperty)
     {
-        $payload = array(
+        $args = func_get_args();
+        $args = isset($args[2]) ? $args[2] : array();
+
+        $parameters = array(
             'event_collection' => $eventCollection,
             'target_property'  => $targetProperty,
-            'filters'          => $filters,
-            'timeframe'        => $timeframe,
-            'interval'         => $interval,
-            'timezone'         => $timezone,
-            'group_by'         => $groupBy
+            'filters'          => isset($args['filters']) ? json_encode($args['filters']) : null,
+            'timeframe'        => isset($args['timeframe']) ? $args['timeframe'] : null,
+            'interval'         => isset($args['interval']) ? $args['interval'] : null,
+            'timezone'         => isset($args['timezone']) ? $args['timezone'] : null,
+            'group_by'         => isset($args['group_by']) ? json_encode($args['group_by']) : null
         );
 
-        return $this->keenIOClient->average(array_filter($payload));
+        $uri      = self::API_ENDPOINT . "/projects/{$this->projectId}/queries/average";
+        $response = $this->prepareHttpClient($uri, $this->readKey ?: $this->masterKey)
+                         ->setParameterGet(array_filter($parameters))
+                         ->send();
+
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -419,27 +435,31 @@ class KeenIOService
      *
      * @param  string $eventCollection
      * @param  string $targetProperty
-     * @param  array  $filters
-     * @param  string $timeframe
-     * @param  string $interval
-     * @param  string $timezone
-     * @param  array  $groupBy
      * @return array
      */
-    public function sum($eventCollection, $targetProperty, array $filters = array(), $timeframe = '',
-                        $interval = '', $timezone = '', array $groupBy = array())
+    public function sum($eventCollection, $targetProperty)
     {
-        $payload = array(
+        $args = func_get_args();
+        $args = isset($args[2]) ? $args[2] : array();
+
+        $parameters = array(
             'event_collection' => $eventCollection,
             'target_property'  => $targetProperty,
-            'filters'          => $filters,
-            'timeframe'        => $timeframe,
-            'interval'         => $interval,
-            'timezone'         => $timezone,
-            'group_by'         => $groupBy
+            'filters'          => isset($args['filters']) ? json_encode($args['filters']) : null,
+            'timeframe'        => isset($args['timeframe']) ? $args['timeframe'] : null,
+            'interval'         => isset($args['interval']) ? $args['interval'] : null,
+            'timezone'         => isset($args['timezone']) ? $args['timezone'] : null,
+            'group_by'         => isset($args['group_by']) ? json_encode($args['group_by']) : null
         );
 
-        return $this->keenIOClient->sum(array_filter($payload));
+        $uri      = self::API_ENDPOINT . "/projects/{$this->projectId}/queries/sum";
+        $response = $this->prepareHttpClient($uri, $this->readKey ?: $this->masterKey)
+                         ->setParameterGet(array_filter($parameters))
+                         ->send();
+
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -447,27 +467,30 @@ class KeenIOService
      *
      * @param  string $eventCollection
      * @param  string $targetProperty
-     * @param  array  $filters
-     * @param  string $timeframe
-     * @param  string $interval
-     * @param  string $timezone
-     * @param  array  $groupBy
      * @return array
      */
-    public function selectUnique($eventCollection, $targetProperty, array $filters = array(), $timeframe = '',
-                                 $interval = '', $timezone = '', array $groupBy = array())
+    public function selectUnique($eventCollection, $targetProperty)
     {
-        $payload = array(
+        $args = func_get_args();
+        $args = isset($args[2]) ? $args[2] : array();
+
+        $parameters = array(
             'event_collection' => $eventCollection,
             'target_property'  => $targetProperty,
-            'filters'          => $filters,
-            'timeframe'        => $timeframe,
-            'interval'         => $interval,
-            'timezone'         => $timezone,
-            'group_by'         => $groupBy
+            'filters'          => isset($args['filters']) ? json_encode($args['filters']) : null,
+            'timeframe'        => isset($args['timeframe']) ? $args['timeframe'] : null,
+            'interval'         => isset($args['interval']) ? $args['interval'] : null,
+            'timezone'         => isset($args['timezone']) ? $args['timezone'] : null
         );
 
-        return $this->keenIOClient->selectUnique(array_filter($payload));
+        $uri      = self::API_ENDPOINT . "/projects/{$this->projectId}/queries/select_unique";
+        $response = $this->prepareHttpClient($uri, $this->readKey ?: $this->masterKey)
+                         ->setParameterGet(array_filter($parameters))
+                         ->send();
+
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -478,7 +501,14 @@ class KeenIOService
      */
     public function funnel(array $steps)
     {
-        return $this->keenIOClient->funnel(array('steps' => $steps));
+        $uri      = self::API_ENDPOINT . "/projects/{$this->projectId}/queries/funnel";
+        $response = $this->prepareHttpClient($uri, $this->readKey ?: $this->masterKey)
+                         ->setParameterGet(array_filter(json_encode($steps)))
+                         ->send();
+
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**
@@ -486,27 +516,30 @@ class KeenIOService
      *
      * @param  string $eventCollection
      * @param  array  $analysis
-     * @param  array  $filters
-     * @param  string $timeframe
-     * @param  string $interval
-     * @param  string $timezone
-     * @param  array  $groupBy
      * @return array
      */
-    public function multiAnalysis($eventCollection, array $analysis, array $filters = array(), $timeframe = '',
-                                  $interval = '', $timezone = '', array $groupBy = array())
+    public function multiAnalysis($eventCollection, array $analysis)
     {
-        $payload = array(
+        $args = func_get_args();
+        $args = isset($args[2]) ? $args[2] : array();
+
+        $parameters = array(
             'event_collection' => $eventCollection,
-            'analysis'         => $analysis,
-            'filters'          => $filters,
-            'timeframe'        => $timeframe,
-            'interval'         => $interval,
-            'timezone'         => $timezone,
-            'group_by'         => $groupBy
+            'analyses'         => json_encode($analysis),
+            'filters'          => isset($args['filters']) ? json_encode($args['filters']) : null,
+            'timeframe'        => isset($args['timeframe']) ? $args['timeframe'] : null,
+            'interval'         => isset($args['interval']) ? $args['interval'] : null,
+            'timezone'         => isset($args['timezone']) ? $args['timezone'] : null
         );
 
-        return $this->keenIOClient->multiAnalysis(array_filter($payload));
+        $uri      = self::API_ENDPOINT . "/projects/{$this->projectId}/queries/multi_analysis";
+        $response = $this->prepareHttpClient($uri, $this->readKey ?: $this->masterKey)
+                         ->setParameterGet(array_filter($parameters))
+                         ->send();
+
+        $response = $this->parseResponse($response);
+
+        return $response['result'];
     }
 
     /**

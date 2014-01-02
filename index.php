@@ -21,11 +21,11 @@ if (file_exists('vendor/autoload.php')) {
 }
 
 $keen = new \KeenIO\Service\KeenIOService('F9AB5942952EBA95B94EA5CF5B1F742C', null, null, '52af864ace5e434ab1000006');
-$resource = $keen->countUnique('bar', 'count', ['filters' => [
+$resource = $keen->selectUnique('bar', 'count', ['filters' => [
     [
         'property_name'  => 'count',
         'operator'       => 'eq',
-        'property_value' => 5
+        'property_value' => 4
     ]
 ]]);
 
