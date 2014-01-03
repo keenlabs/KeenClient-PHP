@@ -114,7 +114,7 @@ class KeenIOClient extends Client
     }
 
     /**
-     * Method used to send multiple events to the Keen IO Api
+     * Proxy the addEvents command (to be used as a shortcut)
      *
      * @param  array $events Event data to store
      * @return mixed
