@@ -95,7 +95,7 @@ class KeenIOClient extends Client
             }
         }
 
-        return $this->getCommand($method, $args)->getResult();
+        return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
     }
 
     /**
