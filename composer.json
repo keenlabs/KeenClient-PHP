@@ -25,7 +25,12 @@
             "name": "Keith Kirk",
             "email": "kkirk@undergroundelephant.com",
             "homepage": "http://undergroundelephant.com"
-        }		
+        },
+        {
+            "name": "Michaël Gallego",
+            "email": "mic.gallego@gmail.com",
+            "homepage": "http://michaelgallego.fr"
+        }
     ],
     "autoload": {
         "psr-0": {
