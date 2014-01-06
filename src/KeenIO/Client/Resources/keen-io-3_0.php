@@ -160,12 +160,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array(
-                        array(
-                            'method' => 'KeenIO\Client\Filter\MultiTypeFiltering::encodeValue',
-                            'args'   => ['@value']
-                        )
-                    ),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'timezone'         => array(
@@ -250,12 +245,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array(
-                        array(
-                            'method' => 'KeenIO\Client\Filter\MultiTypeFiltering::encodeValue',
-                            'args'   => ['@value']
-                        )
-                    ),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
