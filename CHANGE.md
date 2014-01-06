@@ -5,6 +5,7 @@ Version 2.1
 -----------
 
 * Fix a bug when using analytics method (first parameter is now considered the event collection, as before)
+* Allow to specify absolute timeframe
 
 Version 2.0
 -----------

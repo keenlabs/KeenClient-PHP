@@ -159,7 +159,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'timezone'         => array(
@@ -243,7 +244,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -262,7 +264,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -311,7 +313,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -330,7 +333,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -379,7 +382,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -398,7 +402,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -447,7 +451,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -466,7 +471,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -515,7 +520,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -534,7 +540,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -583,7 +589,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -602,7 +609,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -651,7 +658,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -670,7 +678,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -751,7 +759,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -770,7 +779,7 @@ return array(
                     'location'    => 'query',
                     'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('json_encode'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
             ),
@@ -813,7 +822,8 @@ return array(
                 'timeframe'        => array(
                     'location'    => 'query',
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
-                    'type'        => 'string',
+                    'type'        => array('string', 'array'),
+                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'email'            => array(
