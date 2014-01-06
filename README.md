@@ -17,6 +17,10 @@ Installation with Composer
      ```
   3. Run `php composer.phar install`
 
+For easier usage, we provide official integration for the following frameworks:
+
+* [Zend Framework 2](https://github.com/keenlabs/KeenClient-PHP-ZF2)
+
 Changes
 -------
 Please review the change log ( [CHANGE.md](CHANGE.md) ) before upgrading!
