@@ -20,6 +20,7 @@ Installation with Composer
 For easier usage, we provide official integration for the following frameworks:
 
 * [Zend Framework 2](https://github.com/keenlabs/KeenClient-PHP-ZF2)
+* [Symfony2 Framework](https://github.com/keenlabs/KeenClient-PHP-SF2)
 
 Changes
 -------
