@@ -166,7 +166,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
             ),
@@ -257,7 +257,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
@@ -326,7 +326,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
@@ -395,7 +395,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
@@ -464,7 +464,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
@@ -533,7 +533,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
@@ -602,7 +602,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
@@ -671,7 +671,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
@@ -772,7 +772,7 @@ return array(
                 'timezone'         => array(
                     'location'    => 'query',
                     'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
-                    'type'        => array('string','number'),
+                    'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
