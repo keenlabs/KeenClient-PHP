@@ -835,7 +835,7 @@ return array(
                 'latest'           => array(
                     'location'    => 'query',
                     'description' => 'Use this parameter to specifically request the most recent events added to a given collection. Extract up to 100 of your most recent events.',
-                    'type'        => 'integer',
+                    'type'        => 'number',
                     'required'    => false,
                 ),
             ),
