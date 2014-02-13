@@ -130,6 +130,8 @@ You can also check the [Service Description](/src/KeenIO/Resources/config/keen-i
 
 Below are a few example calls to some of the Analysis methods available.
 
+Note: Once the API acknowledges that your event has been stored, it may take up to 10 seconds before it will appear in query results.
+
 ###### Example
 
 ```php
