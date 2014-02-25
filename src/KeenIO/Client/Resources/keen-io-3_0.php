@@ -52,7 +52,7 @@ return array(
             ),
         ),
 
-        'getEventSchemas' => array(
+        'getCollections' => array(
             'uri'         => 'projects/{projectId}/events',
             'description' => 'GET returns schema information for all the event collections in this project, including properties and their type. It also returns links to sub-resources.',
             'httpMethod'  => 'GET',
@@ -62,6 +62,58 @@ return array(
                     'description' => 'The Master API Key.',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
+        'getEventSchemas' => array(
+            'extends'     => 'getCollections'
+        ),
+
+        'getCollection' => array(
+            'uri'         => 'projects/{projectId}/events/{event_collection}',
+            'description' => 'GET returns available schema information for this event collection, including properties and their type. It also returns links to sub-resources.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'event_collection' => array(
+                    'location'    => 'uri',
+                    'description' => 'The event collection.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
+        'getProperty' => array(
+            'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
+            'description' => 'GET returns the property name, type, and a link to sub-resources.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'event_collection' => array(
+                    'location'    => 'uri',
+                    'description' => 'The event collection.',
+                    'required'    => true,
+                ),
+                'property_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The property name to inspect',
                     'type'        => 'string',
                     'required'    => true,
                 ),
@@ -174,7 +226,7 @@ return array(
 
         'deleteEventProperties' => array(
             'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
-            'description' => 'DELETE one property for events. This only work for properties with less than 10,000 events.',
+            'description' => 'DELETE one property for events. This only works for properties with less than 10,000 events.',
             'httpMethod'  => 'DELETE',
             'parameters'  => array(
                 'writeKey'         => array(
@@ -199,7 +251,7 @@ return array(
                     'required'    => true,
                 ),
                 'property_name'    => array(
-                    'location'    => 'query',
+                    'location'    => 'uri',
                     'description' => 'Name of the property to delete.',
                     'type'        => 'string',
                     'required'    => true,
