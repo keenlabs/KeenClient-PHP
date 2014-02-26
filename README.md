@@ -154,6 +154,13 @@ $analyses = [
     'average price' => ['analysis_type' => 'average', 'target_property' => 'purchase.price']
 ];
 $stats = $client->multiAnalysis('purchases', ['analyses' => $analyses]);
+
+//Using Filters in your Analysis
+$filters = [
+    ['property_name' => 'item.price', 'operator' => 'gt', 'property_value' => 10]
+];
+
+$client->count('purchases', ['filters' => $filters]);
 ```
 
 #### Create a Scoped Key
