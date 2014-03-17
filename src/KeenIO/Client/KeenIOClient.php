@@ -85,7 +85,7 @@ class KeenIOClient extends Client
      *
      * @return mixed Returns the result of the command
      */
-    public function __call($method, $args = array())
+    public function __call($method, $args)
     {
         if (isset($args[0]) && is_string($args[0])) {
             $args[0] = array('event_collection' => $args[0]);
