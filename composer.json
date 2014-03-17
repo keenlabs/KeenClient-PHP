@@ -16,6 +16,16 @@
         "phpunit/phpunit": "*"
     },
     "homepage": "http://keen.io",
+    "autoload": {
+        "psr-4": {
+            "KeenIO\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "KeenIO\\Tests\\": "tests/Tests"
+        }
+    },
     "authors": [
         {
             "name": "Tom Anderson",
@@ -31,10 +41,5 @@
             "email": "mic.gallego@gmail.com",
             "homepage": "http://michaelgallego.fr"
         }
-    ],
-    "autoload": {
-        "psr-0": {
-            "KeenIO": "src/"
-        }
-    }
+    ]
 }
