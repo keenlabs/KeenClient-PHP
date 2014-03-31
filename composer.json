@@ -7,6 +7,9 @@
         "keen io",
         "analytics"
     ],
+    "support": {
+        "chat": "https://www.hipchat.com/gIdidQscL"
+    },
     "require": {
         "php": ">=5.3.3",
         "ext-mcrypt": "*",
