@@ -6,21 +6,13 @@ The Keen IO API lets developers build analytics features directly into their app
 
 Installation with Composer
 --------------------------
-The preferred installation method is through the use of Composer. You can download composer or check its documentation at [getcomposer.org](http://getcomposer.org/).
+```sh
+$ php composer.phar require keen-io/keen-io:~2.1
+```
+For composer documentation, please refer to [getcomposer.org](http://getcomposer.org/).
 
-  1. Install composer via `curl -s http://getcomposer.org/installer | php` (on windows, download
-     http://getcomposer.org/installer and execute it with PHP)
-  2. Edit your `composer.json` file with following contents:
-
-     ```json
-     {
-        "require": {
-            "keen-io/keen-io": "~2.1"
-        }
-     }
-     ```
-  3. Run `php composer.phar install`
-
+Integrated Frameworks
+---------------------
 For easier usage, we provide official integration for the following frameworks:
 
 * [Zend Framework 2](https://github.com/keenlabs/KeenClient-PHP-ZF2)
