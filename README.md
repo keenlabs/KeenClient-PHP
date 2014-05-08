@@ -169,7 +169,7 @@ $filter = [
 ];
 
 $filters = [$filter];
-$allowed_operations = ['read'];
+$allowedOperations = ['read'];
 
 $scopedKey = $client->createScopedKey($filters, $allowedOperations);
 ```
