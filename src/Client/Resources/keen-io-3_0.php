@@ -886,8 +886,15 @@ return array(
                 ),
                 'latest'           => array(
                     'location'    => 'query',
-                    'description' => 'Use this parameter to specifically request the most recent events added to a given collection. Extract up to 100 of your most recent events.',
+                    'description' => 'An integer containing the number of most recent events to extract.',
                     'type'        => 'number',
+                    'required'    => false,
+                ),
+                'property_names'   => array(
+                    'location'    => 'query',
+                    'description' => 'A URL-encoded array of strings containing properties you wish to extract. If this parameter is omitted, all properties will be returned.',
+                    'type'        => 'array',
+                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
             ),
