@@ -7,7 +7,7 @@ The Keen IO API lets developers build analytics features directly into their app
 Installation with Composer
 --------------------------
 ```sh
-$ php composer.phar require keen-io/keen-io:~2.1
+$ php composer.phar require keen-io/keen-io:~2.5
 ```
 For composer documentation, please refer to [getcomposer.org](http://getcomposer.org/).
 
