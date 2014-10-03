@@ -287,9 +287,7 @@ class KeenIOClient extends Client
         $ivHex        = bin2hex($iv);
         $encryptedHex = bin2hex($encrypted);
 
-        $scopedKey = $ivHex . $encryptedHex;
-
-        return $scopedKey;
+        return $ivHex . $encryptedHex;
     }
 
     /**
@@ -303,9 +301,8 @@ class KeenIOClient extends Client
     protected function padString($string, $blockSize = 32)
     {
         $paddingSize = $blockSize - (strlen($string) % $blockSize);
-        $string      .= str_repeat(chr($paddingSize), $paddingSize);
-
-        return $string;
+        
+        return $string . str_repeat(chr($paddingSize), $paddingSize);
     }
 
     /**
