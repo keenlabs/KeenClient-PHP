@@ -11,12 +11,12 @@
         "chat": "https://www.hipchat.com/gIdidQscL"
     },
     "require": {
-        "php": ">=5.3.3",
-        "ext-mcrypt": "*",
+        "php":           ">=5.3.3",
+        "ext-mcrypt":    "*",
         "guzzle/guzzle": "~3.7"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "~3.7.0"
     },
     "homepage": "http://keen.io",
     "autoload": {
@@ -36,8 +36,8 @@
         },
         {
             "name": "Keith Kirk",
-            "email": "kkirk@undergroundelephant.com",
-            "homepage": "http://undergroundelephant.com"
+            "email": "keith@kmfk.io",
+            "homepage": "http://kmfk.io"
         },
         {
             "name": "Michaël Gallego",

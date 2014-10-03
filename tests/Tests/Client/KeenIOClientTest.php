@@ -205,7 +205,7 @@ class KeenIOClientTest extends GuzzleTestCase
 
     /**
      * @dataProvider                providerInvalidEvents
-     * @expectedException           \Exception
+     * @expectedException           Guzzle\Service\Exception\ValidationException
      */
     public function testSendEventReturnsExceptionOnBadDataType($event)
     {
