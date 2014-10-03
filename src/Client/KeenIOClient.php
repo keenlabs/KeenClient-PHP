@@ -108,7 +108,7 @@ class KeenIOClient extends Client
      * @param  array  $event      Event data to store
      * @return mixed
      */
-    public function addEvent($collection, array $event = array())
+    public function addEvent($collection, $event = array())
     {
         return $this->getCommand('addEvent', array(
             'event_collection' => $collection,
@@ -122,7 +122,7 @@ class KeenIOClient extends Client
      * @param  array $events Event data to store
      * @return mixed
      */
-    public function addEvents(array $events = array())
+    public function addEvents($events = array())
     {
         return $this->getCommand('addEvents', array('event_data' => $events))->getResult();
     }
@@ -265,7 +265,7 @@ class KeenIOClient extends Client
      * @return string
      * @throws RuntimeException If no master key is set
      */
-    public function createScopedKey($filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM)
+    public function createScopedKey($filters, $allowedOperations, $source = MCRYPT_DEV_URANDOM)
     {
         if (!$masterKey = $this->getMasterKey()) {
             throw new RuntimeException('A master key is needed to create a scoped key');
