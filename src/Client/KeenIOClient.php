@@ -265,7 +265,7 @@ class KeenIOClient extends Client
      * @return string
      * @throws RuntimeException If no master key is set
      */
-    public function createScopedKey($filters, $allowedOperations, $source = MCRYPT_DEV_RANDOM)
+    public function createScopedKey($filters, $allowedOperations, $source = MCRYPT_DEV_URANDOM)
     {
         if (!$masterKey = $this->getMasterKey()) {
             throw new RuntimeException('A master key is needed to create a scoped key');
