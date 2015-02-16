@@ -34,7 +34,7 @@ For certain API Resources, the Master API Key is required and can also be passed
 Please read the [Security Documentation](https://keen.io/docs/security/) regarding this Master API key.
 
 For Requests, the `KeenIOClient` will determine what API Key should be passed based on the type of Request and configuration in the
-[Service Description](/src/KeenIO/Resources/config/keen-io-3_0.json). The API Key is passed in the `Authorization` header of the request.
+[Service Description](/src/Client/Resources/keen-io-3_0.php). The API Key is passed in the `Authorization` header of the request.
 
 For a list of required and available parameters for the different API Endpoints, please consult the Keen IO
 [API Reference Docs](https://keen.io/docs/api/reference/).
@@ -122,7 +122,7 @@ $client->addEvents(['purchases' => $purchases, 'sign_ups' => $signUps]);
 
 #### Get Analysis on Events
 All Analysis Endpoints should be supported.  See the [API Reference Docs](https://keen.io/docs/api/reference/) for required parameters.
-You can also check the [Service Description](/src/KeenIO/Resources/config/keen-io-3_0.json) for configured API Endpoints.
+You can also check the [Service Description](/src/Client/Resources/keen-io-3_0.php) for configured API Endpoints.
 
 Below are a few example calls to some of the Analysis methods available.
 
