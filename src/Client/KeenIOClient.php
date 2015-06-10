@@ -363,7 +363,7 @@ class KeenIOClient extends Client
     protected static function parseConfig($config, $default)
     {
         array_walk($default, function ($value, $key) use (&$config) {
-            if (empty($config[$key])) {
+            if (empty($config[$key]) || !isset($config[$key])) {
                 $config[$key] = $value;
             }
         });
