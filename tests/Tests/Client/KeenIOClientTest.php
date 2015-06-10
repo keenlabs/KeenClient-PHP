@@ -31,6 +31,36 @@ class KeenIOClientTest extends GuzzleTestCase
         $this->assertEquals($config['masterKey'], $client->getConfig('masterKey'));
         $this->assertEquals($config['readKey'], $client->getConfig('readKey'));
         $this->assertEquals($config['writeKey'], $client->getConfig('writeKey'));
+        $this->assertEquals($config['version'], $client->getConfig('version'));
+    }
+
+    /**
+     * Check that a Keen IO Client is instantiated properly when version empty
+     */
+    public function testFactoryReturnsClientWhenVersionEmpty()
+    {
+        $defaultVersion = '3.0';
+
+        $config = array(
+            'projectId' => 'testProjectId',
+            'masterKey' => 'testMasterKey',
+            'readKey'   => 'testReadKey',
+            'writeKey'  => 'testWriteKey',
+            'version'   => ''
+       );
+
+        $client = KeenIOClient::factory($config);
+
+        //Check that the Client is of the right type
+        $this->assertInstanceOf('\Guzzle\Service\Client', $client);
+        $this->assertInstanceOf('\KeenIO\Client\KeenIOClient', $client);
+
+        //Check that the pass config options match the client's config
+        $this->assertEquals($config['projectId'], $client->getConfig('projectId'));
+        $this->assertEquals($config['masterKey'], $client->getConfig('masterKey'));
+        $this->assertEquals($config['readKey'], $client->getConfig('readKey'));
+        $this->assertEquals($config['writeKey'], $client->getConfig('writeKey'));
+        $this->assertEquals($defaultVersion, $client->getConfig('version'));
     }
 
     /**
