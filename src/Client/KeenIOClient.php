@@ -53,6 +53,7 @@ class KeenIOClient extends Client
         );
 
         // Create client configuration
+        $config = self::parseConfig($config, $default);
         $config = Collection::fromConfig($config, $default);
 
         // Because each API Resource uses a separate type of API Key, we need to expose them all in
@@ -349,5 +350,24 @@ class KeenIOClient extends Client
         $pad = ord($string[$len - 1]);
 
         return substr($string, 0, $len - $pad);
+    }
+
+    /**
+     * Attempt to parse config and apply defaults
+     *
+     * @param  array  $config
+     * @param  array  $default
+     *
+     * @return array Returns the updated config array
+     */
+    protected static function parseConfig($config, $default)
+    {
+        array_walk($default, function ($value, $key) use (&$config) {
+            if (empty($config[$key]) || !isset($config[$key])) {
+                $config[$key] = $value;
+            }
+        });
+
+        return $config;
     }
 }
