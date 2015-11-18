@@ -132,18 +132,19 @@ Note: Once the API acknowledges that your event has been stored, it may take up 
 
 ```php
 //Count
-$totalPurchases = $client->count('purchases');
+$totalPurchases = $client->count('purchases', ['timeframe' => 'this_14_days']);
 
 //Count Unqiue
-$totalItems = $client->countUnique('purchases', ['target_property' => 'purchase.item']);
+$totalItems = $client->countUnique('purchases', ['target_property' => 'purchase.item', 'timeframe' => 'this_14_days']);
 
 //Select Unique
-$items = $client->selectUnique('purchases', ['target_property' => 'purchase.item']);
+$items = $client->selectUnique('purchases', ['target_property' => 'purchase.item', 'timeframe' => 'this_14_days']);
 
 //Multi Analysis
 $analyses = [
     'clicks'        => ['analysis_type' => 'count'],
-    'average price' => ['analysis_type' => 'average', 'target_property' => 'purchase.price']
+    'average price' => ['analysis_type' => 'average', 'target_property' => 'purchase.price'],
+    'timeframe'     => 'this_14_days'
 ];
 $stats = $client->multiAnalysis('purchases', ['analyses' => $analyses]);
 
@@ -152,7 +153,7 @@ $filters = [
     ['property_name' => 'item.price', 'operator' => 'gt', 'property_value' => 10]
 ];
 
-$client->count('purchases', ['filters' => $filters]);
+$client->count('purchases', ['filters' => $filters, 'timeframe' => 'this_14_days']);
 ```
 
 #### Create a Scoped Key
