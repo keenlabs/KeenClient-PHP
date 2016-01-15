@@ -278,12 +278,25 @@ class KeenIOClient extends Client
             $options['allowed_operations'] = $allowedOperations;
         }
 
-        $optionsJson = $this->padString(json_encode($options));
+        $apiKey = pack('H*', $masterKey);
+        $blockSize = 16;
+
+        /**
+         * Use the old block size and hex string input if using a legacy master key.
+         * Old block size was 32 bytes and old master key was 32 hex characters in length.
+         */
+
+        if (strlen($masterKey) == 32) {
+            $apiKey = $masterKey;
+            $blockSize = 32;
+        }
+
+        $optionsJson = $this->padString(json_encode($options), $blockSize);
 
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $iv       = mcrypt_create_iv($ivLength, $source);
 
-        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $masterKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
+        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $apiKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
 
         $ivHex        = bin2hex($iv);
         $encryptedHex = bin2hex($encrypted);
@@ -322,6 +335,13 @@ class KeenIOClient extends Client
             throw new RuntimeException('A master key is needed to decrypt a scoped key');
         }
 
+        $apiKey = pack('H*', $masterKey);
+
+        // Use the old hex string input if using a legacy master key
+        if (strlen($masterKey) == 32) {
+            $apiKey = $masterKey;
+        }
+
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
         $ivHex    = substr($scopedKey, 0, $ivLength);
 
@@ -329,7 +349,7 @@ class KeenIOClient extends Client
 
         $resultPadded = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
-            $masterKey,
+            $apiKey,
             pack('H*', $encryptedHex),
             MCRYPT_MODE_CBC,
             pack('H*', $ivHex)
