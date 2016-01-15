@@ -110,10 +110,31 @@ class KeenIOClientTest extends GuzzleTestCase
     /**
      * Tests the creation of a Scoped Key
      */
-    public function testCreateScopedKey()
+    public function testCreateLegacyScopedKey()
     {
         $client = KeenIOClient::factory(array(
             'masterKey' => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+        ));
+
+        $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
+        $filters = array($filter);
+        $allowed_operations = array('read');
+
+        $scopedKey = $client->createScopedKey($filters, $allowed_operations);
+
+        $result = $client->decryptScopedKey($scopedKey);
+        $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests the creation of a Scoped Key
+     */
+    public function testCreateScopedKey()
+    {
+        $client = KeenIOClient::factory(array(
+            'masterKey' => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
         ));
 
         $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');

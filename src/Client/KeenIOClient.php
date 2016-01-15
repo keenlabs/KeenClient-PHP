@@ -335,6 +335,13 @@ class KeenIOClient extends Client
             throw new RuntimeException('A master key is needed to decrypt a scoped key');
         }
 
+        $apiKey = pack('H*', $masterKey);
+
+        // Use the old hex string input if using a legacy master key
+        if (strlen($masterKey) == 32) {
+            $apiKey = $masterKey;
+        }
+
         $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
         $ivHex    = substr($scopedKey, 0, $ivLength);
 
@@ -342,7 +349,7 @@ class KeenIOClient extends Client
 
         $resultPadded = mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
-            $masterKey,
+            $apiKey,
             pack('H*', $encryptedHex),
             MCRYPT_MODE_CBC,
             pack('H*', $ivHex)
