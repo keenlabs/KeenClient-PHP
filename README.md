@@ -18,6 +18,10 @@ For easier usage, we provide official integration for the following frameworks:
 * [Zend Framework 2](https://github.com/keenlabs/KeenClient-PHP-ZF2)
 * [Symfony2 Framework](https://github.com/keenlabs/KeenClient-PHP-SF2)
 
+The following community developed integrations are also available:
+
+* [Laravel 5](https://github.com/garethtdavies/keen-io-laravel)
+
 Changes
 -------
 Please review the change log ( [CHANGE.md](CHANGE.md) ) before upgrading!
