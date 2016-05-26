@@ -18,6 +18,7 @@ use KeenIO\Exception\RuntimeException;
  * @method array getProjects(array $args = array()) {@command KeenIO getProjects}
  * @method array getProject(array $args = array()) {@command KeenIO getProject}
  * @method array getProperty(array $args = array()) {@command KeenIO getProperty}
+ * @method array getQueries(array $args = array()) {@command KeenIO getProperty}
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
  * @method array deleteEvents(array $args = array()) {@command KeenIO deleteEvents}
  * @method array deleteEventProperties(array $args = array()) {@command KeenIO deleteEventProperties}
