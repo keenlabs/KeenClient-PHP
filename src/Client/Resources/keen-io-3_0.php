@@ -68,6 +68,27 @@ return array(
             ),
         ),
 
+        'getQuery' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
+            'description' => 'Returns the detailed information about the specified query, as well as links to retrieve results.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The saved query.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
         'getCollections' => array(
             'uri'         => 'projects/{projectId}/events',
             'description' => 'GET returns schema information for all the event collections in this project, including properties and their type. It also returns links to sub-resources.',
