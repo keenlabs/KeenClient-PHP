@@ -89,6 +89,27 @@ return array(
             ),
         ),
 
+        'deleteQuery' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
+            'description' => 'Deletes the specified query.',
+            'httpMethod'  => 'DELETE',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The saved query.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
         'getQueryResults' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}/result',
             'description' => 'Returns the results of executing the specified query.',
