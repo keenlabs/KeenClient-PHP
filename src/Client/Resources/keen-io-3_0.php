@@ -89,6 +89,32 @@ return array(
             ),
         ),
 
+        'createQuery' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
+            'description' => 'Creates the described query.',
+            'httpMethod'  => 'PUT',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The desired name of the query.',
+                    'required'    => true,
+                ),
+                'query'       => array(
+                    'location' => 'body',
+                    'type'     => 'array',
+                    'filters'  => array('json_encode'),
+                ),
+            ),
+        ),
+
         'deleteQuery' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
             'description' => 'Deletes the specified query.',

@@ -20,6 +20,7 @@ use KeenIO\Exception\RuntimeException;
  * @method array getProperty(array $args = array()) {@command KeenIO getProperty}
  * @method array getQueries(array $args = array()) {@command KeenIO getProperty}
  * @method array getQuery(array $args = array()) {@command KeenIO getProperty}
+ * @method array createQuery(array $args = array()) {@command KeenIO getProperty}
  * @method array deleteQuery(array $args = array()) {@command KeenIO getProperty}
  * @method array getQueryResults(array $args = array()) {@command KeenIO getProperty}
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
