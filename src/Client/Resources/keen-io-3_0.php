@@ -20,6 +20,27 @@ return array(
             ),
         ),
 
+        'createProject' => array(
+            'uri'         => 'organizations/{organizationId}/projects',
+            'description' => 'Creates a project for the specified organization and returns the project id for later usage.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'organizationKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Organization Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'project_data' => array(
+                    'location' => 'body',
+                    'type'     => 'array',
+                    'filters'  => array('json_encode'),
+                ),
+            ),
+        ),
+
         'getProjects' => array(
             'uri'         => 'projects',
             'description' => 'Returns the projects accessible to the API user, as well as links to project sub-resources for discovery.',

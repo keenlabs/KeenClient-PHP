@@ -54,7 +54,9 @@ class KeenIOClient extends Client
             'masterKey' => null,
             'writeKey'  => null,
             'readKey'   => null,
-            'projectId' => null
+            'projectId' => null,
+            'organizationKey' => null,
+            'organizationId' => null
         );
 
         // Create client configuration
@@ -64,7 +66,7 @@ class KeenIOClient extends Client
         // Because each API Resource uses a separate type of API Key, we need to expose them all in
         // `commands.params`. Doing it this way allows the Service Definitions to set what API Key is used.
         $parameters = array();
-        foreach (array('masterKey', 'writeKey', 'readKey') as $key) {
+        foreach (array('masterKey', 'writeKey', 'readKey', 'organizationKey') as $key) {
             $parameters[$key] = $config->get($key);
         }
 
@@ -151,6 +153,26 @@ class KeenIOClient extends Client
     public function getProjectId()
     {
         return $this->getConfig('projectId');
+    }
+
+    /**
+     * Sets the Organization Id used by the Keen IO Client
+     *
+     * @param string $organizationId
+     */
+    public function setOrganizationId($organizationId)
+    {
+        $this->getConfig()->set('organizationId', $organizationId);
+    }
+
+    /**
+     * Gets the Organization Id being used by the Keen IO Client
+     *
+     * @return string|null Value of the OrganizationId or NULL
+     */
+    public function getOrganizationId()
+    {
+        return $this->getConfig('organizationId');
     }
 
     /**
