@@ -126,6 +126,7 @@ return array(
                 'query_name' => array(
                     'location'    => 'uri',
                     'description' => 'The desired name of the query.',
+                    'filters'     => array(["method" => '\KeenIO\Client\KeenIOClient::cleanQueryName', "args" => ["@value"]]),
                     'required'    => true,
                 ),
                 'query'       => array(

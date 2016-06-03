@@ -417,4 +417,12 @@ class KeenIOClient extends Client
 
         return $config;
     }
+
+    public static function cleanQueryName($raw)
+    {
+        $filtered = str_replace(' ', '-', $raw);
+        $filtered = preg_replace("/[^A-Za-z0-9_\-]/", "", $filtered);
+
+        return $filtered;
+    }
 }
