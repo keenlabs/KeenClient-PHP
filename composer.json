@@ -11,7 +11,7 @@
         "chat": "https://www.hipchat.com/gIdidQscL"
     },
     "require": {
-        "php":           ">=5.3.3",
+        "php":           ">=5.6.0",
         "ext-mcrypt":    "*",
         "guzzle/guzzle": "~3.7"
     },
