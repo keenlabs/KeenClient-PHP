@@ -13,10 +13,11 @@ For composer documentation, please refer to [getcomposer.org](http://getcomposer
 
 Integrated Frameworks
 ---------------------
-For easier usage, we provide official integration for the following frameworks:
+For easier usage the following community developed integrations are also available:
 
 * [Zend Framework 2](https://github.com/keenlabs/KeenClient-PHP-ZF2)
 * [Symfony2 Framework](https://github.com/keenlabs/KeenClient-PHP-SF2)
+* [Laravel 5](https://github.com/garethtdavies/keen-io-laravel)
 
 Changes
 -------
