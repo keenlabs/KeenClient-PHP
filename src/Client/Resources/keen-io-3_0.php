@@ -73,7 +73,7 @@ return array(
             ),
         ),
 
-        'getQueries' => array(
+        'getSavedQueries' => array(
             'uri'         => 'projects/{projectId}/queries/saved',
             'description' => 'Returns the saved queries accessible to the API user on the specified project.',
             'httpMethod'  => 'GET',
@@ -89,7 +89,7 @@ return array(
             ),
         ),
 
-        'getQuery' => array(
+        'getSavedQuery' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
             'description' => 'Returns the detailed information about the specified query, as well as links to retrieve results.',
             'httpMethod'  => 'GET',
@@ -110,7 +110,7 @@ return array(
             ),
         ),
 
-        'createQuery' => array(
+        'createSavedQuery' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
             'description' => 'Creates the described query.',
             'httpMethod'  => 'PUT',
@@ -137,7 +137,7 @@ return array(
             ),
         ),
 
-        'updateQuery' => array(
+        'updateSavedQuery' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
             'description' => 'Creates the described query.',
             'httpMethod'  => 'PUT',
@@ -164,7 +164,7 @@ return array(
             ),
         ),
 
-        'deleteQuery' => array(
+        'deleteSavedQuery' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
             'description' => 'Deletes the specified query.',
             'httpMethod'  => 'DELETE',
@@ -185,7 +185,7 @@ return array(
             ),
         ),
 
-        'getQueryResults' => array(
+        'getSavedQueryResults' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}/result',
             'description' => 'Returns the results of executing the specified query.',
             'httpMethod'  => 'GET',
