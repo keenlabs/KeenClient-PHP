@@ -25,6 +25,6 @@ $query = [
     "timeframe" => "this_2_weeks"
 ];
 
-$results = $client->createQuery(['query_name' => 'my new query', 'query' => $query]);
+$results = $client->createSavedQuery(['query_name' => 'my new query', 'query' => $query]);
 
 print_r($results);

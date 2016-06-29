@@ -25,6 +25,6 @@ $query = [
     "timeframe" => "this_1_weeks"
 ];
 
-$results = $client->updateQuery(['query_name' => 'updated query', 'query' => $query]);
+$results = $client->updateSavedQuery(['query_name' => 'updated query', 'query' => $query]);
 
 print_r($results);

@@ -11,10 +11,10 @@ $client = KeenIOClient::factory([
     'masterKey' => $master_key
 ]);
 
-$queries = $client->getQueries();
+$queries = $client->getSavedQueries();
 
 $query_name = $queries[0]['query_name'];
 
-$results = $client->getQuery(['query_name' => $query_name]);
+$results = $client->getSavedQuery(['query_name' => $query_name]);
 
 print_r($results);

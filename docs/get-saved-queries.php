@@ -3,7 +3,7 @@
 include '../creds.php';
 include '../vendor/autoload.php';
 
-// https://keen.io/docs/api/?shell#getting-saved-query-results
+// https://keen.io/docs/api/?shell#getting-all-saved-query-definitions
 use KeenIO\Client\KeenIOClient;
 
 $client = KeenIOClient::factory([
@@ -11,10 +11,6 @@ $client = KeenIOClient::factory([
     'masterKey' => $master_key
 ]);
 
-$queries = $client->getQueries();
-
-$query_name = $queries[0]['query_name'];
-
-$results = $client->getQueryResults(['query_name' => $query_name]);
+$results = $client->getSavedQueries();
 
 print_r($results);

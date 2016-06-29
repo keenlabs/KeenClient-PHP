@@ -3,7 +3,7 @@
 include '../creds.php';
 include '../vendor/autoload.php';
 
-// https://keen.io/docs/api/?shell#delete-a-saved-query
+// https://keen.io/docs/api/?shell#getting-saved-query-results
 use KeenIO\Client\KeenIOClient;
 
 $client = KeenIOClient::factory([
@@ -11,6 +11,10 @@ $client = KeenIOClient::factory([
     'masterKey' => $master_key
 ]);
 
-$results = $client->deleteQuery(['query_name' => 'transactions']);
+$queries = $client->getSavedQueries();
+
+$query_name = $queries[0]['query_name'];
+
+$results = $client->getSavedQueryResults(['query_name' => $query_name]);
 
 print_r($results);
