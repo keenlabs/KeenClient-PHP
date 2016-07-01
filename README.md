@@ -57,6 +57,10 @@ that matches that version. That Service Description defines the operations avail
 
 Currently the Keen IO Webservice Client only supports - and automatically defaults - to the current version (`3.0`) of the API.
 
+##### More details about the client
+
+Since the Keen client extends the [Guzzle](http://guzzlephp.org/) client, you get all the power and flexibility of that behind the scenes. If you need more complex logging, backoff/retry handling, or asynchronous requests, check out their [Plugins](http://guzzle3.readthedocs.io/docs.html#plugins).
+
 ###### Example
 ```php
 use KeenIO\Client\KeenIOClient;
