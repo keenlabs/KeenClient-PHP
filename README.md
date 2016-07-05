@@ -179,6 +179,44 @@ $allowedOperations = ['read'];
 $scopedKey = $client->createScopedKey($filters, $allowedOperations);
 ```
 
+#### Using saved queries
+
+[Saved Queries](https://keen.io/docs/api/?php#saved-queries) allow you to perform with exactly the same parameters every time with minimal effort. It's effectively a bookmark or macro to analysis that you can jump to or share without configuring each time. While you can create and access them via the Dashboard, the PHP library gives you the same ability.
+
+######Example: Creating a Saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$query = [
+    "analysis_type" => "count",
+    "event_collection" => "api_requests",
+    "filters" =>
+        [
+            [
+                "property_name" => "user_agent",
+                "operator" => "ne",
+                "property_value"=> "Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)"
+            ]
+        ],
+    "timeframe" => "this_2_weeks"
+];
+
+$results = $client->createSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
+```
+
+######Example: Retrieving a Saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
+```
+
 Questions & Support
 -------------------
 If you have any questions, bugs, or suggestions, please
