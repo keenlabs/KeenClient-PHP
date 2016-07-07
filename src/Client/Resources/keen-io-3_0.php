@@ -20,6 +20,27 @@ return array(
             ),
         ),
 
+        'createProject' => array(
+            'uri'         => 'organizations/{organizationId}/projects',
+            'description' => 'Creates a project for the specified organization and returns the project id for later usage.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'organizationKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Organization Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'project_data' => array(
+                    'location' => 'body',
+                    'type'     => 'array',
+                    'filters'  => array('json_encode'),
+                ),
+            ),
+        ),
+
         'getProjects' => array(
             'uri'         => 'projects',
             'description' => 'Returns the projects accessible to the API user, as well as links to project sub-resources for discovery.',
@@ -47,6 +68,139 @@ return array(
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
+        'getSavedQueries' => array(
+            'uri'         => 'projects/{projectId}/queries/saved',
+            'description' => 'Returns the saved queries accessible to the API user on the specified project.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
+        'getSavedQuery' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
+            'description' => 'Returns the detailed information about the specified query, as well as links to retrieve results.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The saved query.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
+        'createSavedQuery' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
+            'description' => 'Creates the described query.',
+            'httpMethod'  => 'PUT',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The desired name of the query.',
+                    'filters'     => array(["method" => '\KeenIO\Client\KeenIOClient::cleanQueryName', "args" => ["@value"]]),
+                    'required'    => true,
+                ),
+                'query'       => array(
+                    'location' => 'body',
+                    'type'     => 'array',
+                    'filters'  => array('json_encode'),
+                ),
+            ),
+        ),
+
+        'updateSavedQuery' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
+            'description' => 'Creates the described query.',
+            'httpMethod'  => 'PUT',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The desired name of the query.',
+                    'filters'     => array(["method" => '\KeenIO\Client\KeenIOClient::cleanQueryName', "args" => ["@value"]]),
+                    'required'    => true,
+                ),
+                'query'       => array(
+                    'location' => 'body',
+                    'type'     => 'array',
+                    'filters'  => array('json_encode'),
+                ),
+            ),
+        ),
+
+        'deleteSavedQuery' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
+            'description' => 'Deletes the specified query.',
+            'httpMethod'  => 'DELETE',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The saved query.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
+        'getSavedQueryResults' => array(
+            'uri'         => 'projects/{projectId}/queries/saved/{query_name}/result',
+            'description' => 'Returns the results of executing the specified query.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'query_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The saved query.',
                     'required'    => true,
                 ),
             ),

@@ -58,6 +58,10 @@ that matches that version. That Service Description defines the operations avail
 
 Currently the Keen IO Webservice Client only supports - and automatically defaults - to the current version (`3.0`) of the API.
 
+##### More details about the client
+
+Since the Keen client extends the [Guzzle](http://guzzlephp.org/) client, you get all the power and flexibility of that behind the scenes. If you need more complex logging, backoff/retry handling, or asynchronous requests, check out their [Plugins](http://guzzle3.readthedocs.io/docs.html#plugins).
+
 ###### Example
 ```php
 use KeenIO\Client\KeenIOClient;
@@ -174,6 +178,44 @@ $filters = [$filter];
 $allowedOperations = ['read'];
 
 $scopedKey = $client->createScopedKey($filters, $allowedOperations);
+```
+
+#### Using saved queries
+
+[Saved Queries](https://keen.io/docs/api/?php#saved-queries) allow you to perform with exactly the same parameters every time with minimal effort. It's effectively a bookmark or macro to analysis that you can jump to or share without configuring each time. While you can create and access them via the Dashboard, the PHP library gives you the same ability.
+
+######Example: Creating a Saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$query = [
+    "analysis_type" => "count",
+    "event_collection" => "api_requests",
+    "filters" =>
+        [
+            [
+                "property_name" => "user_agent",
+                "operator" => "ne",
+                "property_value"=> "Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)"
+            ]
+        ],
+    "timeframe" => "this_2_weeks"
+];
+
+$results = $client->createSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
+```
+
+######Example: Retrieving a Saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 ```
 
 Questions & Support
