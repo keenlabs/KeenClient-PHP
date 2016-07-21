@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 2.5.6
+-------------
+* Added Saved Queries and Project Creation
+* Updated minimum php and phpunit versions
+* Added use of organizationID
+
 Version 2.1
 -----------
 
