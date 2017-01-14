@@ -218,6 +218,49 @@ $client = KeenIOClient::factory([
 $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 ```
 
+Troubleshooting
+---------------
+
+When your client sends a request that the API rejects with an HTTP 400
+BAD REQUEST or similar error, it is translated to an exception. You
+might inspect this exception object's getMessage() method, like this:
+
+```php
+try {
+  $client->addEvent( "php-events" , ['broken.purchase' => ['item' => 'Golden Elephant', 'amount' => 42.50]] );
+} catch( Exception $e ) {
+  print $e->getMessage();
+}
+```
+
+This won't give you much in the way of useful details, though:
+
+```
+Client error response
+[status code] 400
+[reason phrase] Bad Request
+[url] ...
+```
+
+Instead, use the getResponse() method, which will give you the entire HTTP response:
+
+```php
+try {
+  $client->addEvent( "php-events" , ['broken.purchase' => ['item' => 'Golden Elephant', 'amount' => 42.50]] );
+} catch( Exception $e ) {
+  print $e->getResponse();
+}
+```
+
+```
+HTTP/1.1 400 Bad Request
+... headers ...
+
+{"message": "Property name is invalid. Must be <= 256 characters, cannot contain the '.' symbol anywhere. You specified: 'broken.purchase'.",
+"error_code": "InvalidPropertyNameError"}
+```
+
+
 Questions & Support
 -------------------
 If you have any questions, bugs, or suggestions, please
