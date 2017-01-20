@@ -139,7 +139,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function setProjectId($projectId)
     {
-        $this->getConfig()->set('projectId', $projectId);
+        $this->setConfig('projectId', $projectId);
     }
 
     /**
@@ -205,13 +205,13 @@ class KeenIOClient extends GuzzleClient
      */
     public function setReadKey($readKey)
     {
-        $this->getConfig()->set('readKey', $readKey);
+        $this->setConfig('readKey', $readKey);
 
         // Add API Read Key to `command.params`
         $params            = $this->getConfig('command.params');
         $params['readKey'] = $readKey;
 
-        $this->getConfig()->set('command.params', $params);
+        $this->getConfig('command.params', $params);
     }
 
     /**
@@ -231,13 +231,13 @@ class KeenIOClient extends GuzzleClient
      */
     public function setMasterKey($masterKey)
     {
-        $this->getConfig()->set('masterKey', $masterKey);
+        $this->getConfig('masterKey', $masterKey);
 
         // Add API Master Key to `command.params`
         $params              = $this->getConfig('command.params');
         $params['masterKey'] = $masterKey;
 
-        $this->getConfig()->set('command.params', $params);
+        $this->getConfig('command.params', $params);
     }
 
     /**
@@ -258,7 +258,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function setVersion($version)
     {
-        $this->getConfig()->set('version', $version);
+        $this->getConfig('version', $version);
 
         /* Set the Service Definition from the versioned file */
         $file = 'keen-io-' . str_replace('.', '_', $this->getConfig('version')) . '.php';
