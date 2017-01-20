@@ -334,7 +334,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
             'masterKey' => $_SERVER['MASTER_KEY'],
             'writeKey'  => $_SERVER['WRITE_KEY'],
             'readKey'   => $_SERVER['READ_KEY'],
-            'verion'    => $_SERVER['API_VERSION']
+            'version'   => $_SERVER['API_VERSION']
         ));
     }
 
