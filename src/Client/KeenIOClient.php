@@ -2,7 +2,7 @@
 
 namespace KeenIO\Client;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\Guzzle\Description as ServiceDescription;
 use KeenIO\Exception\RuntimeException;
 
@@ -36,7 +36,7 @@ use KeenIO\Exception\RuntimeException;
  * @method array multiAnalysis(array $args = array()) {@command KeenIO multiAnalysis}
  * @method array extraction(array $args = array()) {@command KeenIO extraction}
  */
-class KeenIOClient extends Client
+class KeenIOClient extends GuzzleClient
 {
     /**
      * Factory to create new KeenIOClient instance.
@@ -70,8 +70,9 @@ class KeenIOClient extends Client
 
         $config['command.params'] = $parameters;
 
+        $httpClient = new \GuzzleHttp\Client($config);
         // Create the new Keen IO Client with our Configuration
-        $client = new self($config);
+        $client = new self($httpClient, function(){}, function(){});
 
         // Set the Service Definition from the versioned file
         $file = 'keen-io-' . str_replace('.', '_', $client->getConfig('version')) . '.php';
@@ -93,9 +94,8 @@ class KeenIOClient extends Client
      *
      * @return mixed Returns the result of the command
      */
-    public function __call($method, $args)
+    public function __call($method, array $args)
     {
-        return null;
         if (isset($args[0]) && is_string($args[0])) {
             $args[0] = array('event_collection' => $args[0]);
 
