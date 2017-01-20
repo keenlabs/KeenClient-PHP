@@ -2,9 +2,8 @@
 
 namespace KeenIO\Client;
 
-use Guzzle\Common\Collection;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
+use GuzzleHttp\Client;
+use GuzzleHttp\Command\Guzzle\Description as ServiceDescription;
 use KeenIO\Exception\RuntimeException;
 
 /**
@@ -49,7 +48,7 @@ class KeenIOClient extends Client
     public static function factory($config = array())
     {
         $default = array(
-            'baseUrl'   => 'https://api.keen.io/{version}/',
+            'base_url'   => 'https://api.keen.io/{version}/',
             'version'   => '3.0',
             'masterKey' => null,
             'writeKey'  => null,
@@ -61,23 +60,21 @@ class KeenIOClient extends Client
 
         // Create client configuration
         $config = self::parseConfig($config, $default);
-        $config = Collection::fromConfig($config, $default);
 
         // Because each API Resource uses a separate type of API Key, we need to expose them all in
         // `commands.params`. Doing it this way allows the Service Definitions to set what API Key is used.
         $parameters = array();
         foreach (array('masterKey', 'writeKey', 'readKey', 'organizationKey') as $key) {
-            $parameters[$key] = $config->get($key);
+            $parameters[$key] = $config[$key];
         }
 
-        $config->set('command.params', $parameters);
+        $config['command.params'] = $parameters;
 
         // Create the new Keen IO Client with our Configuration
-        $client = new self($config->get('baseUrl'), $config);
+        $client = new self($config);
 
         // Set the Service Definition from the versioned file
         $file = 'keen-io-' . str_replace('.', '_', $client->getConfig('version')) . '.php';
-        $client->setDescription(ServiceDescription::factory(__DIR__ . "/Resources/{$file}"));
 
         // Set the content type header to use "application/json" for all requests
         $client->setDefaultOption('headers', array('Content-Type' => 'application/json'));
@@ -98,6 +95,7 @@ class KeenIOClient extends Client
      */
     public function __call($method, $args)
     {
+        return null;
         if (isset($args[0]) && is_string($args[0])) {
             $args[0] = array('event_collection' => $args[0]);
 
@@ -265,7 +263,6 @@ class KeenIOClient extends Client
 
         /* Set the Service Definition from the versioned file */
         $file = 'keen-io-' . str_replace('.', '_', $this->getConfig('version')) . '.php';
-        $this->setDescription(ServiceDescription::factory(__DIR__ . "/Resources/{$file}"));
     }
 
     /**

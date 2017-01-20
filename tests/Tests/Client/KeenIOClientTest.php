@@ -3,9 +3,8 @@
 namespace KeenIO\Tests\Client;
 
 use KeenIO\Client\KeenIOClient;
-use Guzzle\Tests\GuzzleTestCase;
 
-class KeenIOClientTest extends GuzzleTestCase
+class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Check that a Keen IO Client is instantiated properly
@@ -23,7 +22,7 @@ class KeenIOClientTest extends GuzzleTestCase
         $client = KeenIOClient::factory($config);
 
         //Check that the Client is of the right type
-        $this->assertInstanceOf('\Guzzle\Service\Client', $client);
+        $this->assertInstanceOf('\GuzzleHttp\Client', $client);
         $this->assertInstanceOf('\KeenIO\Client\KeenIOClient', $client);
 
         //Check that the pass config options match the client's config
@@ -52,7 +51,7 @@ class KeenIOClientTest extends GuzzleTestCase
         $client = KeenIOClient::factory($config);
 
         //Check that the Client is of the right type
-        $this->assertInstanceOf('\Guzzle\Service\Client', $client);
+        $this->assertInstanceOf('\GuzzleHttp\Client', $client);
         $this->assertInstanceOf('\KeenIO\Client\KeenIOClient', $client);
 
         //Check that the pass config options match the client's config
@@ -200,7 +199,7 @@ class KeenIOClientTest extends GuzzleTestCase
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   \Guzzle\Http\Exception\ClientErrorResponseException
+     * @expectedException   \GuzzleHttp\Http\Exception\ClientErrorResponseException
      */
     public function testServiceCommandsReturnExceptionOnInvalidAuth($method, $params)
     {
@@ -212,7 +211,7 @@ class KeenIOClientTest extends GuzzleTestCase
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   \Guzzle\Http\Exception\ClientErrorResponseException
+     * @expectedException   \GuzzleHttp\Http\Exception\ClientErrorResponseException
      */
     public function testServiceCommandsReturnExceptionOnInvalidProjectId($method, $params)
     {
@@ -256,7 +255,7 @@ class KeenIOClientTest extends GuzzleTestCase
 
     /**
      * @dataProvider                providerInvalidEvents
-     * @expectedException           Guzzle\Service\Exception\ValidationException
+     * @expectedException           GuzzleHttp\Exception\ValidationException
      */
     public function testSendEventReturnsExceptionOnBadDataType($event)
     {
