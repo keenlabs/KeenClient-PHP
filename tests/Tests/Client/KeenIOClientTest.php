@@ -67,7 +67,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testProjectIdSetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setProjectId('testProjectId');
 
         $this->assertEquals('testProjectId', $client->getConfig('projectId'));
@@ -78,7 +78,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testReadKeySetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setReadKey('testReadKey');
 
         $this->assertEquals('testReadKey', $client->getConfig('readKey'));
@@ -89,7 +89,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testMasterKeySetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setMasterKey('testMasterKey');
 
         $this->assertEquals('testMasterKey', $client->getConfig('masterKey'));
@@ -100,7 +100,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testVersionSetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setVersion('3.0');
 
         $this->assertEquals('3.0', $client->getConfig('version'));
@@ -153,7 +153,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testServiceCommands($method, $params)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
 
         $this->setMockResponse($client, 'valid-response.mock');
         $result = $client->getCommand($method, $params)->getResult();
@@ -203,7 +203,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testServiceCommandsReturnExceptionOnInvalidAuth($method, $params)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
 
         $this->setMockResponse($client, 'invalid-auth.mock');
         $result = $client->getCommand($method, $params)->getResult();
@@ -215,7 +215,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testServiceCommandsReturnExceptionOnInvalidProjectId($method, $params)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
 
         $this->setMockResponse($client, 'invalid-project-id.mock');
         $result = $client->getCommand($method, $params)->getResult();
@@ -229,7 +229,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     {
         $event = array('foo' => 'bar', 'baz' => 1);
 
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
 
         $this->setMockResponse($client, 'add-event.mock');
         $response = $client->addEvent('test', $event);
@@ -259,7 +259,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSendEventReturnsExceptionOnBadDataType($event)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
 
         $this->setMockResponse($client, 'add-event.mock');
         $response = $client->addEvent('test', $event);
@@ -273,7 +273,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     {
         $events = array('test' => array(array('foo' => 'bar'), array('bar' => 'baz')));
 
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
 
         $this->setMockResponse($client, 'add-events.mock');
         $response = $client->addEvents($events);
@@ -303,7 +303,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSendEventsReturnsExceptionOnBadDataType($events)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
 
         $this->setMockResponse($client, 'add-events.mock');
         $response = $client->addEvents($events);
@@ -321,5 +321,16 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
             array('string'),
             array(12345),
         );
+    }
+
+    protected function getClient()
+    {
+        return \KeenIO\Client\KeenIOClient::factory(array(
+            'projectId' => $_SERVER['PROJECT_ID'],
+            'masterKey' => $_SERVER['MASTER_KEY'],
+            'writeKey'  => $_SERVER['WRITE_KEY'],
+            'readKey'   => $_SERVER['READ_KEY'],
+            'verion'    => $_SERVER['API_VERSION']
+        ));
     }
 }

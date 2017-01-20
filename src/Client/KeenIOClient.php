@@ -71,14 +71,13 @@ class KeenIOClient extends GuzzleClient
         $config['command.params'] = $parameters;
 
         $httpClient = new \GuzzleHttp\Client($config);
+        $file = 'keen-io-' . str_replace('.', '_', $config['version']) . '.php';
+        $description = new ServiceDescription(include __DIR__ . "/Resources/{$file}");
         // Create the new Keen IO Client with our Configuration
-        $client = new self($httpClient, function(){}, function(){});
-
-        // Set the Service Definition from the versioned file
-        $file = 'keen-io-' . str_replace('.', '_', $client->getConfig('version')) . '.php';
+        $client = new self($httpClient, $description, $config);
 
         // Set the content type header to use "application/json" for all requests
-        $client->setDefaultOption('headers', array('Content-Type' => 'application/json'));
+        $httpClient->setDefaultOption('headers', array('Content-Type' => 'application/json'));
 
         return $client;
     }
@@ -263,6 +262,8 @@ class KeenIOClient extends GuzzleClient
 
         /* Set the Service Definition from the versioned file */
         $file = 'keen-io-' . str_replace('.', '_', $this->getConfig('version')) . '.php';
+
+        $this->setServiceDescription(new ServiceDescription(include __DIR__ . "/Resources/{$file}"));
     }
 
     /**
