@@ -263,11 +263,6 @@ class KeenIOClient extends GuzzleClient
     public function setVersion($version)
     {
         $this->getConfig('version', $version);
-
-        /* Set the Service Definition from the versioned file */
-        $file = 'keen-io-' . str_replace('.', '_', $this->getConfig('version')) . '.php';
-
-        $this->setServiceDescription(new ServiceDescription(include __DIR__ . "/Resources/{$file}"));
     }
 
     /**
