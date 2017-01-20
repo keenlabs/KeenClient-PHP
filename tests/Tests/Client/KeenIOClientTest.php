@@ -3,6 +3,7 @@
 namespace KeenIO\Tests\Client;
 
 use KeenIO\Client\KeenIOClient;
+use GuzzleHttp\Subscriber\Mock;
 
 class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -156,7 +157,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $client = $this->getClient();
 
         $this->setMockResponse($client, 'valid-response.mock');
-        $result = $client->getCommand($method, $params)->getResult();
+        $command = $client->getCommand($method, $params);
+        $client->execute($command);
 
         $requests = $this->getMockedRequests();
 
@@ -206,7 +208,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $client = $this->getClient();
 
         $this->setMockResponse($client, 'invalid-auth.mock');
-        $result = $client->getCommand($method, $params)->getResult();
+        $command = $client->getCommand($method, $params);
+        $client->execute($command);
     }
 
     /**
@@ -218,7 +221,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $client = $this->getClient();
 
         $this->setMockResponse($client, 'invalid-project-id.mock');
-        $result = $client->getCommand($method, $params)->getResult();
+        $command = $client->getCommand($method, $params);
+        $client->execute($command);
     }
 
     /**
@@ -332,5 +336,11 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
             'readKey'   => $_SERVER['READ_KEY'],
             'verion'    => $_SERVER['API_VERSION']
         ));
+    }
+
+    protected function setMockResponse($client, $file)
+    {
+        $file = __DIR__ . '../../mock/' . $file;
+        $client->getEmitter()->attach(new Mock([$file]));
     }
 }

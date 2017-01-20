@@ -115,10 +115,12 @@ class KeenIOClient extends GuzzleClient
      */
     public function addEvent($collection, $event = array())
     {
-        return $this->getCommand('addEvent', array(
+        $command = $this->getCommand('addEvent', array(
             'event_collection' => $collection,
             'event_data'       => $event
-        ))->getResult();
+        ));
+
+        return $this->execute($command);
     }
 
     /**
@@ -129,7 +131,9 @@ class KeenIOClient extends GuzzleClient
      */
     public function addEvents($events = array())
     {
-        return $this->getCommand('addEvents', array('event_data' => $events))->getResult();
+        $command = $this->getCommand('addEvents', array('event_data' => $events));
+
+        return $this->execute($command);
     }
 
     /**
