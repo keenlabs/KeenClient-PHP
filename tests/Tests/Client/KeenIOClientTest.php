@@ -307,13 +307,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
             'masterKey' => $_SERVER['MASTER_KEY'],
             'writeKey'  => $_SERVER['WRITE_KEY'],
             'readKey'   => $_SERVER['READ_KEY'],
-            'version'   => $_SERVER['API_VERSION']
-        ), $handler);
-    }
-
-    protected function setMockResponse($client, $file)
-    {
-        $file = __DIR__ . '../../mock/' . $file;
-        $client->getEmitter()->attach(new Mock([$file]));
+            'version'   => $_SERVER['API_VERSION'],
+            'handler'   => $handler
+        ));
     }
 }

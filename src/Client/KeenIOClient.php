@@ -45,7 +45,7 @@ class KeenIOClient extends GuzzleClient
      *
      * @returns \KeenIO\Client\KeenIOClient
      */
-    public static function factory($config = array(), $handler = null)
+    public static function factory($config = array())
     {
         $default = array(
             'masterKey' => null,
@@ -59,21 +59,6 @@ class KeenIOClient extends GuzzleClient
 
         // Create client configuration
         $config = self::parseConfig($config, $default);
-
-        // Because each API Resource uses a separate type of API Key, we need to expose them all in
-        // `commands.params`. Doing it this way allows the Service Definitions to set what API Key is used.
-        $parameters = array();
-        foreach (array('masterKey', 'writeKey', 'readKey', 'organizationKey') as $key) {
-            $parameters[$key] = $config[$key];
-        }
-
-        $config['command.params'] = $parameters;
-        $config['headers'] = array('Content-Type' => 'application/json');
-
-        if ($handler)
-        {
-            $config['handler'] = $handler;
-        }
 
         $httpClient = new \GuzzleHttp\Client($config);
         $file = 'keen-io-' . str_replace('.', '_', $config['version']) . '.php';
