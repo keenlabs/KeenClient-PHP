@@ -118,7 +118,6 @@ class KeenIOClient extends GuzzleClient
         $event['event_collection'] = $collection;
         $event['projectId'] = $this->getConfig('projectId');
         $event['writeKey'] = $this->getConfig('writeKey');
-        $event['masterKey'] = $this->getConfig('masterKey');
 
         $command = parent::getCommand('addEvent', $event);
 
@@ -135,7 +134,6 @@ class KeenIOClient extends GuzzleClient
     {
         $events['projectId'] = $this->getConfig('projectId');
         $events['writeKey'] = $this->getConfig('writeKey');
-        $events['masterKey'] = $this->getConfig('masterKey');
 
         $command = parent::getCommand('addEvents', $events);
 

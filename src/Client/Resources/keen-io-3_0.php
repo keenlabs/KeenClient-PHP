@@ -333,14 +333,6 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
                 'event_collection' => array(
                     'location'    => 'uri',
                     'description' => 'The event collection.',
@@ -364,14 +356,6 @@ return array(
                 'writeKey'  => array(
                     'location'    => 'header',
                     'description' => 'The Write Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -444,14 +428,6 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
                 'event_collection' => array(
                     'location'    => 'uri',
                     'description' => 'The event collection.',
@@ -478,14 +454,6 @@ return array(
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -544,14 +512,6 @@ return array(
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -621,14 +581,6 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
                 'event_collection' => array(
                     'location'    => 'query',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -688,14 +640,6 @@ return array(
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -765,14 +709,6 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
                 'event_collection' => array(
                     'location'    => 'query',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -832,14 +768,6 @@ return array(
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -909,14 +837,6 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
                 'event_collection' => array(
                     'location'    => 'query',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -981,14 +901,6 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
                 'steps'     => array(
                     'location'    => 'query',
                     'description' => 'A URL encoded JSON Array defining the Steps in the Funnel.',
@@ -1010,14 +922,6 @@ return array(
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -1087,14 +991,6 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
                 'event_collection' => array(
                     'location'    => 'query',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -1147,14 +1043,6 @@ return array(
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -1219,14 +1107,6 @@ return array(
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
