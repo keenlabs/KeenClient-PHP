@@ -113,6 +113,52 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that the client is able to fallback to the masterkey when
+     * a write key isn't given
+     */
+    public function testWriteKeyPicker()
+    {
+        $client = $this->getClient();
+        $client->setWriteKey('bar');
+        $client->setMasterKey('foo');
+
+        $this->assertNotEquals(
+            $client->getMasterKey(),
+            $client->getKeyForWriting()
+        );
+
+        $client->setWriteKey('');
+
+        $this->assertEquals(
+            $client->getMasterKey(),
+            $client->getKeyForWriting()
+        );
+    }
+
+    /**
+     * Tests that the client is able to fallback to the masterkey when
+     * a read key isn't given
+     */
+    public function testReadKeyPicker()
+    {
+        $client = $this->getClient();
+        $client->setReadKey('bar');
+        $client->setMasterKey('foo');
+
+        $this->assertNotEquals(
+            $client->getMasterKey(),
+            $client->getKeyForReading()
+        );
+
+        $client->setReadKey('');
+
+        $this->assertEquals(
+            $client->getMasterKey(),
+            $client->getKeyForReading()
+        );
+    }
+
+    /**
      * Tests the creation of a Scoped Key
      */
     public function testCreateLegacyScopedKey()
