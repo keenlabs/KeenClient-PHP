@@ -99,8 +99,8 @@ class KeenIOClient extends GuzzleClient
     {
         $params['projectId'] = $this->getConfig('projectId');
         $params['masterKey'] = $this->getConfig('masterKey');
-        $params['writeKey'] = $this->getConfig('writeKey');
-        $params['readKey'] = $this->getConfig('readKey');
+        $params['writeKey'] = $this->getKeyForWriting();
+        $params['readKey'] = $this->getKeyForReading();
         $params['organizationId'] = $this->getConfig('organizationId');
 
         return parent::getCommand($name, $params);
@@ -117,7 +117,7 @@ class KeenIOClient extends GuzzleClient
     {
         $event['event_collection'] = $collection;
         $event['projectId'] = $this->getConfig('projectId');
-        $event['writeKey'] = $this->getConfig('writeKey');
+        $event['writeKey'] = $this->getKeyForWriting();
 
         $command = parent::getCommand('addEvent', $event);
 
@@ -133,7 +133,7 @@ class KeenIOClient extends GuzzleClient
     public function addEvents(array $events = array())
     {
         $events['projectId'] = $this->getConfig('projectId');
-        $events['writeKey'] = $this->getConfig('writeKey');
+        $events['writeKey'] = $this->getKeyForWriting();
 
         $command = parent::getCommand('addEvents', $events);
 
@@ -201,6 +201,16 @@ class KeenIOClient extends GuzzleClient
     }
 
     /**
+     * Gets a key which can be used for API Write requests
+     *
+     * @return string|null Value of the key or NULL
+     */
+    public function getKeyForWriting()
+    {
+        return $this->getWriteKey() ?: $this->getMasterKey();
+    }
+
+    /**
      * Sets the API Read Key used by the Keen IO Client
      *
      * @param string $readKey
@@ -218,6 +228,16 @@ class KeenIOClient extends GuzzleClient
     public function getReadKey()
     {
         return $this->getConfig('readKey');
+    }
+
+    /**
+     * Gets a key which can be used for API Read requests
+     *
+     * @return string|null Value of the key or NULL
+     */
+    public function getKeyForReading()
+    {
+        return $this->getReadKey() ?: $this->getMasterKey();
     }
 
     /**
