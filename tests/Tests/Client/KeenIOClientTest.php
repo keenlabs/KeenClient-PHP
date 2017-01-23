@@ -208,26 +208,28 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   \GuzzleHttp\Http\Exception\ClientErrorResponseException
+     * @expectedException   GuzzleHttp\Command\Exception\CommandClientException
      */
     public function testServiceCommandsReturnExceptionOnInvalidAuth($method, $params)
     {
-        $client = $this->getClient();
+        $client = $this->getClient(HandlerStack::create(new MockHandler([
+            new Response(401)
+        ])));
 
-        $this->setMockResponse($client, 'invalid-auth.mock');
         $command = $client->getCommand($method, $params);
         $client->execute($command);
     }
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   \GuzzleHttp\Http\Exception\ClientErrorResponseException
+     * @expectedException   GuzzleHttp\Command\Exception\CommandClientException
      */
     public function testServiceCommandsReturnExceptionOnInvalidProjectId($method, $params)
     {
-        $client = $this->getClient();
+        $client = $this->getClient(HandlerStack::create(new MockHandler([
+            new Response(404)
+        ])));
 
-        $this->setMockResponse($client, 'invalid-project-id.mock');
         $command = $client->getCommand($method, $params);
         $client->execute($command);
     }
@@ -238,16 +240,17 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testSendEventMethod()
     {
+        $queue = new MockHandler([
+            new Response(200, [], '{"created": true}')
+        ]);
+        $client = $this->getClient(HandlerStack::create($queue));
         $event = array('foo' => 'bar', 'baz' => 1);
 
-        $client = $this->getClient();
-
-        $this->setMockResponse($client, 'add-event.mock');
         $response = $client->addEvent('test', $event);
-        $requests = $this->getMockedRequests();
+        $request = $queue->getLastRequest();
 
         //Resource Url
-        $url = parse_url($requests[0]->getUrl());
+        $url = parse_url($request->getUri());
 
         $expectedResponse = array('created' => true);
 
@@ -261,18 +264,18 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
 
         //Checks that the event is properly encoded in the request body
-        $this->assertJsonStringEqualsJsonString(json_encode($event), (string) $requests[0]->getBody());
+        $this->assertJsonStringEqualsJsonString(json_encode($event), (string) $request->getBody());
     }
 
     /**
-     * @dataProvider                providerInvalidEvents
-     * @expectedException           GuzzleHttp\Exception\ValidationException
+     * @dataProvider      providerInvalidEvents
+     * @expectedException GuzzleHttp\Command\Exception\CommandException
      */
     public function testSendEventReturnsExceptionOnBadDataType($event)
     {
-        $client = $this->getClient();
-
-        $this->setMockResponse($client, 'add-event.mock');
+        $client = $this->getClient(HandlerStack::create(new MockHandler([
+            new Response(200, [], '{"created":true}')
+        ])));
         $response = $client->addEvent('test', $event);
     }
 
@@ -283,15 +286,16 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     public function testSendEventsMethod()
     {
         $events = array('test' => array(array('foo' => 'bar'), array('bar' => 'baz')));
+        $queue = new MockHandler([
+            new Response(200, [], '{"test":[{"success":true}, {"success":true}]}')
+        ]);
 
-        $client = $this->getClient();
-
-        $this->setMockResponse($client, 'add-events.mock');
+        $client = $this->getClient(HandlerStack::create($queue));
         $response = $client->addEvents($events);
-        $requests = $this->getMockedRequests();
 
         //Resource Url
-        $url = parse_url($requests[0]->getUrl());
+        $request = $queue->getLastRequest();
+        $url = parse_url($request->getUri());
 
         $expectedResponse = array('test' => array(array('success' => true), array('success'=>true)));
 
@@ -305,7 +309,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
 
         //Checks that the event is properly encoded in the request body
-        $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $requests[0]->getBody());
+        $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $request->getBody());
     }
 
     /**
@@ -337,7 +341,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     protected function getClient($handler = null)
     {
         return \KeenIO\Client\KeenIOClient::factory(array(
-            'projectId' => $_SERVER['PROJECT_ID'],
+            'projectId' => 'testProjectId',
             'masterKey' => $_SERVER['MASTER_KEY'],
             'writeKey'  => $_SERVER['WRITE_KEY'],
             'readKey'   => $_SERVER['READ_KEY'],

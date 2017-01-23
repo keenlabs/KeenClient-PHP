@@ -48,14 +48,13 @@ class KeenIOClient extends GuzzleClient
     public static function factory($config = array(), $handler = null)
     {
         $default = array(
-            'base_url'   => 'https://api.keen.io/3.0/',
-            'version'   => '3.0',
             'masterKey' => null,
             'writeKey'  => null,
             'readKey'   => null,
             'projectId' => null,
             'organizationKey' => null,
-            'organizationId' => null
+            'organizationId' => null,
+            'version' => '3.0'
         );
 
         // Create client configuration
@@ -80,7 +79,10 @@ class KeenIOClient extends GuzzleClient
         $file = 'keen-io-' . str_replace('.', '_', $config['version']) . '.php';
         $description = new ServiceDescription(include __DIR__ . "/Resources/{$file}");
         // Create the new Keen IO Client with our Configuration
-        $client = new self($httpClient, $description, null, null, null, $config);
+        $client = new self($httpClient, $description, null, (function($arg)
+        {
+            return json_decode($arg->getBody());
+        }), null, $config);
         return $client;
     }
 
@@ -106,6 +108,13 @@ class KeenIOClient extends GuzzleClient
         }
 
         return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
+    }
+
+    public function getCommand($name, array $params = [])
+    {
+        $params['projectId'] = $this->getConfig('projectId');
+
+        return parent::getCommand($name, $params);
     }
 
     /**
