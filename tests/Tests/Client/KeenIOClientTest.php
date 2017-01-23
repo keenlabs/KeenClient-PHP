@@ -179,11 +179,14 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         //Make sure the projectId is set properly in the url
         $this->assertContains($client->getProjectId(), explode('/', $url['path']));
 
+        $this->assertEquals($client->getKeyForReading(), $request->getHeader('Authorization')[0]);
+
         //Make sure the version is set properly in the url
         $this->assertContains($client->getVersion(), explode('/', $url['path']));
 
         //Make sure the url has the right method
         $this->assertContains($method, explode('/', $url['path']));
+
 
         //Check that the querystring has all the parameters
         $this->assertEquals($params, $queryString);
@@ -260,6 +263,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         //Make sure the version is set properly in the url
         $this->assertContains($client->getVersion(), explode('/', $url['path']));
 
+        $this->assertEquals($client->getKeyForWriting(), $request->getHeader('Authorization')[0]);
+
         //Checks that the response is good - based off mock response
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
 
@@ -292,6 +297,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
         //Make sure the version is set properly in the url
         $this->assertContains($client->getVersion(), explode('/', $url['path']));
+
+        $this->assertEquals($client->getKeyForWriting(), $request->getHeader('Authorization')[0]);
 
         //Checks that the response is good - based off mock response
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
