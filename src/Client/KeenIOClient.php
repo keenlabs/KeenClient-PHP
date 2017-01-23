@@ -169,7 +169,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function setOrganizationId($organizationId)
     {
-        $this->getConfig()->set('organizationId', $organizationId);
+        $this->setConfig('organizationId', $organizationId);
     }
 
     /**
@@ -189,13 +189,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function setWriteKey($writeKey)
     {
-        $this->getConfig()->set('writeKey', $writeKey);
-
-        // Add API Read Key to `command.params`
-        $params             = $this->getConfig('command.params');
-        $params['writeKey'] = $writeKey;
-
-        $this->getConfig()->set('command.params', $params);
+        $this->setConfig('writeKey', $writeKey);
     }
 
     /**
@@ -216,12 +210,6 @@ class KeenIOClient extends GuzzleClient
     public function setReadKey($readKey)
     {
         $this->setConfig('readKey', $readKey);
-
-        // Add API Read Key to `command.params`
-        $params            = $this->getConfig('command.params');
-        $params['readKey'] = $readKey;
-
-        $this->getConfig('command.params', $params);
     }
 
     /**
@@ -241,13 +229,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function setMasterKey($masterKey)
     {
-        $this->getConfig('masterKey', $masterKey);
-
-        // Add API Master Key to `command.params`
-        $params              = $this->getConfig('command.params');
-        $params['masterKey'] = $masterKey;
-
-        $this->getConfig('command.params', $params);
+        $this->setConfig('masterKey', $masterKey);
     }
 
     /**
@@ -268,7 +250,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function setVersion($version)
     {
-        $this->getConfig('version', $version);
+        $this->setConfig('version', $version);
     }
 
     /**
