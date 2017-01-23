@@ -39,9 +39,8 @@ return array(
                     'required'    => true,
                 ),
                 'project_data' => array(
-                    'location' => 'body',
+                    'location' => 'json',
                     'type'     => 'array',
-                    'filters'  => array('json_encode'),
                 ),
             ),
         ),
@@ -151,9 +150,8 @@ return array(
                     'required'    => true,
                 ),
                 'query'       => array(
-                    'location' => 'body',
+                    'location' => 'json',
                     'type'     => 'array',
-                    'filters'  => array('json_encode'),
                 ),
             ),
         ),
@@ -182,9 +180,8 @@ return array(
                     'required'    => true,
                 ),
                 'query'       => array(
-                    'location' => 'body',
+                    'location' => 'json',
                     'type'     => 'array',
-                    'filters'  => array('json_encode'),
                 ),
             ),
         ),
@@ -349,11 +346,9 @@ return array(
                     'description' => 'The event collection.',
                     'required'    => true,
                 ),
-                'event_data'       => array(
-                    'location' => 'body',
-                    'type'     => 'array',
-                    'filters'  => array('json_encode'),
-                ),
+            ),
+            'additionalParameters'       => array(
+                'location' => 'json'
             ),
         ),
 
@@ -382,11 +377,9 @@ return array(
                     'type'        => 'string',
                     'required'    => false,
                 ),
-                'event_data' => array(
-                    'location' => 'body',
-                    'type'     => 'array',
-                    'filters'  => array('json_encode'),
-                ),
+            ),
+            'additionalParameters' => array(
+                'location' => 'json',
             ),
         ),
 
@@ -416,7 +409,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -509,7 +501,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -582,7 +573,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -655,7 +645,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -728,7 +717,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -801,7 +789,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -874,7 +861,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -947,7 +933,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -1008,7 +993,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'A URL encoded JSON Array defining the Steps in the Funnel.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
             ),
@@ -1049,14 +1033,12 @@ return array(
                     'location'    => 'query',
                     'description' => 'A URL encoded JSON object that defines the multiple types of analyses to perform.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => true,
                 ),
                 'filters'          => array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -1123,7 +1105,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -1149,7 +1130,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'A URL-encoded array of strings containing properties you wish to extract. If this parameter is omitted, all properties will be returned.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
             ),
@@ -1196,7 +1176,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(
@@ -1269,7 +1248,6 @@ return array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
-                    'filters'     => array('json_encode'),
                     'required'    => false,
                 ),
                 'timeframe'        => array(

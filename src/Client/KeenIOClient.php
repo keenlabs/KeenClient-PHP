@@ -107,7 +107,7 @@ class KeenIOClient extends GuzzleClient
             }
         }
 
-        return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
+        return parent::__call($method, isset($args[0]) ? $args[0] : array());
     }
 
     public function getCommand($name, array $params = [])
@@ -124,12 +124,11 @@ class KeenIOClient extends GuzzleClient
      * @param  array  $event      Event data to store
      * @return mixed
      */
-    public function addEvent($collection, $event = array())
+    public function addEvent($collection, array $event = array())
     {
-        $command = $this->getCommand('addEvent', array(
-            'event_collection' => $collection,
-            'event_data'       => $event
-        ));
+        $event['event_collection'] = $collection;
+
+        $command = $this->getCommand('addEvent', $event);
 
         return $this->execute($command);
     }
@@ -140,9 +139,9 @@ class KeenIOClient extends GuzzleClient
      * @param  array $events Event data to store
      * @return mixed
      */
-    public function addEvents($events = array())
+    public function addEvents(array $events = array())
     {
-        $command = $this->getCommand('addEvents', array('event_data' => $events));
+        $command = $this->getCommand('addEvents', $events);
 
         return $this->execute($command);
     }

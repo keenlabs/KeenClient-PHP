@@ -264,19 +264,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
 
         //Checks that the event is properly encoded in the request body
-        $this->assertJsonStringEqualsJsonString(json_encode($event), (string) $request->getBody());
-    }
-
-    /**
-     * @dataProvider      providerInvalidEvents
-     * @expectedException GuzzleHttp\Command\Exception\CommandException
-     */
-    public function testSendEventReturnsExceptionOnBadDataType($event)
-    {
-        $client = $this->getClient(HandlerStack::create(new MockHandler([
-            new Response(200, [], '{"created":true}')
-        ])));
-        $response = $client->addEvent('test', $event);
+        $this->assertJsonStringEqualsJsonString(json_encode($event), (string)$request->getBody());
     }
 
     /**
@@ -310,32 +298,6 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
         //Checks that the event is properly encoded in the request body
         $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $request->getBody());
-    }
-
-    /**
-     * @dataProvider                providerInvalidEvents
-     * @expectedException           \Exception
-     */
-    public function testSendEventsReturnsExceptionOnBadDataType($events)
-    {
-        $client = $this->getClient();
-
-        $this->setMockResponse($client, 'add-events.mock');
-        $response = $client->addEvents($events);
-    }
-
-    /**
-     * Invalid data types for events
-     */
-    public function providerInvalidEvents()
-    {
-        $obj = new \stdClass();
-
-        return array(
-            array($obj),
-            array('string'),
-            array(12345),
-        );
     }
 
     protected function getClient($handler = null)
