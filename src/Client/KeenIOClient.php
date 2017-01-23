@@ -3,7 +3,8 @@
 namespace KeenIO\Client;
 
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
-use GuzzleHttp\Command\Guzzle\Description as ServiceDescription;
+use GuzzleHttp\Command\Guzzle\Description;
+use GuzzleHttp\Client;
 use KeenIO\Exception\RuntimeException;
 
 /**
@@ -60,15 +61,20 @@ class KeenIOClient extends GuzzleClient
         // Create client configuration
         $config = self::parseConfig($config, $default);
 
-        $httpClient = new \GuzzleHttp\Client($config);
         $file = 'keen-io-' . str_replace('.', '_', $config['version']) . '.php';
-        $description = new ServiceDescription(include __DIR__ . "/Resources/{$file}");
+
         // Create the new Keen IO Client with our Configuration
-        $client = new self($httpClient, $description, null, (function($arg)
-        {
-            return json_decode($arg->getBody());
-        }), null, $config);
-        return $client;
+        return new self(
+            new Client($config),
+            new Description(include __DIR__ . "/Resources/{$file}"),
+            null,
+            function($arg)
+            {
+                return json_decode($arg->getBody());
+            },
+            null,
+            $config
+        );
     }
 
     /**
