@@ -45,10 +45,10 @@ class KeenIOClient extends GuzzleClient
      *
      * @returns \KeenIO\Client\KeenIOClient
      */
-    public static function factory($config = array())
+    public static function factory($config = array(), $handler = null)
     {
         $default = array(
-            'base_url'   => 'https://api.keen.io/{version}/',
+            'base_url'   => 'https://api.keen.io/3.0/',
             'version'   => '3.0',
             'masterKey' => null,
             'writeKey'  => null,
@@ -69,16 +69,18 @@ class KeenIOClient extends GuzzleClient
         }
 
         $config['command.params'] = $parameters;
+        $config['headers'] = array('Content-Type' => 'application/json');
+
+        if ($handler)
+        {
+            $config['handler'] = $handler;
+        }
 
         $httpClient = new \GuzzleHttp\Client($config);
         $file = 'keen-io-' . str_replace('.', '_', $config['version']) . '.php';
         $description = new ServiceDescription(include __DIR__ . "/Resources/{$file}");
         // Create the new Keen IO Client with our Configuration
-        $client = new self($httpClient, $description, $config);
-
-        // Set the content type header to use "application/json" for all requests
-        $httpClient->setDefaultOption('headers', array('Content-Type' => 'application/json'));
-
+        $client = new self($httpClient, $description, null, null, null, $config);
         return $client;
     }
 

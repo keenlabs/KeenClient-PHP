@@ -4,6 +4,11 @@ namespace KeenIO\Tests\Client;
 
 use KeenIO\Client\KeenIOClient;
 use GuzzleHttp\Subscriber\Mock;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Command\Guzzle\GuzzleClient;
 
 class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,8 +28,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $client = KeenIOClient::factory($config);
 
         //Check that the Client is of the right type
-        $this->assertInstanceOf('\GuzzleHttp\Client', $client);
-        $this->assertInstanceOf('\KeenIO\Client\KeenIOClient', $client);
+        $this->assertInstanceOf(GuzzleClient::class, $client);
+        $this->assertInstanceOf(KeenIOClient::class, $client);
 
         //Check that the pass config options match the client's config
         $this->assertEquals($config['projectId'], $client->getConfig('projectId'));
@@ -52,8 +57,8 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $client = KeenIOClient::factory($config);
 
         //Check that the Client is of the right type
-        $this->assertInstanceOf('\GuzzleHttp\Client', $client);
-        $this->assertInstanceOf('\KeenIO\Client\KeenIOClient', $client);
+        $this->assertInstanceOf(GuzzleClient::class, $client);
+        $this->assertInstanceOf(KeenIOClient::class, $client);
 
         //Check that the pass config options match the client's config
         $this->assertEquals($config['projectId'], $client->getConfig('projectId'));
@@ -154,16 +159,18 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testServiceCommands($method, $params)
     {
-        $client = $this->getClient();
+        $queue = new MockHandler([
+            new Response(200, [], '{response: true}')
+        ]);
+        $handler = HandlerStack::create($queue);
+        $client = $this->getClient($handler);
 
-        $this->setMockResponse($client, 'valid-response.mock');
         $command = $client->getCommand($method, $params);
         $client->execute($command);
-
-        $requests = $this->getMockedRequests();
+        $request = $queue->getLastRequest();
 
         //Resource Url
-        $url = parse_url($requests[0]->getUrl());
+        $url = parse_url($request->getUri());
         parse_str($url['query'], $queryString);
 
         //Camel to underscore case
@@ -327,7 +334,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    protected function getClient()
+    protected function getClient($handler = null)
     {
         return \KeenIO\Client\KeenIOClient::factory(array(
             'projectId' => $_SERVER['PROJECT_ID'],
@@ -335,7 +342,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
             'writeKey'  => $_SERVER['WRITE_KEY'],
             'readKey'   => $_SERVER['READ_KEY'],
             'version'   => $_SERVER['API_VERSION']
-        ));
+        ), $handler);
     }
 
     protected function setMockResponse($client, $file)
