@@ -356,7 +356,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     protected function getClient($handler = null)
     {
         return \KeenIO\Client\KeenIOClient::factory(array(
-            'projectId' => 'testProjectId',
+            'projectId' => $_SERVER['PROJECT_ID'],
             'masterKey' => $_SERVER['MASTER_KEY'],
             'writeKey'  => $_SERVER['WRITE_KEY'],
             'readKey'   => $_SERVER['READ_KEY'],
