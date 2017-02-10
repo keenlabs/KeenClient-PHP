@@ -3,9 +3,14 @@
 namespace KeenIO\Tests\Client;
 
 use KeenIO\Client\KeenIOClient;
-use Guzzle\Tests\GuzzleTestCase;
+use GuzzleHttp\Subscriber\Mock;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Command\Guzzle\GuzzleClient;
 
-class KeenIOClientTest extends GuzzleTestCase
+class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Check that a Keen IO Client is instantiated properly
@@ -23,8 +28,8 @@ class KeenIOClientTest extends GuzzleTestCase
         $client = KeenIOClient::factory($config);
 
         //Check that the Client is of the right type
-        $this->assertInstanceOf('\Guzzle\Service\Client', $client);
-        $this->assertInstanceOf('\KeenIO\Client\KeenIOClient', $client);
+        $this->assertInstanceOf(GuzzleClient::class, $client);
+        $this->assertInstanceOf(KeenIOClient::class, $client);
 
         //Check that the pass config options match the client's config
         $this->assertEquals($config['projectId'], $client->getConfig('projectId'));
@@ -52,8 +57,8 @@ class KeenIOClientTest extends GuzzleTestCase
         $client = KeenIOClient::factory($config);
 
         //Check that the Client is of the right type
-        $this->assertInstanceOf('\Guzzle\Service\Client', $client);
-        $this->assertInstanceOf('\KeenIO\Client\KeenIOClient', $client);
+        $this->assertInstanceOf(GuzzleClient::class, $client);
+        $this->assertInstanceOf(KeenIOClient::class, $client);
 
         //Check that the pass config options match the client's config
         $this->assertEquals($config['projectId'], $client->getConfig('projectId'));
@@ -68,7 +73,7 @@ class KeenIOClientTest extends GuzzleTestCase
      */
     public function testProjectIdSetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setProjectId('testProjectId');
 
         $this->assertEquals('testProjectId', $client->getConfig('projectId'));
@@ -79,7 +84,7 @@ class KeenIOClientTest extends GuzzleTestCase
      */
     public function testReadKeySetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setReadKey('testReadKey');
 
         $this->assertEquals('testReadKey', $client->getConfig('readKey'));
@@ -90,7 +95,7 @@ class KeenIOClientTest extends GuzzleTestCase
      */
     public function testMasterKeySetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setMasterKey('testMasterKey');
 
         $this->assertEquals('testMasterKey', $client->getConfig('masterKey'));
@@ -101,10 +106,56 @@ class KeenIOClientTest extends GuzzleTestCase
      */
     public function testVersionSetter()
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient();
         $client->setVersion('3.0');
 
         $this->assertEquals('3.0', $client->getConfig('version'));
+    }
+
+    /**
+     * Tests that the client is able to fallback to the masterkey when
+     * a write key isn't given
+     */
+    public function testWriteKeyPicker()
+    {
+        $client = $this->getClient();
+        $client->setWriteKey('bar');
+        $client->setMasterKey('foo');
+
+        $this->assertNotEquals(
+            $client->getMasterKey(),
+            $client->getKeyForWriting()
+        );
+
+        $client->setWriteKey('');
+
+        $this->assertEquals(
+            $client->getMasterKey(),
+            $client->getKeyForWriting()
+        );
+    }
+
+    /**
+     * Tests that the client is able to fallback to the masterkey when
+     * a read key isn't given
+     */
+    public function testReadKeyPicker()
+    {
+        $client = $this->getClient();
+        $client->setReadKey('bar');
+        $client->setMasterKey('foo');
+
+        $this->assertNotEquals(
+            $client->getMasterKey(),
+            $client->getKeyForReading()
+        );
+
+        $client->setReadKey('');
+
+        $this->assertEquals(
+            $client->getMasterKey(),
+            $client->getKeyForReading()
+        );
     }
 
     /**
@@ -154,15 +205,18 @@ class KeenIOClientTest extends GuzzleTestCase
      */
     public function testServiceCommands($method, $params)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $queue = new MockHandler([
+            new Response(200, [], '{response: true}')
+        ]);
+        $handler = HandlerStack::create($queue);
+        $client = $this->getClient($handler);
 
-        $this->setMockResponse($client, 'valid-response.mock');
-        $result = $client->getCommand($method, $params)->getResult();
-
-        $requests = $this->getMockedRequests();
+        $command = $client->getCommand($method, $params);
+        $client->execute($command);
+        $request = $queue->getLastRequest();
 
         //Resource Url
-        $url = parse_url($requests[0]->getUrl());
+        $url = parse_url($request->getUri());
         parse_str($url['query'], $queryString);
 
         //Camel to underscore case
@@ -171,11 +225,14 @@ class KeenIOClientTest extends GuzzleTestCase
         //Make sure the projectId is set properly in the url
         $this->assertContains($client->getProjectId(), explode('/', $url['path']));
 
+        $this->assertEquals($client->getKeyForReading(), $request->getHeader('Authorization')[0]);
+
         //Make sure the version is set properly in the url
         $this->assertContains($client->getVersion(), explode('/', $url['path']));
 
         //Make sure the url has the right method
         $this->assertContains($method, explode('/', $url['path']));
+
 
         //Check that the querystring has all the parameters
         $this->assertEquals($params, $queryString);
@@ -200,26 +257,30 @@ class KeenIOClientTest extends GuzzleTestCase
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   \Guzzle\Http\Exception\ClientErrorResponseException
+     * @expectedException   GuzzleHttp\Command\Exception\CommandClientException
      */
     public function testServiceCommandsReturnExceptionOnInvalidAuth($method, $params)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient(HandlerStack::create(new MockHandler([
+            new Response(401)
+        ])));
 
-        $this->setMockResponse($client, 'invalid-auth.mock');
-        $result = $client->getCommand($method, $params)->getResult();
+        $command = $client->getCommand($method, $params);
+        $client->execute($command);
     }
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   \Guzzle\Http\Exception\ClientErrorResponseException
+     * @expectedException   GuzzleHttp\Command\Exception\CommandClientException
      */
     public function testServiceCommandsReturnExceptionOnInvalidProjectId($method, $params)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
+        $client = $this->getClient(HandlerStack::create(new MockHandler([
+            new Response(404)
+        ])));
 
-        $this->setMockResponse($client, 'invalid-project-id.mock');
-        $result = $client->getCommand($method, $params)->getResult();
+        $command = $client->getCommand($method, $params);
+        $client->execute($command);
     }
 
     /**
@@ -228,16 +289,17 @@ class KeenIOClientTest extends GuzzleTestCase
      */
     public function testSendEventMethod()
     {
+        $queue = new MockHandler([
+            new Response(200, [], '{"created": true}')
+        ]);
+        $client = $this->getClient(HandlerStack::create($queue));
         $event = array('foo' => 'bar', 'baz' => 1);
 
-        $client = $this->getServiceBuilder()->get('keen-io');
-
-        $this->setMockResponse($client, 'add-event.mock');
         $response = $client->addEvent('test', $event);
-        $requests = $this->getMockedRequests();
+        $request = $queue->getLastRequest();
 
         //Resource Url
-        $url = parse_url($requests[0]->getUrl());
+        $url = parse_url($request->getUri());
 
         $expectedResponse = array('created' => true);
 
@@ -247,23 +309,13 @@ class KeenIOClientTest extends GuzzleTestCase
         //Make sure the version is set properly in the url
         $this->assertContains($client->getVersion(), explode('/', $url['path']));
 
+        $this->assertEquals($client->getKeyForWriting(), $request->getHeader('Authorization')[0]);
+
         //Checks that the response is good - based off mock response
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
 
         //Checks that the event is properly encoded in the request body
-        $this->assertJsonStringEqualsJsonString(json_encode($event), (string) $requests[0]->getBody());
-    }
-
-    /**
-     * @dataProvider                providerInvalidEvents
-     * @expectedException           Guzzle\Service\Exception\ValidationException
-     */
-    public function testSendEventReturnsExceptionOnBadDataType($event)
-    {
-        $client = $this->getServiceBuilder()->get('keen-io');
-
-        $this->setMockResponse($client, 'add-event.mock');
-        $response = $client->addEvent('test', $event);
+        $this->assertJsonStringEqualsJsonString(json_encode($event), (string)$request->getBody());
     }
 
     /**
@@ -273,15 +325,16 @@ class KeenIOClientTest extends GuzzleTestCase
     public function testSendEventsMethod()
     {
         $events = array('test' => array(array('foo' => 'bar'), array('bar' => 'baz')));
+        $queue = new MockHandler([
+            new Response(200, [], '{"test":[{"success":true}, {"success":true}]}')
+        ]);
 
-        $client = $this->getServiceBuilder()->get('keen-io');
-
-        $this->setMockResponse($client, 'add-events.mock');
+        $client = $this->getClient(HandlerStack::create($queue));
         $response = $client->addEvents($events);
-        $requests = $this->getMockedRequests();
 
         //Resource Url
-        $url = parse_url($requests[0]->getUrl());
+        $request = $queue->getLastRequest();
+        $url = parse_url($request->getUri());
 
         $expectedResponse = array('test' => array(array('success' => true), array('success'=>true)));
 
@@ -291,36 +344,24 @@ class KeenIOClientTest extends GuzzleTestCase
         //Make sure the version is set properly in the url
         $this->assertContains($client->getVersion(), explode('/', $url['path']));
 
+        $this->assertEquals($client->getKeyForWriting(), $request->getHeader('Authorization')[0]);
+
         //Checks that the response is good - based off mock response
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
 
         //Checks that the event is properly encoded in the request body
-        $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $requests[0]->getBody());
+        $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $request->getBody());
     }
 
-    /**
-     * @dataProvider                providerInvalidEvents
-     * @expectedException           \Exception
-     */
-    public function testSendEventsReturnsExceptionOnBadDataType($events)
+    protected function getClient($handler = null)
     {
-        $client = $this->getServiceBuilder()->get('keen-io');
-
-        $this->setMockResponse($client, 'add-events.mock');
-        $response = $client->addEvents($events);
-    }
-
-    /**
-     * Invalid data types for events
-     */
-    public function providerInvalidEvents()
-    {
-        $obj = new \stdClass();
-
-        return array(
-            array($obj),
-            array('string'),
-            array(12345),
-        );
+        return \KeenIO\Client\KeenIOClient::factory(array(
+            'projectId' => $_SERVER['PROJECT_ID'],
+            'masterKey' => $_SERVER['MASTER_KEY'],
+            'writeKey'  => $_SERVER['WRITE_KEY'],
+            'readKey'   => $_SERVER['READ_KEY'],
+            'version'   => $_SERVER['API_VERSION'],
+            'handler'   => $handler
+        ));
     }
 }

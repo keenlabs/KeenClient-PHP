@@ -2,9 +2,9 @@
 
 namespace KeenIO\Client;
 
-use Guzzle\Common\Collection;
-use Guzzle\Service\Client;
-use Guzzle\Service\Description\ServiceDescription;
+use GuzzleHttp\Command\Guzzle\GuzzleClient;
+use GuzzleHttp\Command\Guzzle\Description;
+use GuzzleHttp\Client;
 use KeenIO\Exception\RuntimeException;
 
 /**
@@ -37,7 +37,7 @@ use KeenIO\Exception\RuntimeException;
  * @method array multiAnalysis(array $args = array()) {@command KeenIO multiAnalysis}
  * @method array extraction(array $args = array()) {@command KeenIO extraction}
  */
-class KeenIOClient extends Client
+class KeenIOClient extends GuzzleClient
 {
     /**
      * Factory to create new KeenIOClient instance.
@@ -49,40 +49,32 @@ class KeenIOClient extends Client
     public static function factory($config = array())
     {
         $default = array(
-            'baseUrl'   => 'https://api.keen.io/{version}/',
-            'version'   => '3.0',
             'masterKey' => null,
             'writeKey'  => null,
             'readKey'   => null,
             'projectId' => null,
             'organizationKey' => null,
-            'organizationId' => null
+            'organizationId' => null,
+            'version' => '3.0'
         );
 
         // Create client configuration
         $config = self::parseConfig($config, $default);
-        $config = Collection::fromConfig($config, $default);
 
-        // Because each API Resource uses a separate type of API Key, we need to expose them all in
-        // `commands.params`. Doing it this way allows the Service Definitions to set what API Key is used.
-        $parameters = array();
-        foreach (array('masterKey', 'writeKey', 'readKey', 'organizationKey') as $key) {
-            $parameters[$key] = $config->get($key);
-        }
-
-        $config->set('command.params', $parameters);
+        $file = 'keen-io-' . str_replace('.', '_', $config['version']) . '.php';
 
         // Create the new Keen IO Client with our Configuration
-        $client = new self($config->get('baseUrl'), $config);
-
-        // Set the Service Definition from the versioned file
-        $file = 'keen-io-' . str_replace('.', '_', $client->getConfig('version')) . '.php';
-        $client->setDescription(ServiceDescription::factory(__DIR__ . "/Resources/{$file}"));
-
-        // Set the content type header to use "application/json" for all requests
-        $client->setDefaultOption('headers', array('Content-Type' => 'application/json'));
-
-        return $client;
+        return new self(
+            new Client($config),
+            new Description(include __DIR__ . "/Resources/{$file}"),
+            null,
+            function($arg)
+            {
+                return json_decode($arg->getBody());
+            },
+            null,
+            $config
+        );
     }
 
     /**
@@ -96,7 +88,7 @@ class KeenIOClient extends Client
      *
      * @return mixed Returns the result of the command
      */
-    public function __call($method, $args)
+    public function __call($method, array $args)
     {
         if (isset($args[0]) && is_string($args[0])) {
             $args[0] = array('event_collection' => $args[0]);
@@ -106,7 +98,18 @@ class KeenIOClient extends Client
             }
         }
 
-        return $this->getCommand($method, isset($args[0]) ? $args[0] : array())->getResult();
+        return parent::__call($method, isset($args[0]) ? $args[0] : array());
+    }
+
+    public function getCommand($name, array $params = [])
+    {
+        $params['projectId'] = $this->getConfig('projectId');
+        $params['masterKey'] = $this->getConfig('masterKey');
+        $params['writeKey'] = $this->getKeyForWriting();
+        $params['readKey'] = $this->getKeyForReading();
+        $params['organizationId'] = $this->getConfig('organizationId');
+
+        return parent::getCommand($name, $params);
     }
 
     /**
@@ -116,12 +119,15 @@ class KeenIOClient extends Client
      * @param  array  $event      Event data to store
      * @return mixed
      */
-    public function addEvent($collection, $event = array())
+    public function addEvent($collection, array $event = array())
     {
-        return $this->getCommand('addEvent', array(
-            'event_collection' => $collection,
-            'event_data'       => $event
-        ))->getResult();
+        $event['event_collection'] = $collection;
+        $event['projectId'] = $this->getConfig('projectId');
+        $event['writeKey'] = $this->getKeyForWriting();
+
+        $command = parent::getCommand('addEvent', $event);
+
+        return $this->execute($command);
     }
 
     /**
@@ -130,9 +136,14 @@ class KeenIOClient extends Client
      * @param  array $events Event data to store
      * @return mixed
      */
-    public function addEvents($events = array())
+    public function addEvents(array $events = array())
     {
-        return $this->getCommand('addEvents', array('event_data' => $events))->getResult();
+        $events['projectId'] = $this->getConfig('projectId');
+        $events['writeKey'] = $this->getKeyForWriting();
+
+        $command = parent::getCommand('addEvents', $events);
+
+        return $this->execute($command);
     }
 
     /**
@@ -142,7 +153,7 @@ class KeenIOClient extends Client
      */
     public function setProjectId($projectId)
     {
-        $this->getConfig()->set('projectId', $projectId);
+        $this->setConfig('projectId', $projectId);
     }
 
     /**
@@ -162,7 +173,7 @@ class KeenIOClient extends Client
      */
     public function setOrganizationId($organizationId)
     {
-        $this->getConfig()->set('organizationId', $organizationId);
+        $this->setConfig('organizationId', $organizationId);
     }
 
     /**
@@ -182,13 +193,7 @@ class KeenIOClient extends Client
      */
     public function setWriteKey($writeKey)
     {
-        $this->getConfig()->set('writeKey', $writeKey);
-
-        // Add API Read Key to `command.params`
-        $params             = $this->getConfig('command.params');
-        $params['writeKey'] = $writeKey;
-
-        $this->getConfig()->set('command.params', $params);
+        $this->setConfig('writeKey', $writeKey);
     }
 
     /**
@@ -202,19 +207,23 @@ class KeenIOClient extends Client
     }
 
     /**
+     * Gets a key which can be used for API Write requests
+     *
+     * @return string|null Value of the key or NULL
+     */
+    public function getKeyForWriting()
+    {
+        return $this->getWriteKey() ?: $this->getMasterKey();
+    }
+
+    /**
      * Sets the API Read Key used by the Keen IO Client
      *
      * @param string $readKey
      */
     public function setReadKey($readKey)
     {
-        $this->getConfig()->set('readKey', $readKey);
-
-        // Add API Read Key to `command.params`
-        $params            = $this->getConfig('command.params');
-        $params['readKey'] = $readKey;
-
-        $this->getConfig()->set('command.params', $params);
+        $this->setConfig('readKey', $readKey);
     }
 
     /**
@@ -228,19 +237,23 @@ class KeenIOClient extends Client
     }
 
     /**
+     * Gets a key which can be used for API Read requests
+     *
+     * @return string|null Value of the key or NULL
+     */
+    public function getKeyForReading()
+    {
+        return $this->getReadKey() ?: $this->getMasterKey();
+    }
+
+    /**
      * Sets the API Master Key used by the Keen IO Client
      *
      * @param string $masterKey
      */
     public function setMasterKey($masterKey)
     {
-        $this->getConfig()->set('masterKey', $masterKey);
-
-        // Add API Master Key to `command.params`
-        $params              = $this->getConfig('command.params');
-        $params['masterKey'] = $masterKey;
-
-        $this->getConfig()->set('command.params', $params);
+        $this->setConfig('masterKey', $masterKey);
     }
 
     /**
@@ -261,11 +274,7 @@ class KeenIOClient extends Client
      */
     public function setVersion($version)
     {
-        $this->getConfig()->set('version', $version);
-
-        /* Set the Service Definition from the versioned file */
-        $file = 'keen-io-' . str_replace('.', '_', $this->getConfig('version')) . '.php';
-        $this->setDescription(ServiceDescription::factory(__DIR__ . "/Resources/{$file}"));
+        $this->setConfig('version', $version);
     }
 
     /**
