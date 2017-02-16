@@ -7,6 +7,8 @@ use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Client;
 use KeenIO\Exception\RuntimeException;
 
+define('VERSION', '2.5.7');
+
 /**
  * Class KeenIOClient
  *
@@ -55,7 +57,10 @@ class KeenIOClient extends GuzzleClient
             'projectId' => null,
             'organizationKey' => null,
             'organizationId' => null,
-            'version' => '3.0'
+            'version' => '3.0',
+            'headers' => array(
+                'Keen-Sdk' => 'php-' . VERSION
+            )
         );
 
         // Create client configuration
