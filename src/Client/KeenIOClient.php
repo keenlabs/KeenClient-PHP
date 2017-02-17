@@ -7,8 +7,6 @@ use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Client;
 use KeenIO\Exception\RuntimeException;
 
-define('VERSION', '2.5.7');
-
 /**
  * Class KeenIOClient
  *
@@ -41,6 +39,9 @@ define('VERSION', '2.5.7');
  */
 class KeenIOClient extends GuzzleClient
 {
+
+    const VERSION = '2.5.7';
+
     /**
      * Factory to create new KeenIOClient instance.
      *
@@ -59,7 +60,7 @@ class KeenIOClient extends GuzzleClient
             'organizationId' => null,
             'version' => '3.0',
             'headers' => array(
-                'Keen-Sdk' => 'php-' . VERSION
+                'Keen-Sdk' => 'php-' . self::VERSION
             )
         );
 

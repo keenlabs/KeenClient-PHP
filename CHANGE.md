@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+Version 2.5.7
+-------------
+* Added a new HTTP Header that tracks the SDK version
+
 Version 2.5.6
 -------------
 * Added Saved Queries and Project Creation
