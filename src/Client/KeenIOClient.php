@@ -12,30 +12,30 @@ use KeenIO\Exception\RuntimeException;
  *
  * @package KeenIO\Client
  *
- * @method array getCollection(array $args = array()) {@command KeenIO getCollection}
+ * @method array getCollection(string $eventCollection, array $args = array()) {@command KeenIO getCollection}
  * @method array getCollections(array $args = array()) {@command KeenIO getCollections}
  * @method array getResources(array $args = array()) {@command KeenIO getResources}
  * @method array getProjects(array $args = array()) {@command KeenIO getProjects}
  * @method array getProject(array $args = array()) {@command KeenIO getProject}
- * @method array getProperty(array $args = array()) {@command KeenIO getProperty}
+ * @method array getProperty(string $eventCollection, array $args = array()) {@command KeenIO getProperty}
  * @method array getSavedQueries(array $args = array()) {@command KeenIO getProperty}
  * @method array getSavedQuery(array $args = array()) {@command KeenIO getProperty}
  * @method array createSavedQuery(array $args = array()) {@command KeenIO getProperty}
  * @method array deleteSavedQuery(array $args = array()) {@command KeenIO getProperty}
  * @method array getSavedQueryResults(array $args = array()) {@command KeenIO getProperty}
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
- * @method array deleteEvents(array $args = array()) {@command KeenIO deleteEvents}
- * @method array deleteEventProperties(array $args = array()) {@command KeenIO deleteEventProperties}
- * @method array count(array $args = array()) {@command KeenIO count}
- * @method array countUnique(array $args = array()) {@command KeenIO countUnique}
- * @method array minimum(array $args = array()) {@command KeenIO minimum}
- * @method array maximum(array $args = array()) {@command KeenIO maximum}
- * @method array average(array $args = array()) {@command KeenIO average}
- * @method array sum(array $args = array()) {@command KeenIO sum}
- * @method array selectUnique(array $args = array()) {@command KeenIO selectUnique}
- * @method array funnel(array $args = array()) {@command KeenIO funnel}
- * @method array multiAnalysis(array $args = array()) {@command KeenIO multiAnalysis}
- * @method array extraction(array $args = array()) {@command KeenIO extraction}
+ * @method array deleteEvents(string $eventCollection, array $args = array()) {@command KeenIO deleteEvents}
+ * @method array deleteEventProperties(string $eventCollection, array $args = array())) {@command KeenIO deleteEventProperties}
+ * @method array count(string $eventCollection, array $args = array())) {@command KeenIO count}
+ * @method array countUnique(string $eventCollection, array $args = array()) {@command KeenIO countUnique}
+ * @method array minimum(string $eventCollection, array $args = array()) {@command KeenIO minimum}
+ * @method array maximum(string $eventCollection, array $args = array()) {@command KeenIO maximum}
+ * @method array average(string $eventCollection, array $args = array()) {@command KeenIO average}
+ * @method array sum(string $eventCollection, array $args = array()) {@command KeenIO sum}
+ * @method array selectUnique(string $eventCollection, array $args = array()) {@command KeenIO selectUnique}
+ * @method array funnel(string $eventCollection, array $args = array()) {@command KeenIO funnel}
+ * @method array multiAnalysis(string $eventCollection, array $args = array()) {@command KeenIO multiAnalysis}
+ * @method array extraction(string $eventCollection, array $args = array()) {@command KeenIO extraction}
  */
 class KeenIOClient extends GuzzleClient
 {
@@ -90,15 +90,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function __call($method, array $args)
     {
-        if (isset($args[0]) && is_string($args[0])) {
-            $args[0] = array('event_collection' => $args[0]);
-
-            if (isset($args[1]) && is_array($args[1])) {
-                $args[0] = array_merge($args[1], $args[0]);
-            }
-        }
-
-        return parent::__call($method, isset($args[0]) ? $args[0] : array());
+        return parent::__call($method, array($this->combineEventCollectionArgs($args)));
     }
 
     public function getCommand($name, array $params = [])
@@ -425,6 +417,32 @@ class KeenIOClient extends GuzzleClient
         });
 
         return $config;
+    }
+
+    /**
+     * Translate a set of args to merge a lone event_collection into
+     * an array with the other params
+     *
+     * @param array $args Arguments to be formatted
+     *
+     * @return array A single array with event_collection merged in
+     * @access private
+     */
+    private static function combineEventCollectionArgs(array $args)
+    {
+        $formattedArgs = array();
+
+        if (isset($args[0]) && is_string($args[0])) {
+            $formattedArgs['event_collection'] = $args[0];
+            
+            if(isset($args[1]) && is_array($args[1])) {
+                $formattedArgs = array_merge($formattedArgs, $args[1]);
+            }
+        } elseif (isset($args[0]) && is_array($args[0])) {
+            $formattedArgs = $args[0];
+        }
+        
+        return $formattedArgs;
     }
 
     public static function cleanQueryName($raw)
