@@ -39,6 +39,9 @@ use KeenIO\Exception\RuntimeException;
  */
 class KeenIOClient extends GuzzleClient
 {
+
+    const VERSION = '2.5.7';
+
     /**
      * Factory to create new KeenIOClient instance.
      *
@@ -55,7 +58,10 @@ class KeenIOClient extends GuzzleClient
             'projectId' => null,
             'organizationKey' => null,
             'organizationId' => null,
-            'version' => '3.0'
+            'version' => '3.0',
+            'headers' => array(
+                'Keen-Sdk' => 'php-' . self::VERSION
+            )
         );
 
         // Create client configuration
