@@ -69,6 +69,24 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that the magic __call correctly merges in the event_collection parameter
+     */
+    public function testEventCollectionMerging() {
+        $unmerged = array('collection', array('timeframe' => 'this_14_days'));
+        $merged = array(array('event_collection' => 'collection', 'timeframe' => 'this_14_days'));
+
+        $client = $this->getClient();
+
+		$unmergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($unmerged));
+		$mergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($merged));
+
+        $this->assertEquals($unmergedAfter['event_collection'], 'collection'); 
+		$this->assertEquals($unmergedAfter['timeframe'], 'this_14_days');
+        $this->assertEquals($mergedAfter['event_collection'], 'collection'); 
+		$this->assertEquals($mergedAfter['timeframe'], 'this_14_days');
+    }
+
+    /**
      * Tests the client setter method and that the value returned is correct
      */
     public function testProjectIdSetter()
@@ -364,4 +382,22 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
             'handler'   => $handler
         ));
     }
+
+	/**
+	 * Call protected/private method of a class.
+	 *
+	 * @param object &$object    Instantiated object that we will run method on.
+	 * @param string $methodName Method name to call
+	 * @param array  $parameters Array of parameters to pass into method.
+	 *
+	 * @return mixed Method return.
+	 */
+	protected function invokeMethod(&$object, $methodName, array $parameters = array())
+	{
+		$reflection = new \ReflectionClass(get_class($object));
+		$method = $reflection->getMethod($methodName);
+		$method->setAccessible(true);
+
+		return $method->invokeArgs($object, $parameters);
+	}
 }

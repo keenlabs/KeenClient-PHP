@@ -90,15 +90,7 @@ class KeenIOClient extends GuzzleClient
      */
     public function __call($method, array $args)
     {
-        if (isset($args[0]) && is_string($args[0])) {
-            $args[0] = array('event_collection' => $args[0]);
-
-            if (isset($args[1]) && is_array($args[1])) {
-                $args[0] = array_merge($args[1], $args[0]);
-            }
-        }
-
-        return parent::__call($method, isset($args[0]) ? $args[0] : array());
+        return parent::__call($method, array($this->combineEventCollectionArgs($args)));
     }
 
     public function getCommand($name, array $params = [])
@@ -425,6 +417,32 @@ class KeenIOClient extends GuzzleClient
         });
 
         return $config;
+    }
+
+    /**
+     * Translate a set of args to merge a lone event_collection into
+     * an array with the other params
+     *
+     * @param array $args Arguments to be formatted
+     *
+     * @return array A single array with event_collection merged in
+     * @access private
+     */
+    private static function combineEventCollectionArgs(array $args)
+    {
+        $formattedArgs = array();
+
+        if (isset($args[0]) && is_string($args[0])) {
+            $formattedArgs['event_collection'] = $args[0];
+            
+            if(isset($args[1]) && is_array($args[1])) {
+                $formattedArgs = array_merge($formattedArgs, $args[1]);
+            }
+        } elseif (isset($args[0]) && is_array($args[0])) {
+            $formattedArgs = $args[0];
+        }
+        
+        return $formattedArgs;
     }
 
     public static function cleanQueryName($raw)
