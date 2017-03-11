@@ -1164,6 +1164,147 @@ return array(
                 ),
             ),
         ),
+
+        'createAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys',
+            'description' => 'Creates a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+            'additionalParameters' => array(
+                'location' => 'json'
+            ),
+        ),
+        'getAllAccessKeys' => array(
+            'uri'         => 'projects/{projectId}/keys',
+            'description' => 'Returns all project access keys.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+        'getAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}',
+            'description' => 'Returns a project access key.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+        'updateAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}',
+            'description' => 'Updates a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+            'additionalParameters' => array(
+                'location' => 'json'
+            ),
+        ),
+        'revokeAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}/revoke',
+            'description' => 'Revokes a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+        'unrevokeAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}/unrevoke',
+            'description' => 'Unrevokes a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
     ),
     'models' => array(
         'getResponse' => array(
