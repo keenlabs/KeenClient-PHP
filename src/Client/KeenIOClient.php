@@ -76,7 +76,7 @@ class KeenIOClient extends GuzzleClient
             null,
             function($arg)
             {
-                return json_decode($arg->getBody());
+                return json_decode($arg->getBody(), true);
             },
             null,
             $config
@@ -440,14 +440,14 @@ class KeenIOClient extends GuzzleClient
 
         if (isset($args[0]) && is_string($args[0])) {
             $formattedArgs['event_collection'] = $args[0];
-            
+
             if(isset($args[1]) && is_array($args[1])) {
                 $formattedArgs = array_merge($formattedArgs, $args[1]);
             }
         } elseif (isset($args[0]) && is_array($args[0])) {
             $formattedArgs = $args[0];
         }
-        
+
         return $formattedArgs;
     }
 
