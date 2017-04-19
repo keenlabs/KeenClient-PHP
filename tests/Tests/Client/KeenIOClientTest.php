@@ -80,9 +80,9 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 		$unmergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($unmerged));
 		$mergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($merged));
 
-        $this->assertEquals($unmergedAfter['event_collection'], 'collection'); 
+        $this->assertEquals($unmergedAfter['event_collection'], 'collection');
 		$this->assertEquals($unmergedAfter['timeframe'], 'this_14_days');
-        $this->assertEquals($mergedAfter['event_collection'], 'collection'); 
+        $this->assertEquals($mergedAfter['event_collection'], 'collection');
 		$this->assertEquals($mergedAfter['timeframe'], 'this_14_days');
     }
 
@@ -224,13 +224,13 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     public function testServiceCommands($method, $params)
     {
         $queue = new MockHandler([
-            new Response(200, [], '{response: true}')
+            new Response(200, ['Content-Type' => 'application/json'], '{"response": true}')
         ]);
         $handler = HandlerStack::create($queue);
         $client = $this->getClient($handler);
 
         $command = $client->getCommand($method, $params);
-        $client->execute($command);
+        $result = $client->execute($command);
         $request = $queue->getLastRequest();
 
         //Resource Url
@@ -254,6 +254,9 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
         //Check that the querystring has all the parameters
         $this->assertEquals($params, $queryString);
+
+        // Make sure that the response is a PHP array, according to the documented return type
+        $this->assertInternalType('array', $result);
     }
 
     /**
