@@ -235,7 +235,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
         //Resource Url
         $url = parse_url($request->getUri());
-        parse_str($url['query'], $queryString);
+        $body = json_decode($request->getBody()->getContents(), true);
 
         //Camel to underscore case
         $method = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $method));
@@ -251,9 +251,11 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         //Make sure the url has the right method
         $this->assertContains($method, explode('/', $url['path']));
 
-
-        //Check that the querystring has all the parameters
-        $this->assertEquals($params, $queryString);
+        //Check that the json body has all of the parameters
+        $this->assertEquals(count($params), count($body));
+        foreach($params as $param => $value) {
+            $this->assertEquals($value, $body[$param]);
+        }
 
         // Make sure that the response is a PHP array, according to the documented return type
         $this->assertInternalType('array', $result);
