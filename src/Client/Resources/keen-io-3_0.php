@@ -445,7 +445,7 @@ return array(
         'count' => array(
             'uri'         => 'projects/{projectId}/queries/count',
             'description' => 'GET returns the number of resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: a numeric result.',
-            'httpMethod'  => 'GET',
+            'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
                     'location'    => 'uri',
