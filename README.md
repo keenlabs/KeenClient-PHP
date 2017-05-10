@@ -19,6 +19,10 @@ For easier usage the following community developed integrations are also availab
 * [Symfony2 Framework](https://github.com/keenlabs/KeenClient-PHP-SF2)
 * [Laravel 5](https://github.com/garethtdavies/keen-io-laravel)
 
+The following community developed integrations are also available:
+
+* [Laravel 5](https://github.com/garethtdavies/keen-io-laravel)
+
 Changes
 -------
 Please review the change log ( [CHANGE.md](CHANGE.md) ) before upgrading!
