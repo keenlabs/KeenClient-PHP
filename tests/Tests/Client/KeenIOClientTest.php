@@ -198,6 +198,25 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests the decryption of a Scoped Key
+     */
+    public function testDecryptLegacyScopedKey()
+    {
+        $client = KeenIOClient::factory(array(
+            'masterKey' => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+        ));
+
+        $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
+        $filters = array($filter);
+        $allowed_operations = array('read');
+
+        $result = $client->decryptScopedKey('696a2c05b060e6ed344f7e570c101e0909ff97c338dfe0f1e15c0e5c1ec0621dfcd5577f3ae58596558eed2a43c82d3a062fbf6455810f5c859695c766caddd283398e577b24db014fad896a6f0447a2aad9dad43cef5fa040e8f6d366085423804633ef3b21535b31d11eec24631f83c18e83703247f40136aeba779a840e80013e0969a8cf203295f47da1d70bfeb3');
+        $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * Tests the creation of a Scoped Key
      */
     public function testCreateScopedKey()
@@ -213,6 +232,25 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $scopedKey = $client->createScopedKey($filters, $allowed_operations);
 
         $result = $client->decryptScopedKey($scopedKey);
+        $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * Tests the decryption of a Scoped Key
+     */
+    public function testDecryptScopedKey()
+    {
+        $client = KeenIOClient::factory(array(
+            'masterKey' => 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        ));
+
+        $filter = array('property_name' => 'id', 'operator' => 'eq', 'property_value' => '123');
+        $filters = array($filter);
+        $allowed_operations = array('read');
+
+        $result = $client->decryptScopedKey('903441674b0d433ddab759bba82502ec469e00d25c373e35c4d685488bc7779a5abd7d90a03a4cb744ee6a82fa8935804348a5b2351f6527cd5fd6a0613cea5ec4e848f5093e41a53d570cf01066b1f3c3e9b03d4ce0929ff3e6a06e1850fb9e09b65415ac754bbefe9db4b1fcba7d71a9f5f9d9c05cbeffb2a33ef5f4bac131');
         $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
 
         $this->assertEquals($expected, $result);
