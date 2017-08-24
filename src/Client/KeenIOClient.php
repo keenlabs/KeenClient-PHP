@@ -313,7 +313,10 @@ class KeenIOClient extends GuzzleClient
         }
 
         $apiKey = pack('H*', $masterKey);
-        $blockSize = 16;
+
+        $opensslOptions = \OPENSSL_RAW_DATA;
+
+        $optionsJson = json_encode($options);
 
         /**
          * Use the old block size and hex string input if using a legacy master key.
@@ -322,15 +325,18 @@ class KeenIOClient extends GuzzleClient
 
         if (strlen($masterKey) == 32) {
             $apiKey = $masterKey;
-            $blockSize = 32;
+
+            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use OPENSSL zero padding (no-op as already padded)
+            $opensslOptions |= \OPENSSL_ZERO_PADDING;
+            $optionsJson = $this->padString($optionsJson, 32);
         }
 
-        $optionsJson = $this->padString(json_encode($options), $blockSize);
+        $cipher = 'AES-256-CBC';
 
-        $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
-        $iv       = mcrypt_create_iv($ivLength, $source);
+        $ivLength = openssl_cipher_iv_length($cipher);
+        $iv = random_bytes($ivLength);
 
-        $encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $apiKey, $optionsJson, MCRYPT_MODE_CBC, $iv);
+        $encrypted = openssl_encrypt($optionsJson, $cipher, $apiKey, $opensslOptions, $iv);
 
         $ivHex        = bin2hex($iv);
         $encryptedHex = bin2hex($encrypted);
@@ -371,25 +377,37 @@ class KeenIOClient extends GuzzleClient
 
         $apiKey = pack('H*', $masterKey);
 
+        $opensslOptions = \OPENSSL_RAW_DATA;
+        $paddedManually = false;
+
         // Use the old hex string input if using a legacy master key
         if (strlen($masterKey) == 32) {
             $apiKey = $masterKey;
+            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use OPENSSL zero padding (no-op as already padded)
+            $opensslOptions |= \OPENSSL_ZERO_PADDING;
+            $paddedManually = true;
         }
 
-        $ivLength = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC) * 2;
+        $cipher = 'AES-256-CBC';
+
+        $ivLength = openssl_cipher_iv_length($cipher) * 2;
         $ivHex    = substr($scopedKey, 0, $ivLength);
 
         $encryptedHex = substr($scopedKey, $ivLength);
 
-        $resultPadded = mcrypt_decrypt(
-            MCRYPT_RIJNDAEL_128,
-            $apiKey,
+        $result = openssl_decrypt(
             pack('H*', $encryptedHex),
-            MCRYPT_MODE_CBC,
+            $cipher,
+            $apiKey,
+            $opensslOptions,
             pack('H*', $ivHex)
         );
 
-        return json_decode($this->unpadString($resultPadded), true);
+        if ($paddedManually) {
+            $result = $this->unpadString($result);
+        }
+
+        return json_decode($result, true);
     }
 
     /**
