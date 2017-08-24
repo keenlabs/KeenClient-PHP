@@ -296,11 +296,10 @@ class KeenIOClient extends GuzzleClient
      *
      * @param array  $filters           What filters to encode into a scoped key
      * @param array  $allowedOperations What operations the generated scoped key will allow
-     * @param int    $source
      * @return string
      * @throws RuntimeException If no master key is set
      */
-    public function createScopedKey($filters, $allowedOperations, $source = MCRYPT_DEV_URANDOM)
+    public function createScopedKey($filters, $allowedOperations)
     {
         if (!$masterKey = $this->getMasterKey()) {
             throw new RuntimeException('A master key is needed to create a scoped key');
