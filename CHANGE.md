@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+VERSION 2.5.10
+-------------
+* Remove mcrypt dependency (deprecated in PHP 7.1) and replace it with openssl for scoped key support.
+
 VERSION 2.5.9
 -------------
 * Update the querying methods to use a POST request instead of a GET request
