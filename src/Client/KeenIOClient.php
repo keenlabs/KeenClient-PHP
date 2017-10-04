@@ -25,7 +25,8 @@ use KeenIO\Exception\RuntimeException;
  * @method array getSavedQueryResults(array $args = array()) {@command KeenIO getProperty}
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
  * @method array deleteEvents(string $eventCollection, array $args = array()) {@command KeenIO deleteEvents}
- * @method array deleteEventProperties(string $eventCollection, array $args = array())) {@command KeenIO deleteEventProperties}
+ * @method array deleteEventProperties(string $eventCollection, array $args = array()))
+ *      {@command KeenIO deleteEventProperties}
  * @method array count(string $eventCollection, array $args = array())) {@command KeenIO count}
  * @method array countUnique(string $eventCollection, array $args = array()) {@command KeenIO countUnique}
  * @method array minimum(string $eventCollection, array $args = array()) {@command KeenIO minimum}
@@ -53,8 +54,8 @@ class KeenIOClient extends GuzzleClient
     {
         $default = array(
             'masterKey' => null,
-            'writeKey'  => null,
-            'readKey'   => null,
+            'writeKey' => null,
+            'readKey' => null,
             'projectId' => null,
             'organizationKey' => null,
             'organizationId' => null,
@@ -74,8 +75,7 @@ class KeenIOClient extends GuzzleClient
             new Client($config),
             new Description(include __DIR__ . "/Resources/{$file}"),
             null,
-            function($arg)
-            {
+            function ($arg) {
                 return json_decode($arg->getBody(), true);
             },
             null,
@@ -90,7 +90,7 @@ class KeenIOClient extends GuzzleClient
      * from the normal argument array.
      *
      * @param string $method Name of the command object to instantiate
-     * @param array  $args   Arguments to pass to the command
+     * @param array $args Arguments to pass to the command
      *
      * @return mixed Returns the result of the command
      */
@@ -114,7 +114,7 @@ class KeenIOClient extends GuzzleClient
      * Proxy the addEvent command (to be used as a shortcut)
      *
      * @param  string $collection Name of the collection to store events
-     * @param  array  $event      Event data to store
+     * @param  array $event Event data to store
      * @return mixed
      */
     public function addEvent($collection, array $event = array())
@@ -294,8 +294,8 @@ class KeenIOClient extends GuzzleClient
     /**
      * Get a scoped key for an array of filters
      *
-     * @param array  $filters           What filters to encode into a scoped key
-     * @param array  $allowedOperations What operations the generated scoped key will allow
+     * @param array $filters What filters to encode into a scoped key
+     * @param array $allowedOperations What operations the generated scoped key will allow
      * @return string
      * @throws RuntimeException If no master key is set
      */
@@ -325,7 +325,8 @@ class KeenIOClient extends GuzzleClient
         if (strlen($masterKey) == 32) {
             $apiKey = $masterKey;
 
-            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use OPENSSL zero padding (no-op as already padded)
+            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use
+            // OPENSSL zero padding (no-op as already padded)
             $opensslOptions |= \OPENSSL_ZERO_PADDING;
             $optionsJson = $this->padString($optionsJson, 32);
         }
@@ -337,7 +338,7 @@ class KeenIOClient extends GuzzleClient
 
         $encrypted = openssl_encrypt($optionsJson, $cipher, $apiKey, $opensslOptions, $iv);
 
-        $ivHex        = bin2hex($iv);
+        $ivHex = bin2hex($iv);
         $encryptedHex = bin2hex($encrypted);
 
         $scopedKey = $ivHex . $encryptedHex;
@@ -349,14 +350,14 @@ class KeenIOClient extends GuzzleClient
      * Implement PKCS7 padding
      *
      * @param string $string
-     * @param int    $blockSize
+     * @param int $blockSize
      *
      * @return string
      */
     protected function padString($string, $blockSize = 32)
     {
         $paddingSize = $blockSize - (strlen($string) % $blockSize);
-        $string      .= str_repeat(chr($paddingSize), $paddingSize);
+        $string .= str_repeat(chr($paddingSize), $paddingSize);
 
         return $string;
     }
@@ -382,7 +383,8 @@ class KeenIOClient extends GuzzleClient
         // Use the old hex string input if using a legacy master key
         if (strlen($masterKey) == 32) {
             $apiKey = $masterKey;
-            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use OPENSSL zero padding (no-op as already padded)
+            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use
+            // OPENSSL zero padding (no-op as already padded)
             $opensslOptions |= \OPENSSL_ZERO_PADDING;
             $paddedManually = true;
         }
@@ -390,7 +392,7 @@ class KeenIOClient extends GuzzleClient
         $cipher = 'AES-256-CBC';
 
         $ivLength = openssl_cipher_iv_length($cipher) * 2;
-        $ivHex    = substr($scopedKey, 0, $ivLength);
+        $ivHex = substr($scopedKey, 0, $ivLength);
 
         $encryptedHex = substr($scopedKey, $ivLength);
 
@@ -426,8 +428,8 @@ class KeenIOClient extends GuzzleClient
     /**
      * Attempt to parse config and apply defaults
      *
-     * @param  array  $config
-     * @param  array  $default
+     * @param  array $config
+     * @param  array $default
      *
      * @return array Returns the updated config array
      */
@@ -458,7 +460,7 @@ class KeenIOClient extends GuzzleClient
         if (isset($args[0]) && is_string($args[0])) {
             $formattedArgs['event_collection'] = $args[0];
 
-            if(isset($args[1]) && is_array($args[1])) {
+            if (isset($args[1]) && is_array($args[1])) {
                 $formattedArgs = array_merge($formattedArgs, $args[1]);
             }
         } elseif (isset($args[0]) && is_array($args[0])) {

@@ -20,10 +20,10 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $config = array(
             'projectId' => 'testProjectId',
             'masterKey' => 'testMasterKey',
-            'readKey'   => 'testReadKey',
-            'writeKey'  => 'testWriteKey',
-            'version'   => '3.0'
-       );
+            'readKey' => 'testReadKey',
+            'writeKey' => 'testWriteKey',
+            'version' => '3.0'
+        );
 
         $client = KeenIOClient::factory($config);
 
@@ -49,10 +49,10 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $config = array(
             'projectId' => 'testProjectId',
             'masterKey' => 'testMasterKey',
-            'readKey'   => 'testReadKey',
-            'writeKey'  => 'testWriteKey',
-            'version'   => ''
-       );
+            'readKey' => 'testReadKey',
+            'writeKey' => 'testWriteKey',
+            'version' => ''
+        );
 
         $client = KeenIOClient::factory($config);
 
@@ -71,19 +71,20 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests that the magic __call correctly merges in the event_collection parameter
      */
-    public function testEventCollectionMerging() {
+    public function testEventCollectionMerging()
+    {
         $unmerged = array('collection', array('timeframe' => 'this_14_days'));
         $merged = array(array('event_collection' => 'collection', 'timeframe' => 'this_14_days'));
 
         $client = $this->getClient();
 
-		$unmergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($unmerged));
-		$mergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($merged));
+        $unmergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($unmerged));
+        $mergedAfter = $this->invokeMethod($client, 'combineEventCollectionArgs', array($merged));
 
         $this->assertEquals($unmergedAfter['event_collection'], 'collection');
-		$this->assertEquals($unmergedAfter['timeframe'], 'this_14_days');
+        $this->assertEquals($unmergedAfter['timeframe'], 'this_14_days');
         $this->assertEquals($mergedAfter['event_collection'], 'collection');
-		$this->assertEquals($mergedAfter['timeframe'], 'this_14_days');
+        $this->assertEquals($mergedAfter['timeframe'], 'this_14_days');
     }
 
     /**
@@ -210,6 +211,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $filters = array($filter);
         $allowed_operations = array('read');
 
+        // @codingStandardsIgnoreLine - It is not possible to get this below 120 characters
         $result = $client->decryptScopedKey('696a2c05b060e6ed344f7e570c101e0909ff97c338dfe0f1e15c0e5c1ec0621dfcd5577f3ae58596558eed2a43c82d3a062fbf6455810f5c859695c766caddd283398e577b24db014fad896a6f0447a2aad9dad43cef5fa040e8f6d366085423804633ef3b21535b31d11eec24631f83c18e83703247f40136aeba779a840e80013e0969a8cf203295f47da1d70bfeb3');
         $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
 
@@ -250,6 +252,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $filters = array($filter);
         $allowed_operations = array('read');
 
+        // @codingStandardsIgnoreLine - It is not possible to get this below 120 characters
         $result = $client->decryptScopedKey('903441674b0d433ddab759bba82502ec469e00d25c373e35c4d685488bc7779a5abd7d90a03a4cb744ee6a82fa8935804348a5b2351f6527cd5fd6a0613cea5ec4e848f5093e41a53d570cf01066b1f3c3e9b03d4ce0929ff3e6a06e1850fb9e09b65415ac754bbefe9db4b1fcba7d71a9f5f9d9c05cbeffb2a33ef5f4bac131');
         $expected = array('filters' => $filters, 'allowed_operations' => $allowed_operations);
 
@@ -291,7 +294,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
         //Check that the json body has all of the parameters
         $this->assertEquals(count($params), count($body));
-        foreach($params as $param => $value) {
+        foreach ($params as $param => $value) {
             $this->assertEquals($value, $body[$param]);
         }
 
@@ -306,12 +309,27 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('count', array('event_collection' => 'test', 'timeframe' => 'this_week')),
-            array('countUnique', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
-            array('minimum', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
-            array('maximum', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
-            array('average', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array(
+                'countUnique',
+                array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')
+            ),
+            array(
+                'minimum',
+                array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')
+            ),
+            array(
+                'maximum',
+                array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')
+            ),
+            array(
+                'average',
+                array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')
+            ),
             array('sum', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
-            array('selectUnique', array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')),
+            array(
+                'selectUnique',
+                array('event_collection' => 'test', 'target_property' => 'foo', 'timeframe' => 'this_week')
+            ),
             array('extraction', array('event_collection' => 'test', 'timeframe' => 'this_week', 'latest' => 10))
         );
     }
@@ -397,7 +415,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $request = $queue->getLastRequest();
         $url = parse_url($request->getUri());
 
-        $expectedResponse = array('test' => array(array('success' => true), array('success'=>true)));
+        $expectedResponse = array('test' => array(array('success' => true), array('success' => true)));
 
         //Make sure the projectId is set properly in the url
         $this->assertContains($client->getProjectId(), explode('/', $url['path']));
@@ -411,7 +429,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $this->assertJsonStringEqualsJsonString(json_encode($expectedResponse), json_encode($response));
 
         //Checks that the event is properly encoded in the request body
-        $this->assertJsonStringEqualsJsonString(json_encode($events), (string) $request->getBody());
+        $this->assertJsonStringEqualsJsonString(json_encode($events), (string)$request->getBody());
     }
 
     protected function getClient($handler = null)
@@ -419,28 +437,28 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         return \KeenIO\Client\KeenIOClient::factory(array(
             'projectId' => $_SERVER['PROJECT_ID'],
             'masterKey' => $_SERVER['MASTER_KEY'],
-            'writeKey'  => $_SERVER['WRITE_KEY'],
-            'readKey'   => $_SERVER['READ_KEY'],
-            'version'   => $_SERVER['API_VERSION'],
-            'handler'   => $handler
+            'writeKey' => $_SERVER['WRITE_KEY'],
+            'readKey' => $_SERVER['READ_KEY'],
+            'version' => $_SERVER['API_VERSION'],
+            'handler' => $handler
         ));
     }
 
-	/**
-	 * Call protected/private method of a class.
-	 *
-	 * @param object &$object    Instantiated object that we will run method on.
-	 * @param string $methodName Method name to call
-	 * @param array  $parameters Array of parameters to pass into method.
-	 *
-	 * @return mixed Method return.
-	 */
-	protected function invokeMethod(&$object, $methodName, array $parameters = array())
-	{
-		$reflection = new \ReflectionClass(get_class($object));
-		$method = $reflection->getMethod($methodName);
-		$method->setAccessible(true);
+    /**
+     * Call protected/private method of a class.
+     *
+     * @param object &$object Instantiated object that we will run method on.
+     * @param string $methodName Method name to call
+     * @param array $parameters Array of parameters to pass into method.
+     *
+     * @return mixed Method return.
+     */
+    protected function invokeMethod(&$object, $methodName, array $parameters = array())
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
 
-		return $method->invokeArgs($object, $parameters);
-	}
+        return $method->invokeArgs($object, $parameters);
+    }
 }
