@@ -25,7 +25,8 @@ use KeenIO\Exception\RuntimeException;
  * @method array getSavedQueryResults(array $args = array()) {@command KeenIO getProperty}
  * @method array getEventSchemas(array $args = array()) {@command KeenIO getEventSchemas}
  * @method array deleteEvents(string $eventCollection, array $args = array()) {@command KeenIO deleteEvents}
- * @method array deleteEventProperties(string $eventCollection, array $args = array())) {@command KeenIO deleteEventProperties}
+ * @method array deleteEventProperties(string $eventCollection, array $args = array()))
+ * {@command KeenIO deleteEventProperties}
  * @method array count(string $eventCollection, array $args = array())) {@command KeenIO count}
  * @method array countUnique(string $eventCollection, array $args = array()) {@command KeenIO countUnique}
  * @method array minimum(string $eventCollection, array $args = array()) {@command KeenIO minimum}
@@ -74,8 +75,7 @@ class KeenIOClient extends GuzzleClient
             new Client($config),
             new Description(include __DIR__ . "/Resources/{$file}"),
             null,
-            function($arg)
-            {
+            function ($arg) {
                 return json_decode($arg->getBody(), true);
             },
             null,
@@ -325,7 +325,8 @@ class KeenIOClient extends GuzzleClient
         if (strlen($masterKey) == 32) {
             $apiKey = $masterKey;
 
-            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use OPENSSL zero padding (no-op as already padded)
+            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland
+            // and use OPENSSL zero padding (no-op as already padded)
             $opensslOptions |= \OPENSSL_ZERO_PADDING;
             $optionsJson = $this->padString($optionsJson, 32);
         }
@@ -382,7 +383,8 @@ class KeenIOClient extends GuzzleClient
         // Use the old hex string input if using a legacy master key
         if (strlen($masterKey) == 32) {
             $apiKey = $masterKey;
-            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland and use OPENSSL zero padding (no-op as already padded)
+            // Openssl's built-in PKCS7 padding won't use the 32 bytes block size, so apply it in userland
+            // and use OPENSSL zero padding (no-op as already padded)
             $opensslOptions |= \OPENSSL_ZERO_PADDING;
             $paddedManually = true;
         }
@@ -458,7 +460,7 @@ class KeenIOClient extends GuzzleClient
         if (isset($args[0]) && is_string($args[0])) {
             $formattedArgs['event_collection'] = $args[0];
 
-            if(isset($args[1]) && is_array($args[1])) {
+            if (isset($args[1]) && is_array($args[1])) {
                 $formattedArgs = array_merge($formattedArgs, $args[1]);
             }
         } elseif (isset($args[0]) && is_array($args[0])) {
