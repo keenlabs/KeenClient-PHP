@@ -18,7 +18,6 @@
 
 namespace KeenIO\Tests\Filter;
 
-
 use KeenIO\Client\Filter\MultiTypeFiltering;
 
 class MultiTypeFilteringTest extends \PHPUnit_Framework_TestCase
