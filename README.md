@@ -95,10 +95,10 @@ $client->setReadKey($newReadKey);
 
 ```
 
-####Send an event to Keen - ([Changed in 2.0!](CHANGE.md))
+#### Send an event to Keen - ([Changed in 2.0!](CHANGE.md))
 Once you've created a `KeenIOClient`, sending events is simple:
 
-######Example
+###### Example
 ```php
 $event = ['purchase' => ['item' => 'Golden Elephant']];
 
@@ -166,7 +166,7 @@ Scoped keys allow you to secure the requests to the API Endpoints and are especi
 access to multiple clients or applications. You should read the Keen IO docs concerning [Scoped Keys](https://keen.io/docs/security/#scoped-key)
 for more details.
 
-######Example
+###### Example
 ```php
 $filter = [
     'property_name'  => 'user_id',
@@ -184,7 +184,7 @@ $scopedKey = $client->createScopedKey($filters, $allowedOperations);
 
 [Saved Queries](https://keen.io/docs/api/?php#saved-queries) allow you to perform with exactly the same parameters every time with minimal effort. It's effectively a bookmark or macro to analysis that you can jump to or share without configuring each time. While you can create and access them via the Dashboard, the PHP library gives you the same ability.
 
-######Example: Creating a Saved Query
+###### Example: Creating a Saved Query
 ```php
 $client = KeenIOClient::factory([
     'projectId' => $project_id,
@@ -208,7 +208,7 @@ $query = [
 $results = $client->createSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
 ```
 
-######Example: Retrieving a Saved Query
+###### Example: Retrieving a Saved Query
 ```php
 $client = KeenIOClient::factory([
     'projectId' => $project_id,
