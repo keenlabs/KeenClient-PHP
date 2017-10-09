@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+VERSION 2.5.11
+-------------
+* Fix a few headers in the README.md
+* Update for PSR-2 compliance 
+
 VERSION 2.5.10
 -------------
 * Remove mcrypt dependency (deprecated in PHP 7.1) and replace it with openssl for scoped key support.
