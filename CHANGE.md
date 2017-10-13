@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+VERSION 2.5.12
+-------------
+* Fix a bug that caused arrays in the POST body to be encoded as strings 
+
 VERSION 2.5.11
 -------------
 * Fix a few headers in the README.md
