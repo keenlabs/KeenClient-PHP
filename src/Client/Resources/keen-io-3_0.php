@@ -465,7 +465,7 @@ return array(
 
         'count' => array(
             'uri'         => 'projects/{projectId}/queries/count',
-            'description' => 'GET returns the number of resources in the event collection matching the given criteria.'
+            'description' => 'POST returns the number of resources in the event collection matching the given criteria.'
                             . ' The response will be a simple JSON object with one key: a numeric result.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
@@ -527,7 +527,7 @@ return array(
 
         'countUnique' => array(
             'uri'         => 'projects/{projectId}/queries/count_unique',
-            'description' => 'GET returns the number of UNIQUE resources in the event collection matching the given '
+            'description' => 'POST returns the number of UNIQUE resources in the event collection matching the given '
                             . 'criteria. The response will be a simple JSON object with one key: result, which maps '
                             . 'to the numeric result described previously.',
             'httpMethod'  => 'POST',
@@ -596,7 +596,7 @@ return array(
 
         'minimum' => array(
             'uri'         => 'projects/{projectId}/queries/minimum',
-            'description' => 'GET returns the minimum numeric value for the target property in the event collection '
+            'description' => 'POST returns the minimum numeric value for the target property in the event collection '
                             . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
                             . 'simple JSON object with one key: result, which maps to the numeric result described '
                             . 'previously.',
@@ -666,7 +666,7 @@ return array(
 
         'maximum' => array(
             'uri'         => 'projects/{projectId}/queries/maximum',
-            'description' => 'GET returns the maximum numeric value for the target property in the event collection '
+            'description' => 'POST returns the maximum numeric value for the target property in the event collection '
                             . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
                             . 'simple JSON object with one key: result, which maps to the numeric result described '
                             . 'previously.',
@@ -736,7 +736,7 @@ return array(
 
         'average' => array(
             'uri'         => 'projects/{projectId}/queries/average',
-            'description' => 'GET returns the average across all numeric values for the target property in the event '
+            'description' => 'POST returns the average across all numeric values for the target property in the event '
                             . 'collection matching the given criteria. Non-numeric values are ignored. The response '
                             . 'will be a simple JSON object with one key: result, which maps to the numeric result '
                             . 'described previously.',
@@ -806,7 +806,7 @@ return array(
 
         'sum' => array(
             'uri'         => 'projects/{projectId}/queries/sum',
-            'description' => 'GET returns the sum if all numeric values for the target property in the event '
+            'description' => 'POST returns the sum if all numeric values for the target property in the event '
                             . 'collection matching the given criteria. Non-numeric values are ignored. The '
                             . 'response will be a simple JSON object with one key: result, which maps to the '
                             . 'numeric result described previously.',
@@ -876,7 +876,7 @@ return array(
 
         'selectUnique' => array(
             'uri'         => 'projects/{projectId}/queries/select_unique',
-            'description' => 'GET returns a list of UNIQUE resources in the event collection matching the given '
+            'description' => 'POST returns a list of UNIQUE resources in the event collection matching the given '
                             . 'criteria. The response will be a simple JSON object with one key: result, which '
                             . 'maps to an array of unique property values.',
             'httpMethod'  => 'POST',
@@ -1040,7 +1040,7 @@ return array(
 
         'extraction' => array(
             'uri'         => 'projects/{projectId}/queries/extraction',
-            'description' => 'GET creates an extraction request for full-form event data with all property values. '
+            'description' => 'POST creates an extraction request for full-form event data with all property values. '
                             . 'If the query string parameter email is specified, then the extraction will be '
                             . 'processed asynchronously and an e-mail will be sent to the specified address when it '
                             . 'completes. The email will include a link to a downloadable CSV file. If email is '
@@ -1104,7 +1104,7 @@ return array(
 
         'median' => array(
             'uri'         => 'projects/{projectId}/queries/median',
-            'description' => 'GET returns the median across all numeric values for the target property in the event '
+            'description' => 'POST returns the median across all numeric values for the target property in the event '
                             . 'collection matching the given criteria. Non-numeric values are ignored. The response '
                             . 'will be a simple JSON object with one key: result, which maps to the numeric result '
                             . 'described previously.',
@@ -1174,7 +1174,7 @@ return array(
 
         'percentile' => array(
             'uri'         => 'projects/{projectId}/queries/percentile',
-            'description' => 'GET returns the Xth percentile value across all numeric values for the target property '
+            'description' => 'POST returns the Xth percentile value across all numeric values for the target property '
                             . 'in the event collection matching the given criteria. Non-numeric values are ignored. '
                             . 'The response will be a simple JSON object with one key: result, which maps to the '
                             . 'numeric result described previously.',
