@@ -222,7 +222,7 @@ $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 
 By [Cashing a Query](https://keen.io/docs/api/?php#creating-a-cashed-query), you are basically updating the query you have saved earlier by adding a `refresh_rate` property.
 
-Cashed Queries helps you to automatically refresh a saved query within a particular time. This allows you to get an immediate result when you use the saved query for a subsequent trip.  While you can create this via the Dashboard, the PHP library gives you the same ability.
+Cashed Queries helps you to automatically refresh a saved query within a particular time. This allows you to get an immediate result using the saved query for a subsequent trip.  While you can create this via the Dashboard, the PHP library gives you the same ability.
 
 ######Example: Cashing a Saved Query
 ```php
