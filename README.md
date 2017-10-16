@@ -218,6 +218,49 @@ $client = KeenIOClient::factory([
 $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 ```
 
+#### Using Cashed queries
+
+By [Cashing a Query](https://keen.io/docs/api/?php#creating-a-cashed-query), you are basically updating the query you have saved earlier by adding a `refresh_rate` property.
+
+Cashed Queries helps you to automatically refresh a saved query within a particular time. This allows you to get an immediate result when you use the saved query for a subsequent trip.  While you can create this via the Dashboard, the PHP library gives you the same ability.
+
+######Example: Cashing a Saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$query = [
+    "analysis_type" => "count",
+    "event_collection" => "api_requests",
+    "filters" =>
+        [
+            [
+                "property_name" => "user_agent",
+                "operator" => "ne",
+                "property_value"=> "Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)"
+            ]
+        ],
+    "timeframe" => "this_2_weeks",
+    "refresh_rate" => 14400
+
+];
+
+$results = $client->updateSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
+```
+
+######Example: Retrieving a Cashed Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
+```
+
+
 Troubleshooting
 ---------------
 
