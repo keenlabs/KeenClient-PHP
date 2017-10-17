@@ -220,11 +220,11 @@ $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 
 #### Using Cached queries
 
-By [Caching a Query](https://keen.io/docs/api/?php#creating-a-cached-query), you are basically updating the query you have saved earlier by adding a `refresh_rate` property.
+By [Caching a Query](https://keen.io/docs/api/?php#creating-a-cached-query), you are updating the query you have saved earlier by adding a `refresh_rate` property.
 
 Cached Queries helps you to automatically refresh a saved query within a particular time. This allows you to get an immediate result using the saved query for a subsequent trip.  While you can create this via the Dashboard, the PHP library gives you the same ability.
 
-######Example: Caching a Saved Query
+###### Example: Caching a Saved Query
 ```php
 $client = KeenIOClient::factory([
     'projectId' => $project_id,
@@ -250,7 +250,7 @@ $query = [
 $results = $client->updateSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
 ```
 
-######Example: Retrieving a Cached Query
+###### Example: Retrieving a Cached Query
 ```php
 $client = KeenIOClient::factory([
     'projectId' => $project_id,
