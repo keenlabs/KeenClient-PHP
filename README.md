@@ -218,6 +218,79 @@ $client = KeenIOClient::factory([
 $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 ```
 
+#### Using Cached queries
+
+By [Caching a Query](https://keen.io/docs/api/?php#creating-a-cached-query), you are adding a `refresh_rate` property to a query payload.
+
+Cached Queries helps you to automatically refresh a saved query within a particular time. This allows you to get an immediate result using the saved query for a subsequent trip. 
+
+You can either cache a query while [creating a saved query](https://keen.io/docs/api/#creating-a-saved-query) or [updating a saved query](https://keen.io/docs/api/#updating-saved-queries).
+
+ While you can create this via the Dashboard, the PHP library gives you the same ability.
+
+
+###### Example: Caching a query when creating Saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$query = [
+    "analysis_type" => "count",
+    "event_collection" => "api_requests",
+    "filters" =>
+        [
+            [
+                "property_name" => "user_agent",
+                "operator" => "ne",
+                "property_value"=> "Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)"
+            ]
+        ],
+    "timeframe" => "this_2_weeks",
+    "refresh_rate" => 14400
+
+];
+
+$client->createSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
+```
+
+###### Example: Caching a query when updating a saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$query = [
+    "analysis_type" => "count",
+    "event_collection" => "api_requests",
+    "filters" =>
+        [
+            [
+                "property_name" => "user_agent",
+                "operator" => "ne",
+                "property_value"=> "Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)"
+            ]
+        ],
+    "timeframe" => "this_2_weeks",
+    "refresh_rate" => 14400
+
+];
+
+$results = $client->updateSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
+```
+
+###### Example: Retrieving a Cached Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
+```
+
 #### Create Access Keys
 
 The PHP client enables the creation and manipulation of Access Keys. Examples:
