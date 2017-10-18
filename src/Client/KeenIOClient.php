@@ -37,6 +37,12 @@ use KeenIO\Exception\RuntimeException;
  * @method array funnel(string $eventCollection, array $args = array()) {@command KeenIO funnel}
  * @method array multiAnalysis(string $eventCollection, array $args = array()) {@command KeenIO multiAnalysis}
  * @method array extraction(string $eventCollection, array $args = array()) {@command KeenIO extraction}
+ * @method array createAccessKey(array $args = array()) {@command KeenIO createAccessKey}
+ * @method array listAccessKeys(array $args = array()) {@command KeenIO listAccessKeys+}
+ * @method array getAccessKey(array $args = array()) {@command KeenIO getAccessKey}
+ * @method array updateAccessKey(array $args = array()) {@command KeenIO updateAccessKey}
+ * @method array revokeAccessKey(array $args = array()) {@command KeenIO revokeAccessKey}
+ * @method array unRevokeAccessKey(array $args = array()) {@command KeenIO unRevokeAccessKey}
  */
 class KeenIOClient extends GuzzleClient
 {

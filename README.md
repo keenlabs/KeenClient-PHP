@@ -218,6 +218,51 @@ $client = KeenIOClient::factory([
 $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 ```
 
+#### Create Access Keys
+
+The PHP client enables the creation and manipulation of Access Keys. Examples:
+
+###### Example: Access Keys
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+   
+$results = $client->createAccessKey([
+    'name' => 'Dave_Barry_Key',
+    'is_active' => true,
+    'permitted' => ['writes', 'cached_queries'],
+    'options' => ['cached_queries' => ['allowed' => ['dave_barry_in_cyberspace_sales']]]
+]);
+    
+// Get all access keys associated with this client's project
+$client->list_access_keys();
+ 
+//Get details on a particular access key.
+client.get_access_key([
+    'key' => 'your.access.key'
+]);     
+ 
+ 
+//Revoke (disable) an access key
+$client->revokeAccessKey([
+    'key' => 'your.access.key'
+]);
+ 
+// Unrevoke (re-enable) an access key.
+$client->unRevokeAccessKey([
+    'key' => 'your.access.key'
+]);
+
+// Change just the access key.
+$client->updateAccessKey([
+    'key' => 'your.access.key',
+    'name' => 'new name'
+]);
+
+```
+
 Troubleshooting
 ---------------
 
