@@ -15,6 +15,8 @@ use KeenIO\Exception\RuntimeException;
  * @method array getCollection(string $eventCollection, array $args = array()) {@command KeenIO getCollection}
  * @method array getCollections(array $args = array()) {@command KeenIO getCollections}
  * @method array getResources(array $args = array()) {@command KeenIO getResources}
+ * @method array createProject(array $args = array()) {@command KeenIO createProject}
+ * @method array updateProject(array $args = array()) {@command KeenIO updateProject}
  * @method array getProjects(array $args = array()) {@command KeenIO getProjects}
  * @method array getProject(array $args = array()) {@command KeenIO getProject}
  * @method array getProperty(string $eventCollection, array $args = array()) {@command KeenIO getProperty}
@@ -106,6 +108,7 @@ class KeenIOClient extends GuzzleClient
         $params['writeKey'] = $this->getKeyForWriting();
         $params['readKey'] = $this->getKeyForReading();
         $params['organizationId'] = $this->getConfig('organizationId');
+        $params['organizationKey'] = $this->getConfig('organizationKey');
 
         return parent::getCommand($name, $params);
     }

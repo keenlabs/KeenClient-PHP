@@ -40,22 +40,72 @@ return array(
                     'type'        => 'string',
                     'required'    => true,
                 ),
-                'project_data' => array(
+                'name' => array(
+                    'location' => 'json',
+                    'type'     => 'string',
+                    'required' => true,
+                ),
+                'users' => array(
                     'location' => 'json',
                     'type'     => 'array',
+                    'required' => true,
+                ),
+                'preferences' => array(
+                    'location' => 'json',
+                    'type'     => 'object',
+                ),
+            ),
+        ),
+
+        'updateProject' => array(
+            'uri'         => 'organizations/{organizationId}/projects/{projectId}',
+            'description' => 'Updates a project for the specified organization.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'organizationId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'projectId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'organizationKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Organization Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'name' => array(
+                    'location' => 'json',
+                    'type'     => 'string',
+                ),
+                'users' => array(
+                    'location' => 'json',
+                    'type'     => 'array',
+                ),
+                'preferences' => array(
+                    'location' => 'json',
+                    'type'     => 'object',
                 ),
             ),
         ),
 
         'getProjects' => array(
-            'uri'         => 'projects',
+            'uri'         => 'organizations/{organizationId}/projects',
             'description' => 'Returns the projects accessible to the API user, as well as '
                             . 'links to project sub-resources for discovery.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'masterKey' => array(
+                'organizationId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'organizationKey' => array(
                     'location'    => 'header',
-                    'description' => 'The Master API Key.',
+                    'description' => 'The Organization Key.',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
@@ -65,7 +115,7 @@ return array(
         ),
 
         'getProject' => array(
-            'uri'         => 'projects/{projectId}',
+            'uri'         => 'organizations/{organizationId}/projects/{projectId}',
             'description' => 'GET returns detailed information about the specific project, '
                             . 'as well as links to related resources.',
             'httpMethod'  => 'GET',
@@ -74,9 +124,13 @@ return array(
                     'location'    => 'uri',
                     'type'        => 'string'
                 ),
-                'masterKey' => array(
+                'organizationId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'organizationKey' => array(
                     'location'    => 'header',
-                    'description' => 'The Master API Key.',
+                    'description' => 'The Organization Key.',
                     'sentAs'      => 'Authorization',
                     'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
