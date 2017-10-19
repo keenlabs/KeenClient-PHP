@@ -48,9 +48,11 @@ The factory method accepts an array of configuration settings for the Keen IO We
 Setting | Property Name | Description
 --- | --- | ---
 Project ID | `projectId` | The Keen IO Project ID for your specific project
+Organization ID | `organizationId` | The Keen IO Organization ID for your specific organization
 Master API Key | `masterKey` | The Keen IO Master API Key - the one API key to rule them all
 Read API Key | `readKey` | The Read API Key - used for access to read only GET or HEAD operations of the API
 Write API Key | `writeKey` | The Write API Key - used for write PUT or POST Requests operations of the API
+Organization API Key | `organizationKey` | The Organization API Key - used for programmatically managing your Keen IO account information. 
 API Version | `version` | The API Version.  Currently used to version the API URL and Service Description
 
 When passing `version` to the factory method or using the `setVersion()` method, the Client will try to load a client Service Description
@@ -292,6 +294,66 @@ $client = KeenIOClient::factory([
 $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 ```
 
+#### Managing projects
+As an alternative to creating each [project](https://keen.io/docs/api/?shell#projects) by hand in the Keen IO web UI, you can utilize this feature to programmatically create Keen IO projects as your new users sign up.
+
+###### Example: Creating a project
+```php
+$client = KeenIOClient::factory([
+    'organizationId' => $organizationId,
+    'organizationKey' => $organizationKey
+]);
+
+$results = $client->createProject([
+   'name' => $projectName, 
+   'users' => [
+       ['email' => $userEmail]
+   ],
+   'preferences' => [
+       's3_bucket_name' => $s3BucketName
+   ]
+]);
+```
+
+###### Example: Updating a project
+```php
+$client = KeenIOClient::factory([
+    'organizationId' => $organizationId,
+    'projectId' => $projectId,
+    'organizationKey' => $organizationKey
+]);
+
+$results = $client->updateProject([
+   'name' => $projectName, 
+   'users' => [
+       ['email' => $userEmail]
+   ],
+   'preferences' => [
+       's3_bucket_name' => $s3BucketName
+   ]
+]);
+```
+
+###### Example: Getting a project
+```php
+$client = KeenIOClient::factory([
+    'organizationId' => $organizationId,
+    'projectId' => $projectId,
+    'organizationKey' => $organizationKey
+]);
+
+$results = $client->getProject();
+```
+
+###### Example: Getting all projects in an organization
+```php
+$client = KeenIOClient::factory([
+    'organizationId' => $organizationId,
+    'organizationKey' => $organizationKey
+]);
+
+$results = $client->getProjects();
+```
 
 Troubleshooting
 ---------------
