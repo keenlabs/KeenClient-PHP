@@ -36,6 +36,13 @@ class ParameterSettings
         'required'    => false
     );
 
+    public static $eventCollection = array(
+        'location'    => 'json',
+        'description' => 'The name of the event collection you are analyzing.',
+        'type'        => 'string',
+        'required'    => true,
+    );
+
     public static $accessKey = array(
         'location'    => 'uri',
         'type'        => 'string',

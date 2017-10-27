@@ -188,11 +188,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'masterKey' => ParameterSettings::$masterKey,
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection
             ),
         ),
 
@@ -203,11 +199,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'masterKey' => ParameterSettings::$masterKey,
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'property_name' => array(
                     'location'    => 'uri',
                     'description' => 'The property name to inspect',
@@ -224,11 +216,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'writeKey'  => ParameterSettings::$writeKey,
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
             ),
             'additionalParameters'       => array(
                 'location' => 'json'
@@ -259,11 +247,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'masterKey' => ParameterSettings::$masterKey,
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'filters'          => array(
                     'location'    => 'query',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on '
@@ -297,11 +281,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'writeKey'  => ParameterSettings::$writeKey,
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'property_name'    => array(
                     'location'    => 'uri',
                     'description' => 'Name of the property to delete.',
@@ -319,12 +299,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'filters'          => array(
                     'location'    => 'json',
                     'description' => 'Filters are used to narrow down the events used in an analysis request based on '
@@ -372,12 +347,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
@@ -432,12 +402,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
@@ -492,12 +457,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
@@ -552,12 +512,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
@@ -612,12 +567,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
@@ -671,12 +621,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
@@ -745,12 +690,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'analyses'         => array(
                     'location'    => 'json',
                     'description' => 'A URL encoded JSON object that defines the multiple types of analyses to '
@@ -808,12 +748,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'filters'          => array(
                     'location'    => 'json',
                     'description' => 'Filters are used to narrow down the events used in an analysis request '
@@ -860,12 +795,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
@@ -920,12 +850,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'readKey'   => ParameterSettings::$readKey,
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'event_collection' => ParameterSettings::$eventCollection,
                 'target_property'  => array(
                     'location'    => 'json',
                     'description' => 'The name of the property you are analyzing.',
