@@ -223,14 +223,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'writeKey'         => array(
-                    'location'    => 'header',
-                    'description' => 'The Write Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'writeKey'  => ParameterSettings::$writeKey,
                 'event_collection' => array(
                     'location'    => 'uri',
                     'description' => 'The event collection.',
@@ -251,14 +244,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'writeKey'  => array(
-                    'location'    => 'header',
-                    'description' => 'The Write Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'writeKey'  => ParameterSettings::$writeKey,
             ),
             'additionalParameters' => array(
                 'location' => 'json',
@@ -310,14 +296,7 @@ return array(
             'httpMethod'  => 'DELETE',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'writeKey'         => array(
-                    'location'    => 'header',
-                    'description' => 'The Write Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'writeKey'  => ParameterSettings::$writeKey,
                 'event_collection' => array(
                     'location'    => 'uri',
                     'description' => 'The event collection.',
@@ -339,14 +318,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -399,14 +371,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -466,14 +431,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -533,14 +491,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -600,14 +551,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -667,14 +611,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -733,14 +670,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -797,14 +727,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'   => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'steps'     => array(
                     'location'    => 'json',
                     'description' => 'A URL encoded JSON Array defining the Steps in the Funnel.',
@@ -821,14 +744,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -891,14 +807,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -950,14 +859,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
@@ -1017,14 +919,7 @@ return array(
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
+                'readKey'   => ParameterSettings::$readKey,
                 'event_collection' => array(
                     'location'    => 'json',
                     'description' => 'The name of the event collection you are analyzing.',
