@@ -1020,11 +1020,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'masterKey' => ParameterSettings::$masterKey,
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'key'       => ParameterSettings::$accessKey,
             ),
         ),
         'updateAccessKey' => array(
@@ -1034,11 +1030,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'masterKey' => ParameterSettings::$masterKey,
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                )
+                'key'       => ParameterSettings::$accessKey
             ),
             'additionalParameters' => array(
                 'location' => 'json'
@@ -1051,11 +1043,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'masterKey' => ParameterSettings::$masterKey,
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'key'       => ParameterSettings::$accessKey,
             ),
         ),
         'unRevokeAccessKey' => array(
@@ -1065,11 +1053,7 @@ return array(
             'parameters'  => array(
                 'projectId' => ParameterSettings::$projectId,
                 'masterKey' => ParameterSettings::$masterKey,
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'key'       => ParameterSettings::$accessKey,
             ),
         ),
     ),

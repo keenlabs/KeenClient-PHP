@@ -35,4 +35,10 @@ class ParameterSettings
         'type'        => 'string',
         'required'    => false
     );
+
+    public static $accessKey = array(
+        'location'    => 'uri',
+        'type'        => 'string',
+        'required'    => true,
+    );
 }
