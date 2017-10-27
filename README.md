@@ -310,15 +310,15 @@ $results = $client->createAccessKey([
 ]);
     
 // Get all access keys associated with this client's project
-$client->list_access_keys();
+$client->listAccessKeys();
  
-//Get details on a particular access key.
-client.get_access_key([
+// Get details on a particular access key.
+client.getAccessKey([
     'key' => 'your.access.key'
 ]);     
  
  
-//Revoke (disable) an access key
+// Revoke (disable) an access key
 $client->revokeAccessKey([
     'key' => 'your.access.key'
 ]);
