@@ -1,5 +1,7 @@
 <?php
 
+use \KeenIO\Client\Settings\ParameterSettings;
+
 return array(
     'name'        => 'KeenIO',
     'baseUri'     => 'https://api.keen.io/3.0/',
@@ -11,14 +13,7 @@ return array(
                             . 'resource is the Projects Resource.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'masterKey' => ParameterSettings::$masterKey,
             ),
         ),
 
@@ -53,14 +48,7 @@ return array(
                             . 'links to project sub-resources for discovery.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'masterKey' => ParameterSettings::$masterKey,
             ),
         ),
 
@@ -70,18 +58,8 @@ return array(
                             . 'as well as links to related resources.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
             ),
         ),
 
@@ -90,18 +68,8 @@ return array(
             'description' => 'Returns the saved queries accessible to the API user on the specified project.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey
             ),
         ),
 
@@ -111,18 +79,8 @@ return array(
                             . 'well as links to retrieve results.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'query_name' => array(
                     'location'    => 'uri',
                     'description' => 'The saved query.',
@@ -136,18 +94,8 @@ return array(
             'description' => 'Creates the described query.',
             'httpMethod'  => 'PUT',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'query_name' => array(
                     'location'    => 'uri',
                     'description' => 'The desired name of the query.',
@@ -169,18 +117,8 @@ return array(
             'description' => 'Creates the described query.',
             'httpMethod'  => 'PUT',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'query_name' => array(
                     'location'    => 'uri',
                     'description' => 'The desired name of the query.',
@@ -202,18 +140,8 @@ return array(
             'description' => 'Deletes the specified query.',
             'httpMethod'  => 'DELETE',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'query_name' => array(
                     'location'    => 'uri',
                     'description' => 'The saved query.',
@@ -227,18 +155,8 @@ return array(
             'description' => 'Returns the results of executing the specified query.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'query_name' => array(
                     'location'    => 'uri',
                     'description' => 'The saved query.',
@@ -253,18 +171,8 @@ return array(
                             . 'including properties and their type. It also returns links to sub-resources.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
             ),
         ),
 
@@ -278,18 +186,8 @@ return array(
                             . 'properties and their type. It also returns links to sub-resources.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'event_collection' => array(
                     'location'    => 'uri',
                     'description' => 'The event collection.',
@@ -303,18 +201,8 @@ return array(
             'description' => 'GET returns the property name, type, and a link to sub-resources.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'event_collection' => array(
                     'location'    => 'uri',
                     'description' => 'The event collection.',
@@ -334,10 +222,7 @@ return array(
             'description' => 'POST inserts an event into the specified collection.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'writeKey'         => array(
                     'location'    => 'header',
                     'description' => 'The Write Key for the project.',
@@ -365,10 +250,7 @@ return array(
                             . 'collection.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'writeKey'  => array(
                     'location'    => 'header',
                     'description' => 'The Write Key for the project.',
@@ -389,18 +271,8 @@ return array(
                             . 'timeframe or timezone. You can delete up to 50,000 events using one method call',
             'httpMethod'  => 'DELETE',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'event_collection' => array(
                     'location'    => 'uri',
                     'description' => 'The event collection.',
@@ -437,10 +309,7 @@ return array(
                             . 'events.',
             'httpMethod'  => 'DELETE',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'writeKey'         => array(
                     'location'    => 'header',
                     'description' => 'The Write Key for the project.',
@@ -469,10 +338,7 @@ return array(
                             . ' The response will be a simple JSON object with one key: a numeric result.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -532,10 +398,7 @@ return array(
                             . 'to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -602,10 +465,7 @@ return array(
                             . 'previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -672,10 +532,7 @@ return array(
                             . 'previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -742,10 +599,7 @@ return array(
                             . 'described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -812,10 +666,7 @@ return array(
                             . 'numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -881,10 +732,7 @@ return array(
                             . 'maps to an array of unique property values.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -948,10 +796,7 @@ return array(
             'description' => 'Funnels count relevant events in succession.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'   => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -975,10 +820,7 @@ return array(
                             . 'multi-analysis call is very similar to a Metric or a Series.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -1048,10 +890,7 @@ return array(
                             . 'returned in the GET request.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -1110,10 +949,7 @@ return array(
                             . 'described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -1180,10 +1016,7 @@ return array(
                             . 'numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
                 'readKey'          => array(
                     'location'    => 'header',
                     'description' => 'The Read Key for the project.',
@@ -1252,21 +1085,28 @@ return array(
             'description' => 'Creates a project access key.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
+                'name' => array(
+                    'location' => 'header',
+                    'description' => 'API Key Name. Limited to 256 characters.',
+                    'type' => 'string',
                 ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                'is_active' => array(
+                    'location' => 'header',
+                    'description' => 'Indicates if the key is currently active or revoked',
+                    'type' => 'boolean'
                 ),
-            ),
-            'additionalParameters' => array(
-                'location' => 'json'
+                'permitted' => array(
+                    'location' => 'header',
+                    'description' => 'A list of high level actions this key can perform',
+                    'type' => 'array'
+                ),
+                'options' => array(
+                    'location' => 'header',
+                    'description' => 'A list of high level actions this key can perform',
+                    'type' => 'array'
+                )
             ),
         ),
         'listAccessKeys' => array(
@@ -1274,18 +1114,8 @@ return array(
             'description' => 'Returns all project access keys.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey
             ),
         ),
         'getAccessKey' => array(
@@ -1293,20 +1123,10 @@ return array(
             'description' => 'Returns a project access key.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'key'      => array(
                     'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
                     'required'    => true,
                 ),
@@ -1317,23 +1137,13 @@ return array(
             'description' => 'Updates a project access key.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'key'      => array(
                     'location'    => 'uri',
                     'type'        => 'string',
                     'required'    => true,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+                )
             ),
             'additionalParameters' => array(
                 'location' => 'json'
@@ -1344,20 +1154,10 @@ return array(
             'description' => 'Revokes a project access key.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'key'      => array(
                     'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
                     'required'    => true,
                 ),
@@ -1368,20 +1168,10 @@ return array(
             'description' => 'Unrevokes a project access key.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
+                'projectId' => ParameterSettings::$projectId,
+                'masterKey' => ParameterSettings::$masterKey,
                 'key'      => array(
                     'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
                     'type'        => 'string',
                     'required'    => true,
                 ),
