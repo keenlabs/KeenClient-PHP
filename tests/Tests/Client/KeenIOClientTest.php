@@ -432,9 +432,63 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         $this->assertJsonStringEqualsJsonString(json_encode($events), (string)$request->getBody());
     }
 
+    public function testCreateProject() {
+        $client = $this->getClient();
+        $data = [
+            'name' => 'test' . time(),
+            'users' => [
+                ['email' => 'test@test.com']
+            ],
+            'preferences' => [
+                's3_bucket_name' => 'testBucketName'
+            ]
+        ];
+        $response = $client->createProject($data);
+        $this->assertArraySubset($data, $response);
+        $this->assertArrayHasKey('id', $response);
+        $_SERVER['PROJECT_ID'] = $response['id'];
+    }
+
+    /**
+     * @depends testCreateProject
+     */
+    public function testUpdateProject() {
+        $client = $this->getClient();
+        $data = [
+            'name' => 'test' . time(),
+            'users' => [
+                ['email' => 'test@test.com']
+            ],
+            'preferences' => [
+                's3_bucket_name' => 'testBucketName'
+            ]
+        ];
+        $response = $client->updateProject($data);
+        $this->assertArraySubset($data, $response);
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @depends testUpdateProject
+     */
+    public function testGetProject($data) {
+        $client = $this->getClient();
+        $response = $client->getProject();
+        $this->assertArraySubset($data, $response);
+    }
+
+    public function testGetProjects() {
+        $client = $this->getClient();
+        $response = $client->getProjects();
+        $this->assertNotEmpty($response);
+    }
+
     protected function getClient($handler = null)
     {
         return \KeenIO\Client\KeenIOClient::factory(array(
+            'organizationKey' => $_SERVER['ORGANIZATION_KEY'],
+            'organizationId' => $_SERVER['ORGANIZATION_ID'],
             'projectId' => $_SERVER['PROJECT_ID'],
             'masterKey' => $_SERVER['MASTER_KEY'],
             'writeKey' => $_SERVER['WRITE_KEY'],
