@@ -11,4 +11,5 @@ class ParameterKey
     const PATTERN = 'pattern';
     const TYPE = 'type';
     const REQUIRED = 'required';
+    const FILTERS = 'filters';
 }

@@ -3,7 +3,7 @@
 namespace KeenIO\Client\Operations\Parameters;
 
 
-class ParameterValuePattern
+class ValuePattern
 {
     const ALNUM = '/^([[:alnum:]])+$/';
 }

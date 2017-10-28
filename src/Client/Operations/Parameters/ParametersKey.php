@@ -36,4 +36,6 @@ class ParametersKey
     const PERMITTED = 'permitted';
     const OPTIONS = 'options';
     const KEY = 'key';
+    const QUERY = 'query';
+    const PERCENTILE = 'percentile';
 }

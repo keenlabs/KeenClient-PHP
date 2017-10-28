@@ -3,9 +3,10 @@
 namespace KeenIO\Client\Operations\Parameters;
 
 
-class ParameterValueLocation
+class ValueLocation
 {
-    const URI = 'uri';
     const HEADER = 'header';
     const JSON = 'json';
+    const QUERY = 'query';
+    const URI = 'uri';
 }

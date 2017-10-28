@@ -9,11 +9,11 @@ class DefaultParameters
      * @var array
      */
     public static $masterKey = array(
-        ParameterKey::LOCATION => ParameterValueLocation::HEADER,
+        ParameterKey::LOCATION => ValueLocation::HEADER,
         ParameterKey::DESCRIPTION => 'The Master API Key.',
         ParameterKey::SENT_AS => 'Authorization',
-        ParameterKey::PATTERN => ParameterValuePattern::ALNUM,
-        ParameterKey::TYPE => ParameterValueType::STRING,
+        ParameterKey::PATTERN => ValuePattern::ALNUM,
+        ParameterKey::TYPE => ValueType::TYPE_STRING,
         ParameterKey::REQUIRED => true
     );
 
@@ -22,8 +22,8 @@ class DefaultParameters
      * @var array
      */
     public static $projectId = array(
-        ParameterKey::LOCATION => ParameterValueLocation::URI,
-        ParameterKey::TYPE => ParameterValueType::STRING
+        ParameterKey::LOCATION => ValueLocation::URI,
+        ParameterKey::TYPE => ValueType::TYPE_STRING
     );
 
     /**
@@ -31,11 +31,11 @@ class DefaultParameters
      * @var array
      */
     public static $writeKey = array(
-        ParameterKey::LOCATION => ParameterValueLocation::HEADER,
+        ParameterKey::LOCATION => ValueLocation::HEADER,
         ParameterKey::DESCRIPTION => 'The Write Key for the project.',
         ParameterKey::SENT_AS => 'Authorization',
-        ParameterKey::PATTERN => ParameterValuePattern::ALNUM,
-        ParameterKey::TYPE => ParameterValueType::STRING,
+        ParameterKey::PATTERN => ValuePattern::ALNUM,
+        ParameterKey::TYPE => ValueType::TYPE_STRING,
         ParameterKey::REQUIRED => false
     );
 
@@ -44,16 +44,16 @@ class DefaultParameters
      * @var array
      */
     public static $readKey = array(
-        ParameterKey::LOCATION => ParameterValueLocation::HEADER,
+        ParameterKey::LOCATION => ValueLocation::HEADER,
         ParameterKey::DESCRIPTION => 'The Read Key for the project.',
         ParameterKey::SENT_AS => 'Authorization',
-        ParameterKey::PATTERN  => ParameterValuePattern::ALNUM,
-        ParameterKey::TYPE => ParameterValueType::STRING,
+        ParameterKey::PATTERN  => ValuePattern::ALNUM,
+        ParameterKey::TYPE => ValueType::TYPE_STRING,
         ParameterKey::REQUIRED => false
     );
 
     public static $eventCollectionUri = array(
-        ParameterKey::LOCATION    => ParameterValueLocation::URI,
+        ParameterKey::LOCATION    => ValueLocation::URI,
         ParameterKey::DESCRIPTION => 'The event collection.',
         ParameterKey::REQUIRED    => true,
     );
@@ -63,9 +63,9 @@ class DefaultParameters
      * @var array
      */
     public static $eventCollectionJson = array(
-        ParameterKey::LOCATION    => ParameterValueLocation::JSON,
+        ParameterKey::LOCATION    => ValueLocation::JSON,
         ParameterKey::DESCRIPTION => 'The name of the event collection you are analyzing.',
-        ParameterKey::TYPE => ParameterValueType::STRING,
+        ParameterKey::TYPE => ValueType::TYPE_STRING,
         ParameterKey::REQUIRED => true
     );
 
@@ -74,8 +74,8 @@ class DefaultParameters
      * @var array
      */
     public static $accessKey = array(
-        ParameterKey::LOCATION => ParameterValueLocation::URI,
-        ParameterKey::TYPE => ParameterValueType::STRING,
+        ParameterKey::LOCATION => ValueLocation::URI,
+        ParameterKey::TYPE => ValueType::TYPE_STRING,
         ParameterKey::REQUIRED => true
     );
 }

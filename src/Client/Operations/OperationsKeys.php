@@ -46,5 +46,4 @@ class OperationsKeys
     const UPDATE_ACCESS_KEY = 'updateAccessKey';
     const REVOKE_ACCESS_KEY = 'revokeAccessKey';
     const UN_REVOKE_ACCESS_KEY = 'unRevokeAccessKey';
-
 }
