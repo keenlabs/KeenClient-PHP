@@ -330,7 +330,9 @@ $client->unRevokeAccessKey([
 // Change just the access key.
 $client->updateAccessKey([
     'key' => 'your.access.key',
-    'name' => 'new name'
+    'name' => 'new name',
+    'is_active' => true,
+    'permitted' => ['writes']
 ]);
 
 ```
