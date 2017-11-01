@@ -105,6 +105,67 @@ $event = ['purchase' => ['item' => 'Golden Elephant']];
 $client->addEvent('purchases', $event);
 ```
 
+#### Data Enrichment
+A data enrichment is a powerful add-on to enrich the data you're already streaming to Keen IO by pre-processing the data and adding helpful data properties. To activate add-ons, you simply add some new properties within the "keen" namespace in your events. Detailed documentation for the configuration of our add-ons is available [here](https://keen.io/docs/api/?php#data-enrichment).
+
+Here is an example of using the [URL parser](https://keen.io/docs/streams/url-enrichment/):
+
+```php
+$client->addEvent('requests', [
+    'page_url' => 'http://my-website.com/cool/link?source=twitter&foo=bar/#title',
+    'keen' => [
+        'addons' => [
+            [
+                'name' => 'keen:url_parser',
+                'input' => [
+                    'url' => 'page_url'
+                ],
+                'output' => 'parsed_page_url'
+            ]
+        ]
+    ]
+]);
+```
+
+Keen IO will parse the URL for you and that would equivalent to:
+
+```php
+$client->addEvent('requests', [
+    'page_url' => 'http://my-website.com/cool/link?source=twitter&foo=bar/#title',
+    'parsed_page_url' => [
+        'protocol' => 'http',
+        'domain' => 'my-website.com',
+        'path' => '/cool/link',
+        'anchor' => 'title',
+        'query_string' => [
+            'source' => 'twitter',
+            'foo' => 'bar'
+        ]
+    ]
+]);
+```
+
+Here is another example of using the [Datetime parser](https://keen.io/docs/streams/datetime-enrichment/). Let's assume you want to do a deeper analysis on the "purchases" event by day of the week (Monday, Tuesday, Wednesday, etc.) and other interesting Datetime components. You can use "keen.timestamp" property that is included in your event automatically.
+
+```php
+$client->addEvent('purchases', [
+    'keen' => [
+        'addons' => [
+            [
+                'name' => 'keen:date_time_parser',
+                'input' => [
+                    'date_time' => 'keen.timestamp'
+                ],
+                'output' => 'timestamp_info'
+            ]
+        ]
+    ],
+    'price' => 500
+]);
+```
+
+Other Data Enrichment add-ons are located in the [API reference docs](https://keen.io/docs/api/?php#data-enrichment).
+
 #### Send batched events to Keen  - ([Changed in 2.0!](CHANGE.md))
 You can upload multiple Events to multiple Event Collections at once!
 
