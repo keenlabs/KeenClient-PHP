@@ -11,6 +11,8 @@
 		 bootstrap="tests/bootstrap.php"
         >
 	<php>
+        <server name="ORGANIZATION_KEY" value="organizationKey" />
+        <server name="ORGANIZATION_ID" value="organizationId" />
         <server name="PROJECT_ID" value="testProjectId" />
         <server name="MASTER_KEY" value="testMasterKey" />
         <server name="READ_KEY" value="testReadKey" />

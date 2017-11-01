@@ -1,5 +1,14 @@
 <?php
 
+$organizationKeyValue = array(
+    'location'    => 'header',
+    'description' => 'The Organization Key.',
+    'sentAs'      => 'Authorization',
+    'pattern'     => '/^([[:alnum:]])+$/',
+    'type'        => 'string',
+    'required'    => true,
+);
+
 return array(
     'name'        => 'KeenIO',
     'baseUri'     => 'https://api.keen.io/3.0/',
@@ -32,56 +41,80 @@ return array(
                     'location'    => 'uri',
                     'type'        => 'string'
                 ),
-                'organizationKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Organization Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                'organizationKey' => $organizationKeyValue,
+                'name' => array(
+                    'location' => 'json',
+                    'type'     => 'string',
+                    'required' => true,
                 ),
-                'project_data' => array(
+                'users' => array(
                     'location' => 'json',
                     'type'     => 'array',
+                    'required' => true,
+                ),
+                'preferences' => array(
+                    'location' => 'json',
+                    'type'     => 'object',
+                ),
+            ),
+        ),
+
+        'updateProject' => array(
+            'uri'         => 'organizations/{organizationId}/projects/{projectId}',
+            'description' => 'Updates a project for the specified organization.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'organizationId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'projectId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'organizationKey' => $organizationKeyValue,
+                'name' => array(
+                    'location' => 'json',
+                    'type'     => 'string',
+                ),
+                'users' => array(
+                    'location' => 'json',
+                    'type'     => 'array',
+                ),
+                'preferences' => array(
+                    'location' => 'json',
+                    'type'     => 'object',
                 ),
             ),
         ),
 
         'getProjects' => array(
-            'uri'         => 'projects',
-            'description' => 'Returns the projects accessible to the API user, as well as '
-                            . 'links to project sub-resources for discovery.',
+            'uri'         => 'organizations/{organizationId}/projects',
+            'description' => 'Returns information about all projects for the given organization.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                'organizationId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
                 ),
+                'organizationKey' => $organizationKeyValue,
             ),
         ),
 
         'getProject' => array(
-            'uri'         => 'projects/{projectId}',
-            'description' => 'GET returns detailed information about the specific project, '
-                            . 'as well as links to related resources.',
+            'uri'         => 'organizations/{organizationId}/projects/{projectId}',
+            'description' => 'Returns information about a project.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
                 'projectId'        => array(
                     'location'    => 'uri',
                     'type'        => 'string'
                 ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                'organizationId'  => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
                 ),
+                'organizationKey' => $organizationKeyValue,
             ),
         ),
 
