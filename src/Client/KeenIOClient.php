@@ -106,6 +106,7 @@ class KeenIOClient extends GuzzleClient
         $params['writeKey'] = $this->getKeyForWriting();
         $params['readKey'] = $this->getKeyForReading();
         $params['organizationId'] = $this->getConfig('organizationId');
+        $params['organizationKey'] = $this->getConfig('organizationKey');
 
         return parent::getCommand($name, $params);
     }
