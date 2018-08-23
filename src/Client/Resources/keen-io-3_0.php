@@ -40,10 +40,9 @@ return array(
                     'type'        => 'string',
                     'required'    => true,
                 ),
-                'project_data' => array(
-                    'location' => 'json',
-                    'type'     => 'array',
-                ),
+            ),
+            'additionalParameters'       => array(
+                'location' => 'json'
             ),
         ),
 

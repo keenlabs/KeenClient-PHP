@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+VERSION 2.5.13
+-------------
+* Fix for invalid request "Missing required organizationKey" when using createProject
+* Fix for no body content being sent when using createProject
+
 VERSION 2.5.12
 -------------
 * Fix a bug that caused arrays in the POST body to be encoded as strings 

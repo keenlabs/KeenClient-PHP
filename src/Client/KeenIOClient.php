@@ -41,7 +41,7 @@ use KeenIO\Exception\RuntimeException;
 class KeenIOClient extends GuzzleClient
 {
 
-    const VERSION = '2.5.12';
+    const VERSION = '2.5.13';
 
     /**
      * Factory to create new KeenIOClient instance.
@@ -106,6 +106,7 @@ class KeenIOClient extends GuzzleClient
         $params['writeKey'] = $this->getKeyForWriting();
         $params['readKey'] = $this->getKeyForReading();
         $params['organizationId'] = $this->getConfig('organizationId');
+        $params['organizationKey'] = $this->getConfig('organizationKey');
 
         return parent::getCommand($name, $params);
     }
