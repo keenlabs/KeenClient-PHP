@@ -406,3 +406,9 @@ at [users.keen.io](http://users.keen.io). We'd love to hear your feedback and id
 Contributing
 ------------
 This is an open source project and we love involvement from the community! Hit us up with pull requests and issues.
+
+Local development
+-----------------
+1. Start with installation of [composer](https://getcomposer.org/download/)
+2. Download dependencies: `$ php composer.phar install`
+3. You can verify whether tests pass by running `$ vendor/bin/phpunit`
