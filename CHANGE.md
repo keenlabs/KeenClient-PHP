@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+VERSION 2.5.14
+-------------
+* Updated README.md - added basic info regarding local development setup
+* composer.phar added to .gitignore file
+
 VERSION 2.5.13
 -------------
 * Fix for invalid request "Missing required organizationKey" when using createProject
