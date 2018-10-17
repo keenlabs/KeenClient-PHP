@@ -73,6 +73,9 @@ $client = KeenIOClient::factory([
 ]);
 ```
 
+For more options see [Guzzle Client documentation](http://docs.guzzlephp.org/en/stable/quickstart.html#creating-a-client)
+Please notice that _all other options passed to the constructor are used as default request options with every request created by the client_.
+
 #### Configuration can be updated to reuse the same Client:
 You can reconfigure the Keen IO Client configuration options through available getters and setters. You can get and set the following options:
 `projectId`, `readKey`, `writeKey`, `masterKey`, & `version`.
