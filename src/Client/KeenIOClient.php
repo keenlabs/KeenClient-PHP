@@ -41,7 +41,7 @@ use KeenIO\Exception\RuntimeException;
 class KeenIOClient extends GuzzleClient
 {
 
-    const VERSION = '2.5.13';
+    const VERSION = '2.5.14';
 
     /**
      * Factory to create new KeenIOClient instance.
