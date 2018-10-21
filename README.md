@@ -73,6 +73,9 @@ $client = KeenIOClient::factory([
 ]);
 ```
 
+For more options see [Guzzle Client documentation](http://docs.guzzlephp.org/en/stable/quickstart.html#creating-a-client)
+Please notice that _all other options passed to the constructor are used as default request options with every request created by the client_.
+
 #### Configuration can be updated to reuse the same Client:
 You can reconfigure the Keen IO Client configuration options through available getters and setters. You can get and set the following options:
 `projectId`, `readKey`, `writeKey`, `masterKey`, & `version`.
@@ -406,3 +409,9 @@ at [users.keen.io](http://users.keen.io). We'd love to hear your feedback and id
 Contributing
 ------------
 This is an open source project and we love involvement from the community! Hit us up with pull requests and issues.
+
+Local development
+-----------------
+1. Start with installation of [composer](https://getcomposer.org/download/)
+2. Download dependencies: `$ php composer.phar install`
+3. You can verify whether tests pass by running `$ vendor/bin/phpunit`
