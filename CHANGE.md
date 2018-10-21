@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+VERSION 2.5.15
+-------------
+* Added collection deletion - added collection deletion by name 
+
 VERSION 2.5.14
 -------------
 * Updated README.md - added basic info regarding local development setup
