@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-VERSION 2.5.15
+VERSION 2.6.0
 -------------
 * Added collection deletion - added collection deletion by name 
 
