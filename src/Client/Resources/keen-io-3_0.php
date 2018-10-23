@@ -297,6 +297,31 @@ return array(
             ),
         ),
 
+        'deleteCollection' => array(
+            'uri'         => 'projects/{projectId}/events/{collection_name}',
+            'description' => 'Deletes the specified collection.',
+            'httpMethod'  => 'DELETE',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'collection_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The collection name.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
         'getProperty' => array(
             'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
             'description' => 'GET returns the property name, type, and a link to sub-resources.',
