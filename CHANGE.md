@@ -1,6 +1,10 @@
 Change Log
 ==========
 
+VERSION 2.7.0
+-------------
+* Added support for including metadata of requests through include_metadata parameter
+
 VERSION 2.6.0
 -------------
 * Added collection deletion - added collection deletion by name 
