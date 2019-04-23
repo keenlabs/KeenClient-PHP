@@ -1,1390 +1,1019 @@
 <?php
 
+use \KeenIO\Client\Operations\Parameters\DefaultParameters;
+use \KeenIO\Client\Operations\Parameters\ParametersKey;
+use \KeenIO\Client\Operations\Parameters\ParameterKey;
+use \KeenIO\Client\Operations\OperationsKeys;
+use \KeenIO\Client\Operations\OperationKeys;
+use \KeenIO\Client\Operations\Parameters\ValueLocation;
+use \KeenIO\Client\Operations\Parameters\ValueHttpMethod;
+use \KeenIO\Client\Operations\Parameters\ValueType;
+
 return array(
     'name'        => 'KeenIO',
     'baseUri'     => 'https://api.keen.io/3.0/',
     'apiVersion'  => '3.0',
     'operations'  => array(
-        'getResources' => array(
-            'uri'         => '/',
-            'description' => 'Returns the available child resources. Currently, the only child '
+        OperationsKeys::GET_RESOURCES => array(
+            OperationKeys::URI => '/',
+            OperationKeys::DESCRIPTION => 'Returns the available child resources. Currently, the only child '
                             . 'resource is the Projects Resource.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master Api Key',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
             ),
         ),
 
-        'createProject' => array(
-            'uri'         => 'organizations/{organizationId}/projects',
-            'description' => 'Creates a project for the specified organization and returns the '
+        OperationsKeys::CREATE_PROJECT => array(
+            OperationKeys::URI => 'organizations/{organizationId}/projects',
+            OperationKeys::DESCRIPTION => 'Creates a project for the specified organization and returns the '
                             . 'project id for later usage.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'organizationId'  => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::ORGANIZATION_ID  => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::TYPE => ValueType::TYPE_STRING
                 ),
-                'organizationKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Organization Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::ORGANIZATION_KEY => array(
+                    ParameterKey::LOCATION => ValueLocation::HEADER,
+                    ParameterKey::DESCRIPTION => 'The Organization Key.',
+                    ParameterKey::SENT_AS => 'Authorization',
+                    ParameterKey::PATTERN => '/^([[:alnum:]])+$/',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'project_data' => array(
-                    'location' => 'json',
-                    'type'     => 'array',
+                ParametersKey::PROJECT_DATA => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
                 ),
             ),
         ),
 
-        'getProjects' => array(
-            'uri'         => 'projects',
-            'description' => 'Returns the projects accessible to the API user, as well as '
+        OperationsKeys::GET_PROJECTS => array(
+            OperationKeys::URI => 'projects',
+            OperationKeys::DESCRIPTION => 'Returns the projects accessible to the API user, as well as '
                             . 'links to project sub-resources for discovery.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
             ),
         ),
 
-        'getProject' => array(
-            'uri'         => 'projects/{projectId}',
-            'description' => 'GET returns detailed information about the specific project, '
+        OperationsKeys::GET_PROJECT => array(
+            OperationKeys::URI         => 'projects/{projectId}',
+            OperationKeys::DESCRIPTION => 'GET returns detailed information about the specific project, '
                             . 'as well as links to related resources.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId
             ),
         ),
 
-        'getSavedQueries' => array(
-            'uri'         => 'projects/{projectId}/queries/saved',
-            'description' => 'Returns the saved queries accessible to the API user on the specified project.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+        OperationsKeys::GET_SAVED_QUERIES => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/saved',
+            OperationKeys::DESCRIPTION  => 'Returns the saved queries accessible to the API user on the '
+                            . 'specified project.',
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId
             ),
         ),
 
-        'getSavedQuery' => array(
-            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
-            'description' => 'Returns the detailed information about the specified query, as '
+        OperationsKeys::GET_SAVED_QUERY => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/saved/{query_name}',
+            OperationKeys::DESCRIPTION => 'Returns the detailed information about the specified query, as '
                             . 'well as links to retrieve results.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'query_name' => array(
-                    'location'    => 'uri',
-                    'description' => 'The saved query.',
-                    'required'    => true,
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::QUERY_NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::DESCRIPTION => 'The saved query.',
+                    ParameterKey::REQUIRED => true,
                 ),
             ),
         ),
 
-        'createSavedQuery' => array(
-            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
-            'description' => 'Creates the described query.',
-            'httpMethod'  => 'PUT',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'query_name' => array(
-                    'location'    => 'uri',
-                    'description' => 'The desired name of the query.',
-                    'filters'     => array([
+        OperationsKeys::CREATE_SAVED_QUERY => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/saved/{query_name}',
+            OperationKeys::DESCRIPTION => 'Creates the described query.',
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::PUT,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::QUERY_NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::DESCRIPTION => 'The desired name of the query.',
+                    ParameterKey::FILTERS => array([
                         "method" => '\KeenIO\Client\KeenIOClient::cleanQueryName',
                         "args" => ["@value"]
                     ]),
-                    'required'    => true,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'query'       => array(
-                    'location' => 'json',
-                    'type'     => 'array',
+                ParametersKey::QUERY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
                 ),
             ),
         ),
 
-        'updateSavedQuery' => array(
-            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
-            'description' => 'Creates the described query.',
-            'httpMethod'  => 'PUT',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'query_name' => array(
-                    'location'    => 'uri',
-                    'description' => 'The desired name of the query.',
-                    'filters'     => array([
+        OperationsKeys::UPDATE_SAVED_QUERY => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/saved/{query_name}',
+            // TODO is it correct description?
+            OperationKeys::DESCRIPTION => 'Creates the described query.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::PUT,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::QUERY_NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::DESCRIPTION => 'The desired name of the query.',
+                    ParameterKey::FILTERS => array([
                         "method" => '\KeenIO\Client\KeenIOClient::cleanQueryName',
                         "args" => ["@value"]
                     ]),
-                    'required'    => true,
+                    'required' => true,
                 ),
-                'query'       => array(
-                    'location' => 'json',
-                    'type'     => 'array',
-                ),
-            ),
-        ),
-
-        'deleteSavedQuery' => array(
-            'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
-            'description' => 'Deletes the specified query.',
-            'httpMethod'  => 'DELETE',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'query_name' => array(
-                    'location'    => 'uri',
-                    'description' => 'The saved query.',
-                    'required'    => true,
+                ParametersKey::QUERY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
                 ),
             ),
         ),
 
-        'getSavedQueryResults' => array(
-            'uri'         => 'projects/{projectId}/queries/saved/{query_name}/result',
-            'description' => 'Returns the results of executing the specified query.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'query_name' => array(
-                    'location'    => 'uri',
-                    'description' => 'The saved query.',
-                    'required'    => true,
+        OperationsKeys::DELETE_SAVED_QUERY => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/saved/{query_name}',
+            OperationKeys::DESCRIPTION => 'Deletes the specified query.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::DELETE,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::QUERY_NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::DESCRIPTION => 'The saved query.',
+                    ParameterKey::REQUIRED => true,
                 ),
             ),
         ),
 
-        'getCollections' => array(
-            'uri'         => 'projects/{projectId}/events',
-            'description' => 'GET returns schema information for all the event collections in this project, '
+        OperationsKeys::GET_SAVED_QUERY_RESULTS => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/saved/{query_name}/result',
+            OperationKeys::DESCRIPTION => 'Returns the results of executing the specified query.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::QUERY_NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::DESCRIPTION => 'The saved query.',
+                    ParameterKey::REQUIRED => true,
+                ),
+            ),
+        ),
+
+        OperationsKeys::GET_COLLECTIONS => array(
+            OperationKeys::URI         => 'projects/{projectId}/events',
+            OperationKeys::DESCRIPTION => 'GET returns schema information for all the event collections in this '
+                            . 'project, including properties and their type. It also returns links to sub-resources.',
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId
+            ),
+        ),
+
+        OperationsKeys::GET_EVENT_SCHEMAS => array(
+            OperationKeys::KEY_EXTENDS => 'getCollections'
+        ),
+
+        OperationsKeys::GET_COLLECTION => array(
+            OperationKeys::URI  => 'projects/{projectId}/events/{event_collection}',
+            OperationKeys::DESCRIPTION => 'GET returns available schema information for this event collection, '
                             . 'including properties and their type. It also returns links to sub-resources.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::GET,
+            OperationKeys::HTTP_METHOD => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionUri
+            ),
+        ),
+
+        OperationsKeys::GET_PROPERTY => array(
+            OperationKeys::URI         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
+            OperationKeys::DESCRIPTION => 'GET returns the property name, type, and a link to sub-resources.',
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionUri,
+                ParametersKey::PROPERTY_NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::DESCRIPTION => 'The property name to inspect',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
             ),
         ),
 
-        'getEventSchemas' => array(
-            'extends'     => 'getCollections'
-        ),
-
-        'getCollection' => array(
-            'uri'         => 'projects/{projectId}/events/{event_collection}',
-            'description' => 'GET returns available schema information for this event collection, including '
-                            . 'properties and their type. It also returns links to sub-resources.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
+        OperationsKeys::ADD_EVENT => array(
+            OperationKeys::URI => 'projects/{projectId}/events/{event_collection}',
+            OperationKeys::DESCRIPTION => 'POST inserts an event into the specified collection.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::WRITE_KEY => DefaultParameters::$writeKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionUri,
+            ),
+            OperationKeys::ADDITIONAL_PARAMETERS => array(
+                ParameterKey::LOCATION => ValueLocation::JSON
             ),
         ),
 
-        'getProperty' => array(
-            'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
-            'description' => 'GET returns the property name, type, and a link to sub-resources.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
-                'property_name' => array(
-                    'location'    => 'uri',
-                    'description' => 'The property name to inspect',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
+        OperationsKeys::ADD_EVENTS => array(
+            OperationKeys::URI => 'projects/{projectId}/events',
+            OperationKeys::DESCRIPTION => 'POST inserts multiple events in one or more collections, '
+                            . 'in a single request. The API expects a JSON object whose keys are the names of each '
+                            . 'event collection you want to insert into. Each key should point to a list of events to '
+                            . 'insert for that event collection.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::WRITE_KEY  => DefaultParameters::$writeKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+            ),
+            OperationKeys::ADDITIONAL_PARAMETERS => array(
+                ParameterKey::LOCATION => ValueLocation::JSON,
             ),
         ),
 
-        'addEvent' => array(
-            'uri'         => 'projects/{projectId}/events/{event_collection}',
-            'description' => 'POST inserts an event into the specified collection.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+        OperationsKeys::DELETE_EVENTS => array(
+            OperationKeys::URI => 'projects/{projectId}/events/{event_collection}',
+            OperationKeys::DESCRIPTION => 'DELETE one or multiple events from a collection. You can optionally add '
+                            . 'filters, timeframe or timezone. You can delete up to 50,000 events using '
+                            . 'one method call',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::DELETE,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionUri,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION    => ValueLocation::QUERY,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'writeKey'         => array(
-                    'location'    => 'header',
-                    'description' => 'The Write Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::QUERY,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::FILTERS => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
+                    ParameterKey::REQUIRED => false,
                 ),
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
-            ),
-            'additionalParameters'       => array(
-                'location' => 'json'
-            ),
-        ),
-
-        'addEvents' => array(
-            'uri'         => 'projects/{projectId}/events',
-            'description' => 'POST inserts multiple events in one or more collections, in a single request. The API '
-                            . 'expects a JSON object whose keys are the names of each event collection you want to '
-                            . 'insert into. Each key should point to a list of events to insert for that event '
-                            . 'collection.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'writeKey'  => array(
-                    'location'    => 'header',
-                    'description' => 'The Write Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-            ),
-            'additionalParameters' => array(
-                'location' => 'json',
-            ),
-        ),
-
-        'deleteEvents' => array(
-            'uri'         => 'projects/{projectId}/events/{event_collection}',
-            'description' => 'DELETE one or multiple events from a collection. You can optionally add filters, '
-                            . 'timeframe or timezone. You can delete up to 50,000 events using one method call',
-            'httpMethod'  => 'DELETE',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'masterKey'        => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
-                'filters'          => array(
-                    'location'    => 'query',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-                'timeframe'        => array(
-                    'location'    => 'query',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'query',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::QUERY,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
 
-        'deleteEventProperties' => array(
-            'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
-            'description' => 'DELETE one property for events. This only works for properties with less than 10,000 '
-                            . 'events.',
-            'httpMethod'  => 'DELETE',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'writeKey'         => array(
-                    'location'    => 'header',
-                    'description' => 'The Write Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'event_collection' => array(
-                    'location'    => 'uri',
-                    'description' => 'The event collection.',
-                    'required'    => true,
-                ),
-                'property_name'    => array(
-                    'location'    => 'uri',
-                    'description' => 'Name of the property to delete.',
-                    'type'        => 'string',
-                    'required'    => true,
+        OperationsKeys::DELETE_EVENT_PROPERTIES => array(
+            OperationKeys::URI => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
+            OperationKeys::DESCRIPTION => 'DELETE one property for events. This only works for properties with '
+                            . 'less than 10,000 events.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::DELETE,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::WRITE_KEY => DefaultParameters::$writeKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionUri,
+                ParametersKey::PROPERTY_NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::URI,
+                    ParameterKey::DESCRIPTION => 'Name of the property to delete.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
             ),
         ),
 
-        'count' => array(
-            'uri'         => 'projects/{projectId}/queries/count',
-            'description' => 'POST returns the number of resources in the event collection matching the given criteria.'
-                            . ' The response will be a simple JSON object with one key: a numeric result.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+        OperationsKeys::COUNT => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/count',
+            OperationKeys::DESCRIPTION => 'POST returns the number of resources in the event collection matching '
+                            . 'the given criteria. The response will be a simple JSON object with one key: '
+                            . 'a numeric result.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION  => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. '
+                                    . 'The interval specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
 
-        'countUnique' => array(
-            'uri'         => 'projects/{projectId}/queries/count_unique',
-            'description' => 'POST returns the number of UNIQUE resources in the event collection matching the given '
-                            . 'criteria. The response will be a simple JSON object with one key: result, which maps '
-                            . 'to the numeric result described previously.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+        OperationsKeys::COUNT_UNIQUE => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/count_unique',
+            OperationKeys::DESCRIPTION => 'POST returns the number of UNIQUE resources in the event collection '
+                            . 'matching the given criteria. The response will be a simple JSON object with one key: '
+                            . 'result, which maps to the numeric result described previously.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION  => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by '
+                                    . 'which you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
 
-        'minimum' => array(
-            'uri'         => 'projects/{projectId}/queries/minimum',
-            'description' => 'POST returns the minimum numeric value for the target property in the event collection '
-                            . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
-                            . 'simple JSON object with one key: result, which maps to the numeric result described '
-                            . 'previously.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+        OperationsKeys::MINIMUM => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/minimum',
+            OperationKeys::DESCRIPTION => 'POST returns the minimum numeric value for the target property in the '
+                            . 'event collection matching the given criteria. Non-numeric values are ignored. '
+                            . 'The response will be a simple JSON object with one key: result, which maps to '
+                            . 'the numeric result described previously.',
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
 
-        'maximum' => array(
-            'uri'         => 'projects/{projectId}/queries/maximum',
-            'description' => 'POST returns the maximum numeric value for the target property in the event collection '
-                            . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
-                            . 'simple JSON object with one key: result, which maps to the numeric result described '
-                            . 'previously.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+        OperationsKeys::MAXIMUM => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/maximum',
+            OperationKeys::DESCRIPTION => 'POST returns the maximum numeric value for the target property in '
+                            . 'the event collection matching the given criteria. Non-numeric values are ignored. '
+                            . 'The response will be a simple JSON object with one key: result, which maps to '
+                            . 'the numeric result described previously.',
+            OperationKeys::HTTP_METHOD  => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. '
+                                    . 'The interval specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes '
+                                    . 'to match a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by '
+                                    . 'which you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
 
-        'average' => array(
-            'uri'         => 'projects/{projectId}/queries/average',
-            'description' => 'POST returns the average across all numeric values for the target property in the event '
-                            . 'collection matching the given criteria. Non-numeric values are ignored. The response '
-                            . 'will be a simple JSON object with one key: result, which maps to the numeric result '
-                            . 'described previously.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+        OperationsKeys::AVERAGE => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/average',
+            OperationKeys::DESCRIPTION => 'POST returns the average across all numeric values for the target '
+                            . 'property in the event collection matching the given criteria. Non-numeric values '
+                            . 'are ignored. The response will be a simple JSON object with one key: result, which '
+                            . 'maps to the numeric result described previously.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY  => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in '
+                                    . 'an analysis request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request '
-                                    . 'based on event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of '
-                                    . 'time. If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
 
-        'sum' => array(
-            'uri'         => 'projects/{projectId}/queries/sum',
-            'description' => 'POST returns the sum if all numeric values for the target property in the event '
-                            . 'collection matching the given criteria. Non-numeric values are ignored. The '
-                            . 'response will be a simple JSON object with one key: result, which maps to the '
-                            . 'numeric result described previously.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based '
-                                    . 'on event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-            ),
-        ),
-
-        'selectUnique' => array(
-            'uri'         => 'projects/{projectId}/queries/select_unique',
-            'description' => 'POST returns a list of UNIQUE resources in the event collection matching the given '
-                            . 'criteria. The response will be a simple JSON object with one key: result, which '
-                            . 'maps to an array of unique property values.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based '
-                                    . 'on event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-            ),
-        ),
-
-        'funnel' => array(
-            'uri'         => 'projects/{projectId}/queries/funnel',
-            'description' => 'Funnels count relevant events in succession.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'readKey'   => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'steps'     => array(
-                    'location'    => 'json',
-                    'description' => 'A URL encoded JSON Array defining the Steps in the Funnel.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-            ),
-        ),
-
-        'multiAnalysis' => array(
-            'uri'         => 'projects/{projectId}/queries/multi_analysis',
-            'description' => 'Multi-analysis lets you run multiple types of analysis over the same data. Performing a '
-                            . 'multi-analysis call is very similar to a Metric or a Series.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'analyses'         => array(
-                    'location'    => 'json',
-                    'description' => 'A URL encoded JSON object that defines the multiple types of analyses to '
-                                    . 'perform.',
-                    'type'        => 'array',
-                    'required'    => true,
-                ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request '
-                                    . 'based on event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => array('string', 'number'),
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-            ),
-        ),
-
-        'extraction' => array(
-            'uri'         => 'projects/{projectId}/queries/extraction',
-            'description' => 'POST creates an extraction request for full-form event data with all property values. '
-                            . 'If the query string parameter email is specified, then the extraction will be '
-                            . 'processed asynchronously and an e-mail will be sent to the specified address when it '
-                            . 'completes. The email will include a link to a downloadable CSV file. If email is '
-                            . 'omitted, then the extraction will be processed in-line and JSON results will be '
-                            . 'returned in the GET request.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request '
-                                    . ' based on event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'email'            => array(
-                    'location'    => 'json',
-                    'description' => 'Email that will be notified when your extraction is ready for download.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'latest'           => array(
-                    'location'    => 'json',
-                    'description' => 'An integer containing the number of most recent events to extract.',
-                    'type'        => 'number',
-                    'required'    => false,
-                ),
-                'property_names'   => array(
-                    'location'    => 'json',
-                    'description' => 'A URL-encoded array of strings containing properties you wish to extract. If '
-                                    . 'this parameter is omitted, all properties will be returned.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-            ),
-        ),
-
-        'median' => array(
-            'uri'         => 'projects/{projectId}/queries/median',
-            'description' => 'POST returns the median across all numeric values for the target property in the event '
-                            . 'collection matching the given criteria. Non-numeric values are ignored. The response '
-                            . 'will be a simple JSON object with one key: result, which maps to the numeric result '
-                            . 'described previously.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
-                ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => 'number',
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-            ),
-        ),
-
-        'percentile' => array(
-            'uri'         => 'projects/{projectId}/queries/percentile',
-            'description' => 'POST returns the Xth percentile value across all numeric values for the target property '
+        OperationsKeys::SUM => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/sum',
+            OperationKeys::DESCRIPTION => 'POST returns the sum if all numeric values for the target property '
                             . 'in the event collection matching the given criteria. Non-numeric values are ignored. '
                             . 'The response will be a simple JSON object with one key: result, which maps to the '
                             . 'numeric result described previously.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'readKey'          => array(
-                    'location'    => 'header',
-                    'description' => 'The Read Key for the project.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => false,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'event_collection' => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the event collection you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'target_property'  => array(
-                    'location'    => 'json',
-                    'description' => 'The name of the property you are analyzing.',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'filters'          => array(
-                    'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
-                    'type'        => 'array',
-                    'required'    => false,
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'timeframe'        => array(
-                    'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . ' If no timeframe is specified, all events will be counted.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'interval'         => array(
-                    'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
-                    'type'        => 'string',
-                    'required'    => false,
-                ),
-                'timezone'         => array(
-                    'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
-                    'type'        => 'number',
-                    'required'    => false,
-                ),
-                'group_by'         => array(
-                    'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
-                    'type'        => array('string', 'array'),
-                    'required'    => false,
-                ),
-                'percentile'         => array(
-                    'location'    => 'json',
-                    'description' => 'The desired Xth percentile you want to get in your analysis.',
-                    'type'        => 'number',
-                    'required'    => true,
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
-        'createAccessKey' => array(
-            'uri'         => 'projects/{projectId}/keys',
-            'description' => 'Creates a project access key.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+
+        OperationsKeys::SELECT_UNIQUE => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/select_unique',
+            OperationKeys::DESCRIPTION => 'POST returns a list of UNIQUE resources in the event collection '
+                            . 'matching the given criteria. The response will be a simple JSON object with one key: '
+                            . 'result, which maps to an array of unique property values.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY  => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-            ),
-            'additionalParameters' => array(
-                'location' => 'json'
-            ),
-        ),
-        'listAccessKeys' => array(
-            'uri'         => 'projects/{projectId}/keys',
-            'description' => 'Returns all project access keys.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
                 ),
-            ),
-        ),
-        'getAccessKey' => array(
-            'uri'         => 'projects/{projectId}/keys/{key}',
-            'description' => 'Returns a project access key.',
-            'httpMethod'  => 'GET',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
-        'updateAccessKey' => array(
-            'uri'         => 'projects/{projectId}/keys/{key}',
-            'description' => 'Updates a project access key.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-            ),
-            'additionalParameters' => array(
-                'location' => 'json'
-            ),
-        ),
-        'revokeAccessKey' => array(
-            'uri'         => 'projects/{projectId}/keys/{key}/revoke',
-            'description' => 'Revokes a project access key.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
-                ),
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
-                ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+
+        OperationsKeys::FUNNEL => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/funnel',
+            OperationKeys::DESCRIPTION => 'Funnels count relevant events in succession.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::STEPS     => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A URL encoded JSON Array defining the Steps in the Funnel.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
             ),
         ),
-        'unRevokeAccessKey' => array(
-            'uri'         => 'projects/{projectId}/keys/{key}/unrevoke',
-            'description' => 'Unrevokes a project access key.',
-            'httpMethod'  => 'POST',
-            'parameters'  => array(
-                'projectId'        => array(
-                    'location'    => 'uri',
-                    'type'        => 'string'
+
+        OperationsKeys::MULTI_ANALYSIS => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/multi_analysis',
+            OperationKeys::DESCRIPTION => 'Multi-analysis lets you run multiple types of analysis over the same data. '
+                            . 'Performing a multi-analysis call is very similar to a Metric or a Series.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY  => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::ANALYSIS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A URL encoded JSON object that defines the multiple types of '
+                                    . 'analyses to perform.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => true,
                 ),
-                'key'      => array(
-                    'location'    => 'uri',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in '
+                                    . 'an analysis request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
-                'masterKey' => array(
-                    'location'    => 'header',
-                    'description' => 'The Master API Key.',
-                    'sentAs'      => 'Authorization',
-                    'pattern'     => '/^([[:alnum:]])+$/',
-                    'type'        => 'string',
-                    'required'    => true,
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
                 ),
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+            ),
+        ),
+
+        OperationsKeys::EXTRACTION => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/extraction',
+            OperationKeys::DESCRIPTION => 'POST creates an extraction request for full-form event data with all '
+                            . 'property values. If the query string parameter email is specified, then the extraction '
+                            . 'will be processed asynchronously and an e-mail will be sent to the specified address '
+                            . 'when it completes. The email will include a link to a downloadable CSV file. '
+                            . 'If email is omitted, then the extraction will be processed in-line and JSON results '
+                            . 'will be returned in the GET request.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request  based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::EMAIL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Email that will be notified when your extraction is ready '
+                                    . 'for download.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::LATEST => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'An integer containing the number of most recent events to extract.',
+                    ParameterKey::TYPE => ValueType::TYPE_NUMBER,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::PROPERTY_NAMES => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A URL-encoded array of strings containing properties you wish '
+                                    . 'to extract. If this parameter is omitted, all properties will be returned.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+            ),
+        ),
+
+        OperationsKeys::MEDIAN => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/median',
+            OperationKeys::DESCRIPTION => 'POST returns the median across all numeric values for the target property '
+                            . 'in the event collection matching the given criteria. Non-numeric values are ignored. '
+                            . 'The response will be a simple JSON object with one key: result, which maps to '
+                            . 'the numeric result described previously.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY  => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
+                ),
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes '
+                                    . 'to match a specific timezone.',
+                    ParameterKey::TYPE => ValueType::TYPE_NUMBER,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+            ),
+        ),
+
+        OperationsKeys::PERCINTILE => array(
+            OperationKeys::URI => 'projects/{projectId}/queries/percentile',
+            OperationKeys::DESCRIPTION => 'POST returns the Xth percentile value across all numeric values for '
+                            . 'the target property in the event collection matching the given criteria. Non-numeric '
+                            . 'values are ignored. The response will be a simple JSON object with one key: result, '
+                            . 'which maps to the numeric result described previously.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::READ_KEY => DefaultParameters::$readKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::EVENT_COLLECTION => DefaultParameters::$eventCollectionJson,
+                ParametersKey::TARGET_PROPERTY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The name of the property you are analyzing.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => true,
+                ),
+                ParametersKey::FILTERS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Filters are used to narrow down the events used in an analysis '
+                                    . 'request based on event property values.',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::TIME_FRAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A Timeframe specifies the events to use for analysis based on '
+                                    . 'a window of time. If no timeframe is specified, all events will be counted.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::INTERVAL => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Intervals are used when creating a Series API call. The interval '
+                                    . 'specifies the length of each sub-timeframe in a Series.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::TIME_ZONE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Modifies the timeframe filters for Relative Timeframes to match '
+                                    . 'a specific timezone.',
+                    ParameterKey::TYPE => ValueType::TYPE_NUMBER,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::GROUP_BY => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The group_by parameter specifies the name of a property by which '
+                                    . 'you would like to group the results.',
+                    ParameterKey::TYPE => ValueType::SET_STRING_ARRAY,
+                    ParameterKey::REQUIRED => false,
+                ),
+                ParametersKey::PERCENTILE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'The desired Xth percentile you want to get in your analysis.',
+                    ParameterKey::TYPE => ValueType::TYPE_NUMBER,
+                    ParameterKey::REQUIRED => true,
+                ),
+            ),
+        ),
+        
+        OperationsKeys::CREATE_ACCESS_KEY => array(
+            OperationKeys::URI => 'projects/{projectId}/keys',
+            OperationKeys::DESCRIPTION => 'Creates a project access key.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::NAME => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'API Key Name. Limited to 256 characters.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING,
+                ),
+                ParametersKey::IS_ACTIVE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Indicates if the key is currently active or revoked',
+                    ParameterKey::TYPE => ValueType::TYPE_BOOLEAN
+                ),
+                ParametersKey::PERMITTED => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A list of high level actions this key can perform',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY
+                ),
+                ParametersKey::OPTIONS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A list of high level actions this key can perform',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY
+                )
+            ),
+        ),
+        
+        OperationsKeys::LIST_ACCESS_KEYS => array(
+            OperationKeys::URI => 'projects/{projectId}/keys',
+            OperationKeys::DESCRIPTION => 'Returns all project access keys.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId
+            ),
+        ),
+        
+        OperationsKeys::GET_ACCESS_KEY => array(
+            OperationKeys::URI => 'projects/{projectId}/keys/{key}',
+            OperationKeys::DESCRIPTION => 'Returns a project access key.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::GET,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::KEY => DefaultParameters::$accessKey,
+            ),
+        ),
+        
+        OperationsKeys::UPDATE_ACCESS_KEY => array(
+            OperationKeys::URI => 'projects/{projectId}/keys/{key}',
+            OperationKeys::DESCRIPTION => 'Updates a project access key.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::KEY => DefaultParameters::$accessKey,
+                ParametersKey::NAME => [
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'API Key Name. Limited to 256 characters.',
+                    ParameterKey::TYPE => ValueType::TYPE_STRING
+                ],
+                ParametersKey::IS_ACTIVE => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'Indicates if the key is currently active or revoked',
+                    ParameterKey::TYPE => ValueType::TYPE_BOOLEAN
+                ),
+                ParametersKey::PERMITTED => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A list of high level actions this key can perform',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY
+                ),
+                ParametersKey::OPTIONS => array(
+                    ParameterKey::LOCATION => ValueLocation::JSON,
+                    ParameterKey::DESCRIPTION => 'A list of high level actions this key can perform',
+                    ParameterKey::TYPE => ValueType::TYPE_ARRAY
+                )
+            )
+        ),
+        
+        OperationsKeys::REVOKE_ACCESS_KEY => array(
+            OperationKeys::URI => 'projects/{projectId}/keys/{key}/revoke',
+            OperationKeys::DESCRIPTION => 'Revokes a project access key.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS  => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::KEY => DefaultParameters::$accessKey,
+            ),
+        ),
+        
+        OperationsKeys::UN_REVOKE_ACCESS_KEY => array(
+            OperationKeys::URI => 'projects/{projectId}/keys/{key}/unrevoke',
+            OperationKeys::DESCRIPTION => 'Unrevokes a project access key.',
+            OperationKeys::HTTP_METHOD => ValueHttpMethod::POST,
+            OperationKeys::PARAMETERS => array(
+                ParametersKey::MASTER_KEY => DefaultParameters::$masterKey,
+                ParametersKey::PROJECT_ID => DefaultParameters::$projectId,
+                ParametersKey::KEY => DefaultParameters::$accessKey,
             ),
         ),
     ),

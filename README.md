@@ -313,10 +313,9 @@ $results = $client->createAccessKey([
 $client->listAccessKeys();
  
 // Get details on a particular access key.
-client->getAccessKey([
+$client->getAccessKey([
     'key' => 'your.access.key'
 ]);     
- 
  
 // Revoke (disable) an access key
 $client->revokeAccessKey([
@@ -331,7 +330,9 @@ $client->unRevokeAccessKey([
 // Change just the access key.
 $client->updateAccessKey([
     'key' => 'your.access.key',
-    'name' => 'new name'
+    'name' => 'new name',
+    'is_active' => true,
+    'permitted' => ['writes']
 ]);
 
 ```
