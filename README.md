@@ -313,7 +313,7 @@ $results = $client->createAccessKey([
 $client->listAccessKeys();
  
 // Get details on a particular access key.
-client.getAccessKey([
+client->getAccessKey([
     'key' => 'your.access.key'
 ]);     
  
