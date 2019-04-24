@@ -54,7 +54,6 @@ class KeenIOClient extends GuzzleClient
      *
      * @param array $config
      *
-     * @returns \KeenIO\Client\KeenIOClient
      * @return KeenIOClient
      */
     public static function factory($config = array())
