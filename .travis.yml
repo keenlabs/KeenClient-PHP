@@ -6,3 +6,7 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-source
+
+script: 
+  - composer phpcs
+  - composer phpunit
