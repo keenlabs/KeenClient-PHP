@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+VERSION 2.8.0
+-------------
+* Bumbed Guzzle version to 7
+* Bumbed Guzzle Services version to 1.2
+
 VERSION 2.7.0
 -------------
 * Added support for including metadata of requests through include_metadata parameter
