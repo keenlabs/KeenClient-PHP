@@ -19,8 +19,9 @@
 namespace KeenIO\Tests\Filter;
 
 use KeenIO\Client\Filter\MultiTypeFiltering;
+use PHPUnit\Framework\TestCase;
 
-class MultiTypeFilteringTest extends \PHPUnit_Framework_TestCase
+class MultiTypeFilteringTest extends TestCase
 {
     public function testCanEncode()
     {

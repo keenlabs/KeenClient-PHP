@@ -2,15 +2,16 @@
 
 namespace KeenIO\Tests\Client;
 
+use GuzzleHttp\Command\Exception\CommandClientException;
 use KeenIO\Client\KeenIOClient;
 use GuzzleHttp\Subscriber\Mock;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
+use PHPUnit\Framework\TestCase;
 
-class KeenIOClientTest extends \PHPUnit_Framework_TestCase
+class KeenIOClientTest extends TestCase
 {
     /**
      * Check that a Keen IO Client is instantiated properly
@@ -299,7 +300,7 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
         }
 
         // Make sure that the response is a PHP array, according to the documented return type
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     /**
@@ -336,10 +337,11 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   GuzzleHttp\Command\Exception\CommandClientException
      */
     public function testServiceCommandsReturnExceptionOnInvalidAuth($method, $params)
     {
+        $this->expectException(CommandClientException::class);
+
         $client = $this->getClient(HandlerStack::create(new MockHandler([
             new Response(401)
         ])));
@@ -350,10 +352,10 @@ class KeenIOClientTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider        providerServiceCommands
-     * @expectedException   GuzzleHttp\Command\Exception\CommandClientException
      */
     public function testServiceCommandsReturnExceptionOnInvalidProjectId($method, $params)
     {
+        $this->expectException(CommandClientException::class);
         $client = $this->getClient(HandlerStack::create(new MockHandler([
             new Response(404)
         ])));
