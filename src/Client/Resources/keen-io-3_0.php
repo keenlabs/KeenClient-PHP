@@ -40,10 +40,9 @@ return array(
                     'type'        => 'string',
                     'required'    => true,
                 ),
-                'project_data' => array(
-                    'location' => 'json',
-                    'type'     => 'array',
-                ),
+            ),
+            'additionalParameters'       => array(
+                'location' => 'json'
             ),
         ),
 
@@ -298,6 +297,31 @@ return array(
             ),
         ),
 
+        'deleteCollection' => array(
+            'uri'         => 'projects/{projectId}/events/{collection_name}',
+            'description' => 'Deletes the specified collection.',
+            'httpMethod'  => 'DELETE',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'collection_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The collection name.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
         'getProperty' => array(
             'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
             'description' => 'GET returns the property name, type, and a link to sub-resources.',
@@ -465,7 +489,7 @@ return array(
 
         'count' => array(
             'uri'         => 'projects/{projectId}/queries/count',
-            'description' => 'GET returns the number of resources in the event collection matching the given criteria.'
+            'description' => 'POST returns the number of resources in the event collection matching the given criteria.'
                             . ' The response will be a simple JSON object with one key: a numeric result.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
@@ -499,7 +523,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -521,15 +544,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would '
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'countUnique' => array(
             'uri'         => 'projects/{projectId}/queries/count_unique',
-            'description' => 'GET returns the number of UNIQUE resources in the event collection matching the given '
+            'description' => 'POST returns the number of UNIQUE resources in the event collection matching the given '
                             . 'criteria. The response will be a simple JSON object with one key: result, which maps '
                             . 'to the numeric result described previously.',
             'httpMethod'  => 'POST',
@@ -570,7 +598,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -592,15 +619,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would '
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'minimum' => array(
             'uri'         => 'projects/{projectId}/queries/minimum',
-            'description' => 'GET returns the minimum numeric value for the target property in the event collection '
+            'description' => 'POST returns the minimum numeric value for the target property in the event collection '
                             . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
                             . 'simple JSON object with one key: result, which maps to the numeric result described '
                             . 'previously.',
@@ -642,7 +674,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -664,15 +695,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would '
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'maximum' => array(
             'uri'         => 'projects/{projectId}/queries/maximum',
-            'description' => 'GET returns the maximum numeric value for the target property in the event collection '
+            'description' => 'POST returns the maximum numeric value for the target property in the event collection '
                             . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
                             . 'simple JSON object with one key: result, which maps to the numeric result described '
                             . 'previously.',
@@ -714,7 +750,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -736,15 +771,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would like '
                                     . 'to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'average' => array(
             'uri'         => 'projects/{projectId}/queries/average',
-            'description' => 'GET returns the average across all numeric values for the target property in the event '
+            'description' => 'POST returns the average across all numeric values for the target property in the event '
                             . 'collection matching the given criteria. Non-numeric values are ignored. The response '
                             . 'will be a simple JSON object with one key: result, which maps to the numeric result '
                             . 'described previously.',
@@ -786,7 +826,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of '
                                     . 'time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -808,15 +847,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would like '
                                     . 'to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'sum' => array(
             'uri'         => 'projects/{projectId}/queries/sum',
-            'description' => 'GET returns the sum if all numeric values for the target property in the event '
+            'description' => 'POST returns the sum if all numeric values for the target property in the event '
                             . 'collection matching the given criteria. Non-numeric values are ignored. The '
                             . 'response will be a simple JSON object with one key: result, which maps to the '
                             . 'numeric result described previously.',
@@ -858,7 +902,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -880,15 +923,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would like '
                                     . 'to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'selectUnique' => array(
             'uri'         => 'projects/{projectId}/queries/select_unique',
-            'description' => 'GET returns a list of UNIQUE resources in the event collection matching the given '
+            'description' => 'POST returns a list of UNIQUE resources in the event collection matching the given '
                             . 'criteria. The response will be a simple JSON object with one key: result, which '
                             . 'maps to an array of unique property values.',
             'httpMethod'  => 'POST',
@@ -929,7 +977,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -951,8 +998,13 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would '
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
@@ -979,6 +1031,12 @@ return array(
                     'description' => 'A URL encoded JSON Array defining the Steps in the Funnel.',
                     'type'        => 'array',
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
@@ -1026,7 +1084,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -1048,15 +1105,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would '
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'extraction' => array(
             'uri'         => 'projects/{projectId}/queries/extraction',
-            'description' => 'GET creates an extraction request for full-form event data with all property values. '
+            'description' => 'POST creates an extraction request for full-form event data with all property values. '
                             . 'If the query string parameter email is specified, then the extraction will be '
                             . 'processed asynchronously and an e-mail will be sent to the specified address when it '
                             . 'completes. The email will include a link to a downloadable CSV file. If email is '
@@ -1094,7 +1156,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'email'            => array(
@@ -1121,7 +1182,7 @@ return array(
 
         'median' => array(
             'uri'         => 'projects/{projectId}/queries/median',
-            'description' => 'GET returns the median across all numeric values for the target property in the event '
+            'description' => 'POST returns the median across all numeric values for the target property in the event '
                             . 'collection matching the given criteria. Non-numeric values are ignored. The response '
                             . 'will be a simple JSON object with one key: result, which maps to the numeric result '
                             . 'described previously.',
@@ -1163,7 +1224,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . 'If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -1185,15 +1245,20 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would '
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
 
         'percentile' => array(
             'uri'         => 'projects/{projectId}/queries/percentile',
-            'description' => 'GET returns the Xth percentile value across all numeric values for the target property '
+            'description' => 'POST returns the Xth percentile value across all numeric values for the target property '
                             . 'in the event collection matching the given criteria. Non-numeric values are ignored. '
                             . 'The response will be a simple JSON object with one key: result, which maps to the '
                             . 'numeric result described previously.',
@@ -1235,7 +1300,6 @@ return array(
                     'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
                                     . ' If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'interval'         => array(
@@ -1257,7 +1321,6 @@ return array(
                     'description' => 'The group_by parameter specifies the name of a property by which you would like '
                                     . 'to group the results.',
                     'type'        => array('string', 'array'),
-                    'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'percentile'         => array(
@@ -1265,6 +1328,12 @@ return array(
                     'description' => 'The desired Xth percentile you want to get in your analysis.',
                     'type'        => 'number',
                     'required'    => true,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),

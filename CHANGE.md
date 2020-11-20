@@ -1,6 +1,33 @@
 Change Log
 ==========
 
+VERSION 2.7.0
+-------------
+* Added support for including metadata of requests through include_metadata parameter
+
+VERSION 2.6.0
+-------------
+* Added collection deletion - added collection deletion by name 
+
+VERSION 2.5.14
+-------------
+* Updated README.md - added basic info regarding local development setup
+* composer.phar added to .gitignore file
+
+VERSION 2.5.13
+-------------
+* Fix for invalid request "Missing required organizationKey" when using createProject
+* Fix for no body content being sent when using createProject
+
+VERSION 2.5.12
+-------------
+* Fix a bug that caused arrays in the POST body to be encoded as strings 
+
+VERSION 2.5.11
+-------------
+* Fix a few headers in the README.md
+* Update for PSR-2 compliance 
+
 VERSION 2.5.10
 -------------
 * Remove mcrypt dependency (deprecated in PHP 7.1) and replace it with openssl for scoped key support.

@@ -73,6 +73,9 @@ $client = KeenIOClient::factory([
 ]);
 ```
 
+For more options see [Guzzle Client documentation](http://docs.guzzlephp.org/en/stable/quickstart.html#creating-a-client)
+Please notice that _all other options passed to the constructor are used as default request options with every request created by the client_.
+
 #### Configuration can be updated to reuse the same Client:
 You can reconfigure the Keen IO Client configuration options through available getters and setters. You can get and set the following options:
 `projectId`, `readKey`, `writeKey`, `masterKey`, & `version`.
@@ -104,6 +107,67 @@ $event = ['purchase' => ['item' => 'Golden Elephant']];
 
 $client->addEvent('purchases', $event);
 ```
+
+#### Data Enrichment
+A data enrichment is a powerful add-on to enrich the data you're already streaming to Keen IO by pre-processing the data and adding helpful data properties. To activate add-ons, you simply add some new properties within the "keen" namespace in your events. Detailed documentation for the configuration of our add-ons is available [here](https://keen.io/docs/api/?php#data-enrichment).
+
+Here is an example of using the [URL parser](https://keen.io/docs/streams/url-enrichment/):
+
+```php
+$client->addEvent('requests', [
+    'page_url' => 'http://my-website.com/cool/link?source=twitter&foo=bar/#title',
+    'keen' => [
+        'addons' => [
+            [
+                'name' => 'keen:url_parser',
+                'input' => [
+                    'url' => 'page_url'
+                ],
+                'output' => 'parsed_page_url'
+            ]
+        ]
+    ]
+]);
+```
+
+Keen IO will parse the URL for you and that would equivalent to:
+
+```php
+$client->addEvent('requests', [
+    'page_url' => 'http://my-website.com/cool/link?source=twitter&foo=bar/#title',
+    'parsed_page_url' => [
+        'protocol' => 'http',
+        'domain' => 'my-website.com',
+        'path' => '/cool/link',
+        'anchor' => 'title',
+        'query_string' => [
+            'source' => 'twitter',
+            'foo' => 'bar'
+        ]
+    ]
+]);
+```
+
+Here is another example of using the [Datetime parser](https://keen.io/docs/streams/datetime-enrichment/). Let's assume you want to do a deeper analysis on the "purchases" event by day of the week (Monday, Tuesday, Wednesday, etc.) and other interesting Datetime components. You can use "keen.timestamp" property that is included in your event automatically.
+
+```php
+$client->addEvent('purchases', [
+    'keen' => [
+        'addons' => [
+            [
+                'name' => 'keen:date_time_parser',
+                'input' => [
+                    'date_time' => 'keen.timestamp'
+                ],
+                'output' => 'timestamp_info'
+            ]
+        ]
+    ],
+    'price' => 500
+]);
+```
+
+Other Data Enrichment add-ons are located in the [API reference docs](https://keen.io/docs/api/?php#data-enrichment).
 
 #### Send batched events to Keen  - ([Changed in 2.0!](CHANGE.md))
 You can upload multiple Events to multiple Event Collections at once!
@@ -218,6 +282,81 @@ $client = KeenIOClient::factory([
 $results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
 ```
 
+#### Using Cached queries
+
+By [Caching a Query](https://keen.io/docs/api/?php#creating-a-cached-query), you are adding a `refresh_rate` property to a query payload.
+
+Cached Queries helps you to automatically refresh a saved query within a particular time. This allows you to get an immediate result using the saved query for a subsequent trip. 
+
+You can either cache a query while [creating a saved query](https://keen.io/docs/api/#creating-a-saved-query) or [updating a saved query](https://keen.io/docs/api/#updating-saved-queries).
+
+ While you can create this via the Dashboard, the PHP library gives you the same ability.
+
+
+###### Example: Caching a query when creating Saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$query = [
+    "analysis_type" => "count",
+    "event_collection" => "api_requests",
+    "filters" =>
+        [
+            [
+                "property_name" => "user_agent",
+                "operator" => "ne",
+                "property_value"=> "Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)"
+            ]
+        ],
+    "timeframe" => "this_2_weeks",
+    "refresh_rate" => 14400
+
+];
+
+$client->createSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
+```
+
+
+###### Example: Caching a query when updating a saved Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$query = [
+    "analysis_type" => "count",
+    "event_collection" => "api_requests",
+    "filters" =>
+        [
+            [
+                "property_name" => "user_agent",
+                "operator" => "ne",
+                "property_value"=> "Pingdom.com_bot_version_1.4_(http://www.pingdom.com/)"
+            ]
+        ],
+    "timeframe" => "this_2_weeks",
+    "refresh_rate" => 14400
+
+];
+
+$results = $client->updateSavedQuery(['query_name' => 'total-API-requests', 'query' => $query]);
+```
+
+###### Example: Retrieving a Cached Query
+```php
+$client = KeenIOClient::factory([
+    'projectId' => $project_id,
+    'masterKey' => $master_key
+]);
+
+$results = $client->getSavedQuery(['query_name' => 'total-API-requests']);
+```
+
+
 Troubleshooting
 ---------------
 
@@ -270,3 +409,9 @@ at [users.keen.io](http://users.keen.io). We'd love to hear your feedback and id
 Contributing
 ------------
 This is an open source project and we love involvement from the community! Hit us up with pull requests and issues.
+
+Local development
+-----------------
+1. Start with installation of [composer](https://getcomposer.org/download/)
+2. Download dependencies: `$ php composer.phar install`
+3. You can verify whether tests pass by running `$ vendor/bin/phpunit`
