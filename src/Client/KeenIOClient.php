@@ -14,7 +14,7 @@ use KeenIO\Exception\RuntimeException;
  *
  * @method array getCollection(string $eventCollection, array $args = array()) {@command KeenIO getCollection}
  * @method array getCollections(array $args = array()) {@command KeenIO getCollections}
- * @method array deleteCollection(array $args = array()) {@command KeenIO getProperty} * 
+ * @method array deleteCollection(array $args = array()) {@command KeenIO getProperty}
  * @method array getResources(array $args = array()) {@command KeenIO getResources}
  * @method array getProjects(array $args = array()) {@command KeenIO getProjects}
  * @method array getProject(array $args = array()) {@command KeenIO getProject}
