@@ -1,6 +1,19 @@
 Change Log
 ==========
 
+VERSION 2.7.0
+-------------
+* Added support for including metadata of requests through include_metadata parameter
+
+VERSION 2.6.0
+-------------
+* Added collection deletion - added collection deletion by name 
+
+VERSION 2.5.14
+-------------
+* Updated README.md - added basic info regarding local development setup
+* composer.phar added to .gitignore file
+
 VERSION 2.5.13
 -------------
 * Fix for invalid request "Missing required organizationKey" when using createProject

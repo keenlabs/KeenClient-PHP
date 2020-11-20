@@ -297,6 +297,31 @@ return array(
             ),
         ),
 
+        'deleteCollection' => array(
+            'uri'         => 'projects/{projectId}/events/{collection_name}',
+            'description' => 'Deletes the specified collection.',
+            'httpMethod'  => 'DELETE',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'collection_name' => array(
+                    'location'    => 'uri',
+                    'description' => 'The collection name.',
+                    'required'    => true,
+                ),
+            ),
+        ),
+
         'getProperty' => array(
             'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
             'description' => 'GET returns the property name, type, and a link to sub-resources.',
@@ -521,6 +546,12 @@ return array(
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
+                ),
             ),
         ),
 
@@ -589,6 +620,12 @@ return array(
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
@@ -660,6 +697,12 @@ return array(
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
+                ),
             ),
         ),
 
@@ -729,6 +772,12 @@ return array(
                                     . 'to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
@@ -800,6 +849,12 @@ return array(
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
+                ),
             ),
         ),
 
@@ -870,6 +925,12 @@ return array(
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
+                ),
             ),
         ),
 
@@ -939,6 +1000,12 @@ return array(
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
+                ),
             ),
         ),
 
@@ -964,6 +1031,12 @@ return array(
                     'description' => 'A URL encoded JSON Array defining the Steps in the Funnel.',
                     'type'        => 'array',
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
@@ -1033,6 +1106,12 @@ return array(
                                     . 'like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
@@ -1168,6 +1247,12 @@ return array(
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
+                ),
             ),
         ),
 
@@ -1243,6 +1328,12 @@ return array(
                     'description' => 'The desired Xth percentile you want to get in your analysis.',
                     'type'        => 'number',
                     'required'    => true,
+                ),
+                'include_metadata' => array(
+                    'location' => 'json',
+                    'description' => 'Specifies whether to enrich query results with execution metadata or not.',
+                    'type' => 'boolean',
+                    'required' => false,
                 ),
             ),
         ),
