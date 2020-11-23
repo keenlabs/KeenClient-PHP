@@ -11,10 +11,10 @@
         "chat": "https://www.hipchat.com/gIdidQscL"
     },
     "require": {
-        "php":           ">=5.6.0",
-        "ext-openssl":    "*",
-        "guzzlehttp/guzzle": "~6.0",
-        "guzzlehttp/guzzle-services": "~1.0",
+        "php": ">=5.6.0",
+        "ext-openssl": "*",
+        "guzzlehttp/guzzle": "^6.0 || ^7.0",
+        "guzzlehttp/guzzle-services": "^1.0",
         "paragonie/random_compat": "^1.4 || ^2.0"
     },
     "require-dev": {
