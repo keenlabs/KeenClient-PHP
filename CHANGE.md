@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+VERSION 2.8.1
+-------------
+* Fix code standards
+* Check code standards in Travis
+
 VERSION 2.8.0
 -------------
 * Bumped Guzzle version to 7

@@ -1,8 +1,13 @@
 language: php
 php:
+  - "7.4"
   - "7.1"
   - "7.0"
   - "5.6"
 before_script:
   - composer self-update
   - composer install --prefer-source
+
+script: 
+  - composer phpcs
+  - composer phpunit
