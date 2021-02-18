@@ -7,8 +7,7 @@ return array(
     'operations'  => array(
         'getResources' => array(
             'uri'         => '/',
-            'description' => 'Returns the available child resources. Currently, the only child '
-                            . 'resource is the Projects Resource.',
+            'description' => 'Returns the available child resources. Currently, the only child resource is the Projects Resource.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
                 'masterKey' => array(
@@ -24,8 +23,7 @@ return array(
 
         'createProject' => array(
             'uri'         => 'organizations/{organizationId}/projects',
-            'description' => 'Creates a project for the specified organization and returns the '
-                            . 'project id for later usage.',
+            'description' => 'Creates a project for the specified organization and returns the project id for later usage.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'organizationId'  => array(
@@ -48,8 +46,7 @@ return array(
 
         'getProjects' => array(
             'uri'         => 'projects',
-            'description' => 'Returns the projects accessible to the API user, as well as '
-                            . 'links to project sub-resources for discovery.',
+            'description' => 'Returns the projects accessible to the API user, as well as links to project sub-resources for discovery.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
                 'masterKey' => array(
@@ -65,8 +62,7 @@ return array(
 
         'getProject' => array(
             'uri'         => 'projects/{projectId}',
-            'description' => 'GET returns detailed information about the specific project, '
-                            . 'as well as links to related resources.',
+            'description' => 'GET returns detailed information about the specific project, as well as links to related resources.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
                 'projectId'        => array(
@@ -106,8 +102,7 @@ return array(
 
         'getSavedQuery' => array(
             'uri'         => 'projects/{projectId}/queries/saved/{query_name}',
-            'description' => 'Returns the detailed information about the specified query, as '
-                            . 'well as links to retrieve results.',
+            'description' => 'Returns the detailed information about the specified query, as well as links to retrieve results.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
                 'projectId'        => array(
@@ -248,8 +243,7 @@ return array(
 
         'getCollections' => array(
             'uri'         => 'projects/{projectId}/events',
-            'description' => 'GET returns schema information for all the event collections in this project, '
-                            . 'including properties and their type. It also returns links to sub-resources.',
+            'description' => 'GET returns schema information for all the event collections in this project, including properties and their type. It also returns links to sub-resources.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
                 'projectId'        => array(
@@ -273,8 +267,7 @@ return array(
 
         'getCollection' => array(
             'uri'         => 'projects/{projectId}/events/{event_collection}',
-            'description' => 'GET returns available schema information for this event collection, including '
-                            . 'properties and their type. It also returns links to sub-resources.',
+            'description' => 'GET returns available schema information for this event collection, including properties and their type. It also returns links to sub-resources.',
             'httpMethod'  => 'GET',
             'parameters'  => array(
                 'projectId'        => array(
@@ -383,10 +376,7 @@ return array(
 
         'addEvents' => array(
             'uri'         => 'projects/{projectId}/events',
-            'description' => 'POST inserts multiple events in one or more collections, in a single request. The API '
-                            . 'expects a JSON object whose keys are the names of each event collection you want to '
-                            . 'insert into. Each key should point to a list of events to insert for that event '
-                            . 'collection.',
+            'description' => 'POST inserts multiple events in one or more collections, in a single request. The API expects a JSON object whose keys are the names of each event collection you want to insert into. Each key should point to a list of events to insert for that event collection.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -409,8 +399,7 @@ return array(
 
         'deleteEvents' => array(
             'uri'         => 'projects/{projectId}/events/{event_collection}',
-            'description' => 'DELETE one or multiple events from a collection. You can optionally add filters, '
-                            . 'timeframe or timezone. You can delete up to 50,000 events using one method call',
+            'description' => 'DELETE one or multiple events from a collection. You can optionally add filters, timeframe or timezone. You can delete up to 50,000 events using one method call',
             'httpMethod'  => 'DELETE',
             'parameters'  => array(
                 'projectId'        => array(
@@ -432,23 +421,20 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'query',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'query',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'filters'     => array('KeenIO\Client\Filter\MultiTypeFiltering::encodeValue'),
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'query',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
@@ -457,8 +443,7 @@ return array(
 
         'deleteEventProperties' => array(
             'uri'         => 'projects/{projectId}/events/{event_collection}/properties/{property_name}',
-            'description' => 'DELETE one property for events. This only works for properties with less than 10,000 '
-                            . 'events.',
+            'description' => 'DELETE one property for events. This only works for properties with less than 10,000 events.',
             'httpMethod'  => 'DELETE',
             'parameters'  => array(
                 'projectId'        => array(
@@ -489,8 +474,7 @@ return array(
 
         'count' => array(
             'uri'         => 'projects/{projectId}/queries/count',
-            'description' => 'POST returns the number of resources in the event collection matching the given criteria.'
-                            . ' The response will be a simple JSON object with one key: a numeric result.',
+            'description' => 'POST returns the number of resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: a numeric result.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -513,36 +497,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -557,9 +536,7 @@ return array(
 
         'countUnique' => array(
             'uri'         => 'projects/{projectId}/queries/count_unique',
-            'description' => 'POST returns the number of UNIQUE resources in the event collection matching the given '
-                            . 'criteria. The response will be a simple JSON object with one key: result, which maps '
-                            . 'to the numeric result described previously.',
+            'description' => 'POST returns the number of UNIQUE resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -588,36 +565,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -632,10 +604,7 @@ return array(
 
         'minimum' => array(
             'uri'         => 'projects/{projectId}/queries/minimum',
-            'description' => 'POST returns the minimum numeric value for the target property in the event collection '
-                            . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
-                            . 'simple JSON object with one key: result, which maps to the numeric result described '
-                            . 'previously.',
+            'description' => 'POST returns the minimum numeric value for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -664,36 +633,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -708,10 +672,7 @@ return array(
 
         'maximum' => array(
             'uri'         => 'projects/{projectId}/queries/maximum',
-            'description' => 'POST returns the maximum numeric value for the target property in the event collection '
-                            . 'matching the given criteria. Non-numeric values are ignored. The response will be a '
-                            . 'simple JSON object with one key: result, which maps to the numeric result described '
-                            . 'previously.',
+            'description' => 'POST returns the maximum numeric value for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -740,36 +701,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -784,10 +740,7 @@ return array(
 
         'average' => array(
             'uri'         => 'projects/{projectId}/queries/average',
-            'description' => 'POST returns the average across all numeric values for the target property in the event '
-                            . 'collection matching the given criteria. Non-numeric values are ignored. The response '
-                            . 'will be a simple JSON object with one key: result, which maps to the numeric result '
-                            . 'described previously.',
+            'description' => 'POST returns the average across all numeric values for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -817,35 +770,31 @@ return array(
                 'filters'          => array(
                     'location'    => 'json',
                     'description' => 'Filters are used to narrow down the events used in an analysis request '
-                                    . 'based on event property values.',
+                        . 'based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of '
-                                    . 'time. If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -860,10 +809,7 @@ return array(
 
         'sum' => array(
             'uri'         => 'projects/{projectId}/queries/sum',
-            'description' => 'POST returns the sum if all numeric values for the target property in the event '
-                            . 'collection matching the given criteria. Non-numeric values are ignored. The '
-                            . 'response will be a simple JSON object with one key: result, which maps to the '
-                            . 'numeric result described previously.',
+            'description' => 'POST returns the sum if all numeric values for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -892,36 +838,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based '
-                                    . 'on event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -936,9 +877,7 @@ return array(
 
         'selectUnique' => array(
             'uri'         => 'projects/{projectId}/queries/select_unique',
-            'description' => 'POST returns a list of UNIQUE resources in the event collection matching the given '
-                            . 'criteria. The response will be a simple JSON object with one key: result, which '
-                            . 'maps to an array of unique property values.',
+            'description' => 'POST returns a list of UNIQUE resources in the event collection matching the given criteria. The response will be a simple JSON object with one key: result, which maps to an array of unique property values.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -967,36 +906,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based '
-                                    . 'on event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -1043,8 +977,7 @@ return array(
 
         'multiAnalysis' => array(
             'uri'         => 'projects/{projectId}/queries/multi_analysis',
-            'description' => 'Multi-analysis lets you run multiple types of analysis over the same data. Performing a '
-                            . 'multi-analysis call is very similar to a Metric or a Series.',
+            'description' => 'Multi-analysis lets you run multiple types of analysis over the same data. Performing a multi-analysis call is very similar to a Metric or a Series.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -1067,43 +1000,37 @@ return array(
                 ),
                 'analyses'         => array(
                     'location'    => 'json',
-                    'description' => 'A URL encoded JSON object that defines the multiple types of analyses to '
-                                    . 'perform.',
+                    'description' => 'A URL encoded JSON object that defines the multiple types of analyses to perform.',
                     'type'        => 'array',
                     'required'    => true,
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request '
-                                    . 'based on event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => array('string', 'number'),
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -1118,12 +1045,7 @@ return array(
 
         'extraction' => array(
             'uri'         => 'projects/{projectId}/queries/extraction',
-            'description' => 'POST creates an extraction request for full-form event data with all property values. '
-                            . 'If the query string parameter email is specified, then the extraction will be '
-                            . 'processed asynchronously and an e-mail will be sent to the specified address when it '
-                            . 'completes. The email will include a link to a downloadable CSV file. If email is '
-                            . 'omitted, then the extraction will be processed in-line and JSON results will be '
-                            . 'returned in the GET request.',
+            'description' => 'POST creates an extraction request for full-form event data with all property values. If the query string parameter email is specified, then the extraction will be processed asynchronously and an e-mail will be sent to the specified address when it completes. The email will include a link to a downloadable CSV file. If email is omitted, then the extraction will be processed in-line and JSON results will be returned in the GET request.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -1146,15 +1068,13 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request '
-                                    . ' based on event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -1172,8 +1092,7 @@ return array(
                 ),
                 'property_names'   => array(
                     'location'    => 'json',
-                    'description' => 'A URL-encoded array of strings containing properties you wish to extract. If '
-                                    . 'this parameter is omitted, all properties will be returned.',
+                    'description' => 'A URL-encoded array of strings containing properties you wish to extract. If this parameter is omitted, all properties will be returned.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
@@ -1182,10 +1101,7 @@ return array(
 
         'median' => array(
             'uri'         => 'projects/{projectId}/queries/median',
-            'description' => 'POST returns the median across all numeric values for the target property in the event '
-                            . 'collection matching the given criteria. Non-numeric values are ignored. The response '
-                            . 'will be a simple JSON object with one key: result, which maps to the numeric result '
-                            . 'described previously.',
+            'description' => 'POST returns the median across all numeric values for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -1214,36 +1130,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . 'If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => 'number',
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would '
-                                    . 'like to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -1258,10 +1169,7 @@ return array(
 
         'percentile' => array(
             'uri'         => 'projects/{projectId}/queries/percentile',
-            'description' => 'POST returns the Xth percentile value across all numeric values for the target property '
-                            . 'in the event collection matching the given criteria. Non-numeric values are ignored. '
-                            . 'The response will be a simple JSON object with one key: result, which maps to the '
-                            . 'numeric result described previously.',
+            'description' => 'POST returns the Xth percentile value across all numeric values for the target property in the event collection matching the given criteria. Non-numeric values are ignored. The response will be a simple JSON object with one key: result, which maps to the numeric result described previously.',
             'httpMethod'  => 'POST',
             'parameters'  => array(
                 'projectId'        => array(
@@ -1290,36 +1198,31 @@ return array(
                 ),
                 'filters'          => array(
                     'location'    => 'json',
-                    'description' => 'Filters are used to narrow down the events used in an analysis request based on '
-                                    . 'event property values.',
+                    'description' => 'Filters are used to narrow down the events used in an analysis request based on event property values.',
                     'type'        => 'array',
                     'required'    => false,
                 ),
                 'timeframe'        => array(
                     'location'    => 'json',
-                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. '
-                                    . ' If no timeframe is specified, all events will be counted.',
+                    'description' => 'A Timeframe specifies the events to use for analysis based on a window of time. If no timeframe is specified, all events will be counted.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
                 'interval'         => array(
                     'location'    => 'json',
-                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the '
-                                    . 'length of each sub-timeframe in a Series.',
+                    'description' => 'Intervals are used when creating a Series API call. The interval specifies the length of each sub-timeframe in a Series.',
                     'type'        => 'string',
                     'required'    => false,
                 ),
                 'timezone'         => array(
                     'location'    => 'json',
-                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific '
-                                    . 'timezone.',
+                    'description' => 'Modifies the timeframe filters for Relative Timeframes to match a specific timezone.',
                     'type'        => 'number',
                     'required'    => false,
                 ),
                 'group_by'         => array(
                     'location'    => 'json',
-                    'description' => 'The group_by parameter specifies the name of a property by which you would like '
-                                    . 'to group the results.',
+                    'description' => 'The group_by parameter specifies the name of a property by which you would like to group the results.',
                     'type'        => array('string', 'array'),
                     'required'    => false,
                 ),
@@ -1334,6 +1237,146 @@ return array(
                     'description' => 'Specifies whether to enrich query results with execution metadata or not.',
                     'type' => 'boolean',
                     'required' => false,
+                ),
+            ),
+        ),
+        'createAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys',
+            'description' => 'Creates a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+            'additionalParameters' => array(
+                'location' => 'json'
+            ),
+        ),
+        'listAccessKeys' => array(
+            'uri'         => 'projects/{projectId}/keys',
+            'description' => 'Returns all project access keys.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+        'getAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}',
+            'description' => 'Returns a project access key.',
+            'httpMethod'  => 'GET',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+        'updateAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}',
+            'description' => 'Updates a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+            'additionalParameters' => array(
+                'location' => 'json'
+            ),
+        ),
+        'revokeAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}/revoke',
+            'description' => 'Revokes a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+            ),
+        ),
+        'unRevokeAccessKey' => array(
+            'uri'         => 'projects/{projectId}/keys/{key}/unrevoke',
+            'description' => 'Unrevokes a project access key.',
+            'httpMethod'  => 'POST',
+            'parameters'  => array(
+                'projectId'        => array(
+                    'location'    => 'uri',
+                    'type'        => 'string'
+                ),
+                'key'      => array(
+                    'location'    => 'uri',
+                    'type'        => 'string',
+                    'required'    => true,
+                ),
+                'masterKey' => array(
+                    'location'    => 'header',
+                    'description' => 'The Master API Key.',
+                    'sentAs'      => 'Authorization',
+                    'pattern'     => '/^([[:alnum:]])+$/',
+                    'type'        => 'string',
+                    'required'    => true,
                 ),
             ),
         ),
