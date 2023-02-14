@@ -2,6 +2,7 @@
 
 namespace KeenIO\Client;
 
+use GuzzleHttp\Command\CommandInterface;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\Guzzle\Description;
 use GuzzleHttp\Client;
@@ -100,6 +101,12 @@ class KeenIOClient extends GuzzleClient
         return parent::__call($method, array($this->combineEventCollectionArgs($args)));
     }
 
+    /**
+     * @param string               $name
+     * @param array<string, mixed> $args
+     *
+     * @return CommandInterface
+     */
     public function getCommand($name, array $params = [])
     {
         $params['projectId'] = $this->getConfig('projectId');
