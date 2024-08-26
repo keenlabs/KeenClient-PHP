@@ -72,9 +72,20 @@ class KeenIOClient extends GuzzleClient
 
         $file = 'keen-io-' . str_replace('.', '_', $config['version']) . '.php';
 
+        $guzzleClientConfig = $config;
+        unset(
+            $guzzleClientConfig['masterKey'],
+            $guzzleClientConfig['writeKey'],
+            $guzzleClientConfig['readKey'],
+            $guzzleClientConfig['projectId'],
+            $guzzleClientConfig['organizationKey'],
+            $guzzleClientConfig['organizationId'],
+            $guzzleClientConfig['version']
+        );
+
         // Create the new Keen IO Client with our Configuration
         return new self(
-            new Client($config),
+            new Client($guzzleClientConfig),
             new Description(include __DIR__ . "/Resources/{$file}"),
             null,
             function ($arg) {
