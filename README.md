@@ -2,7 +2,7 @@ Keen IO PHP Library
 ===================
 The Keen IO API lets developers build analytics features directly into their apps.
 
-[![Build Status](https://travis-ci.org/keenlabs/KeenClient-PHP.png?branch=master)](https://travis-ci.org/keenlabs/KeenClient-PHP)
+[![CI](https://github.com/keenlabs/KeenClient-PHP/actions/workflows/ci.yml/badge.svg)](https://github.com/keenlabs/KeenClient-PHP/actions/workflows/ci.yml)
 
 Installation with Composer
 --------------------------
